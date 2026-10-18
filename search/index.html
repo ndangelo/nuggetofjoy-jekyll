@@ -1,0 +1,22 @@
+---
+layout: default
+title: Search
+description: Search the Nugget of Joy archive.
+permalink: /search/
+---
+<section class="noj-section noj-search-page">
+  <div class="noj-wrap">
+    <p class="noj-kicker">the archive</p>
+    <h1>Search Nugget of Joy</h1>
+    <p class="noj-intro">Find design briefs, tutorials, course materials, and creative experiments.</p>
+    <form class="noj-search noj-search-page-form" role="search" action="{{ '/search/' | relative_url }}" method="get">
+      <label class="screen-reader-text" for="noja-search-page">Search all content</label>
+      <input id="noja-search-page" type="search" name="s" placeholder="Try “Figma”, “color theory”, or “portfolio”…">
+      <button type="submit">Search</button>
+    </form>
+    <p id="noj-search-status" class="noj-small-note" aria-live="polite">Enter a search term to search the archive.</p>
+    <div id="noj-search-results" class="noj-content-list" data-index-url="{{ '/search.json' | relative_url }}"></div>
+    <noscript><p>Search requires JavaScript. Please enable JavaScript to search the archive.</p></noscript>
+  </div>
+</section>
+<script src="{{ '/assets/js/search.js' | relative_url }}" defer></script>
