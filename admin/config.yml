@@ -94,6 +94,59 @@ collections:
         fields:
           - { label: Link Text, name: label, widget: string }
           - { label: URL, name: url, widget: string }
+      - label: Content Blocks
+        name: content_blocks
+        widget: list
+        required: false
+        collapsed: true
+        summary: "{{fields.heading}}"
+        hint: "Optional structured sections that appear after the main article body. Reorder blocks to change their order."
+        types:
+          - label: Callout / Note
+            name: callout
+            widget: object
+            fields:
+              - { label: Heading, name: heading, widget: string, required: false }
+              - label: Style
+                name: tone
+                widget: select
+                options:
+                  - { label: Tip, value: tip }
+                  - { label: Note, value: note }
+                  - { label: Important, value: important }
+                default: note
+              - { label: Text, name: text, widget: markdown, required: true }
+          - label: Image Gallery
+            name: gallery
+            widget: object
+            fields:
+              - { label: Heading, name: heading, widget: string, required: false }
+              - label: Images
+                name: images
+                widget: list
+                label_singular: Gallery Image
+                summary: "{{fields.alt}}"
+                fields:
+                  - { label: Image, name: image, widget: image }
+                  - { label: Alt Text, name: alt, widget: string }
+                  - { label: Caption, name: caption, widget: string, required: false }
+          - label: Code Example
+            name: code_example
+            widget: object
+            fields:
+              - { label: Heading, name: heading, widget: string, required: false }
+              - label: Code
+                name: code
+                widget: code
+                default_language: html
+                allow_language_selection: true
+                keys: { code: code, lang: language }
+          - label: Quote
+            name: quote
+            widget: object
+            fields:
+              - { label: Quote, name: quote, widget: text }
+              - { label: Attribution, name: attribution, widget: string, required: false }
       - label: Body
         name: body
         widget: richtext
