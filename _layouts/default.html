@@ -1,26 +1,41 @@
 <!doctype html>
-<html lang="en">
+<html lang="en-US">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>{% if page.title and page.title != "Home" %}{{ page.title | escape }} · {% endif %}{{ site.title | escape }}</title>
   <meta name="description" content="{{ page.description | default: site.description | escape }}">
+  <link rel="stylesheet" href="{{ '/assets/css/nuggetofjoy-theme.css' | relative_url }}">
   <link rel="stylesheet" href="{{ '/assets/css/style.css' | relative_url }}">
 </head>
 <body>
-  <header class="site-header">
-    <a class="site-name" href="{{ '/' | relative_url }}">Nugget of Joy</a>
-    <nav aria-label="Main navigation">
-      <a href="{{ '/' | relative_url }}">Home</a>
-      <a href="{{ '/about/' | relative_url }}">About</a>
-      <a href="{{ '/admin/' | relative_url }}">Editor</a>
-    </nav>
+  <a class="noj-skip" href="#main">Skip to content</a>
+  <header class="noj-header">
+    <div class="noj-wrap noj-header-inner">
+      <a class="noj-brand" href="{{ '/' | relative_url }}"><span class="noj-brand-orange">nugget</span><span class="noj-brand-blue"> of joy</span></a>
+      <nav class="noj-nav" aria-label="Main navigation">
+        <ul class="noj-menu">
+          <li><a href="{{ '/' | relative_url }}">Home</a></li>
+          <li><a href="{{ '/about/' | relative_url }}">About</a></li>
+          <li><a href="{{ '/admin/' | relative_url }}">Editor</a></li>
+        </ul>
+      </nav>
+      <form class="noj-search" role="search" action="{{ '/' | relative_url }}" method="get">
+        <label class="screen-reader-text" for="noja-search-header">Search all content</label>
+        <input id="noja-search-header" type="search" name="s" placeholder="Search the archive…">
+        <button type="submit">Search</button>
+      </form>
+    </div>
   </header>
-  <main class="site-main">
+  <main id="main">
     {{ content }}
   </main>
-  <footer class="site-footer">
-    <p>© {{ site.time | date: "%Y" }} Nugget of Joy</p>
+  <footer class="noj-footer">
+    <div class="noj-wrap noj-footer-inner">
+      <a class="noj-brand" href="{{ '/' | relative_url }}"><span class="noj-brand-orange">nugget</span><span class="noj-brand-blue"> of joy</span></a>
+      <p>Communication, Art, Design &amp; Instruction</p>
+      <p>© {{ site.time | date: "%Y" }} Communication, Art, Design &amp; Instruction</p>
+    </div>
   </footer>
 </body>
 </html>
