@@ -325,6 +325,10 @@ wordpress_id: "68044"
 <!-- /wp:paragraph -->
 
 
+<!-- wp:html -->
+<figure class="uber-reference-image uber-styleguide-overview"><img src="https://www.figma.com/api/mcp/asset/c53b8af3-9dd9-49b8-b29c-af6053d039aa.png" alt="Actual Figma UI/UX Style Guide template showing Foundations: project purpose, intended user, primary task, and visual direction" loading="lazy"><figcaption><strong>Actual course template — Foundations.</strong> Define the product, user, primary task, and visual direction before designing screens.</figcaption></figure>
+<!-- /wp:html -->
+
 <!-- wp:heading {"level":3} -->
 <h3 class="wp-block-heading">Foundations</h3>
 <!-- /wp:heading -->
@@ -497,6 +501,11 @@ wordpress_id: "68044"
 <!-- wp:paragraph -->
 <p><strong>Student examples:</strong> Review the examples provided in D2L, including the prototype created with Figma Make.</p>
 <!-- /wp:paragraph -->
+
+<!-- wp:html -->
+<figure class="uber-reference-image uber-styleguide-overview"><img src="https://www.figma.com/api/mcp/asset/e95b4662-5403-4563-a3dd-3ad472b300f7.png" alt="Actual Figma UI/UX Style Guide template showing interaction states: default, hover, focus, pressed, disabled, and error" loading="lazy"><figcaption><strong>Actual course template — States.</strong> Show how interactive elements change across default, hover, focus, pressed, disabled, and error states.</figcaption></figure>
+<figure class="uber-reference-image uber-styleguide-overview"><img src="https://www.figma.com/api/mcp/asset/6efc91f7-9a9f-4de0-80c3-20521f419f83.png" alt="Actual Figma UI/UX Style Guide template accessibility checklist" loading="lazy"><figcaption><strong>Actual course template — Accessibility.</strong> Check contrast, visible focus, clear labels, readable type, and distinct feedback states.</figcaption></figure>
+<!-- /wp:html -->
 
 <!-- wp:heading -->
 <h2 class="wp-block-heading">Design Principles to Remember</h2>
