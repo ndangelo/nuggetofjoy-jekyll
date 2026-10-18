@@ -36,6 +36,9 @@ collections:
     label_singular: Page
     folder: "_pages"
     create: true
+    filter:
+      field: layout
+      value: page
     slug: "{{slug}}"
     fields:
       - { label: Title, name: title, widget: string }
