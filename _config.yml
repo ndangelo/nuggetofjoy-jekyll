@@ -4,6 +4,10 @@ url: "https://ndangelo.github.io"
 baseurl: "/nuggetofjoy-jekyll"
 
 markdown: kramdown
+highlighter: rouge
+kramdown:
+  input: GFM
+  syntax_highlighter: rouge
 permalink: /:categories/:year/:month/:day/:title/
 
 collections:
