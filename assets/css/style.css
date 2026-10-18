@@ -288,3 +288,12 @@ h3 { font-size: .88rem; margin: .25rem 0 .65rem; }
 .noj-entry-content .hljs-meta .hljs-keyword { color: #8ddb8c !important; }
 .noj-entry-content :not(pre) > code { background: #eef0f2; color: #b34e2b; }
 
+
+
+/* CMS-authored post details */
+.noj-entry-byline { margin-top: -.4rem; color: var(--muted); font-size: .78rem; }
+.noj-featured-image figcaption { margin-top: .5rem; color: var(--muted); font-size: .78rem; line-height: 1.5; }
+.noj-related-resources { margin-top: 3rem; padding: 1.5rem; border: 1px solid var(--line); border-radius: 8px; }
+.noj-related-resources h2 { margin-top: 0; }
+.noj-related-resources ul { margin-bottom: 0; padding-left: 1.2rem; }
+.noj-related-resources li + li { margin-top: .4rem; }
