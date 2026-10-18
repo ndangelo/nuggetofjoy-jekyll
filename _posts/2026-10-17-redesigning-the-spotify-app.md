@@ -292,6 +292,11 @@ wordpress_id: "68050"
 <p><strong>Deliverable:</strong> A completed copy of the existing UI/UX Style Guide template adapted to your Spotify project. Keep it open as a reference while designing screens.</p>
 <!-- /wp:paragraph -->
 
+<!-- wp:html -->
+<figure class="spotify-reference spotify-template-shot"><img src="https://www.figma.com/api/mcp/asset/c53b8af3-9dd9-49b8-b29c-af6053d039aa.png" alt="Actual Figma UI/UX Style Guide template showing Foundations: project purpose, intended user, primary task, and visual direction" loading="lazy"><figcaption><strong>Actual course template — Foundations.</strong> Define the product, user, primary task, and visual direction before designing screens.</figcaption></figure>
+<figure class="spotify-reference spotify-template-shot"><img src="https://www.figma.com/api/mcp/asset/e95b4662-5403-4563-a3dd-3ad472b300f7.png" alt="Actual Figma UI/UX Style Guide template showing interaction states: default, hover, focus, pressed, disabled, and error" loading="lazy"><figcaption><strong>Actual course template — States.</strong> Show how interactive elements change across default, hover, focus, pressed, disabled, and error states.</figcaption></figure>
+<figure class="spotify-reference spotify-template-shot"><img src="https://www.figma.com/api/mcp/asset/6efc91f7-9a9f-4de0-80c3-20521f419f83.png" alt="Actual Figma UI/UX Style Guide template accessibility checklist" loading="lazy"><figcaption><strong>Actual course template — Accessibility.</strong> Check contrast, visible focus, clear labels, readable type, and distinct feedback states.</figcaption></figure>
+
 <!-- wp:heading -->
 <h2 class="wp-block-heading">04 — Design the Flat Screens in Figma Design</h2>
 <!-- /wp:heading -->
