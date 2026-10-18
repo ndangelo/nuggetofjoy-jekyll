@@ -3,8 +3,26 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>{% if page.title and page.title != "Home" %}{{ page.title | escape }} · {% endif %}{{ site.title | escape }}</title>
-  <meta name="description" content="{{ page.description | default: site.description | escape }}">
+  {% assign seo_title = page.seo.seo_title | default: page.title | default: site.title %}
+  {% assign seo_description = page.seo.seo_description | default: page.description | default: site.description %}
+  {% assign share_image = page.seo.social_image | default: page.image %}
+  <title>{{ seo_title | escape }}{% unless page.title == "Home" %} · {{ site.title | escape }}{% endunless %}</title>
+  <meta name="description" content="{{ seo_description | strip_html | normalize_whitespace | escape }}">
+  <link rel="canonical" href="{{ page.seo.canonical_url | default: page.url | absolute_url }}">
+  <meta property="og:site_name" content="{{ site.title | escape }}">
+  <meta property="og:type" content="{% if page.layout == 'post' %}article{% else %}website{% endif %}">
+  <meta property="og:title" content="{{ seo_title | escape }}">
+  <meta property="og:description" content="{{ seo_description | strip_html | normalize_whitespace | escape }}">
+  <meta property="og:url" content="{{ page.seo.canonical_url | default: page.url | absolute_url }}">
+  {% if share_image %}
+  <meta property="og:image" content="{% if share_image contains '://' %}{{ share_image | escape }}{% else %}{{ share_image | absolute_url }}{% endif %}">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="{% if share_image contains '://' %}{{ share_image | escape }}{% else %}{{ share_image | absolute_url }}{% endif %}">
+  {% else %}
+  <meta name="twitter:card" content="summary">
+  {% endif %}
+  <meta name="twitter:title" content="{{ seo_title | escape }}">
+  <meta name="twitter:description" content="{{ seo_description | strip_html | normalize_whitespace | escape }}">
   <link rel="stylesheet" href="{{ '/assets/css/nuggetofjoy-theme.css' | relative_url }}">
   <link rel="stylesheet" href="{{ '/assets/css/style.css' | relative_url }}">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/styles/github-dark-dimmed.min.css">
