@@ -17,6 +17,7 @@
     .cms-loading p { line-height: 1.65; }
     .cms-loading a { color: #427fa4; }
   </style>
+  <link rel="stylesheet" href="{{ '/admin/preview.css' | relative_url }}">
 </head>
 <body>
   <main class="cms-loading">
@@ -26,5 +27,36 @@
     <p>If the editor does not load, refresh this page or check the <a href="https://github.com/ndangelo/nuggetofjoy-jekyll/actions">staging build status</a>.</p>
   </main>
   <script src="https://cdn.jsdelivr.net/npm/decap-cms@^3.17.0/dist/decap-cms.js"></script>
+  <script>
+    (function () {
+      if (!window.CMS) return;
+      CMS.registerPreviewStyle("/nuggetofjoy-jekyll/admin/preview.css");
+      var PostPreview = createClass({
+        render: function () {
+          var entry = this.props.entry;
+          var title = entry.getIn(["data", "title"]) || "Untitled";
+          var date = entry.getIn(["data", "date"]);
+          var description = entry.getIn(["data", "description"]);
+          var image = entry.getIn(["data", "image"]);
+          return h("article", { className: "preview-article" },
+            h("p", { className: "preview-date" }, date ? String(date) : "Draft preview"),
+            h("h1", {}, title),
+            description ? h("p", { className: "preview-meta" }, description) : null,
+            image ? h("img", { className: "preview-featured", src: this.props.getAsset(image), alt: "" }) : null,
+            h("div", { className: "preview-content" }, this.props.widgetFor("body"))
+          );
+        }
+      });
+      CMS.registerPreviewTemplate("posts", PostPreview);
+      CMS.registerPreviewTemplate("content_pages", createClass({
+        render: function () {
+          return h("article", { className: "preview-article" },
+            h("h1", {}, this.props.entry.getIn(["data", "title"]) || "Untitled"),
+            h("div", { className: "preview-content" }, this.props.widgetFor("body"))
+          );
+        }
+      }));
+    })();
+  </script>
 </body>
 </html>
