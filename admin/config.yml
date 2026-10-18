@@ -33,7 +33,14 @@ collections:
     extension: "md"
     format: "frontmatter"
     slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
-    summary: "{{title}}"
+    summary: "{{title}} · {{date}}"
+    view_filters:
+      - label: Has featured image
+        field: image
+        pattern: ".+"
+      - label: Has SEO description
+        field: seo.seo_description
+        pattern: ".+"
     sortable_fields:
       - title
       - date
@@ -51,9 +58,22 @@ collections:
         date_format: "YYYY-MM-DD"
         time_format: "HH:mm:ss"
       - { label: Permalink / Public URL, name: permalink, widget: string, required: false, hint: "Preserve the existing URL for older posts. Changing this can break links." }
-      - { label: Description / Excerpt, name: description, widget: text, required: false }
-      - { label: Featured Image, name: image, widget: image, required: false }
-      - { label: Image Alt Text, name: image_alt, widget: string, required: false }
+      - { label: Description / Excerpt, name: description, widget: text, required: false, hint: "Short summary used on archive cards and as the default search/social description." }
+      - { label: Author, name: author, widget: string, required: false, default: "Nicholas D’Angelo" }
+      - { label: Featured Image, name: image, widget: image, required: false, media_folder: "/assets/images/uploads", public_folder: "/nuggetofjoy-jekyll/assets/images/uploads" }
+      - { label: Image Alt Text, name: image_alt, widget: string, required: false, hint: "Describe the image for screen readers; do not repeat the post title." }
+      - { label: Featured Image Caption, name: image_caption, widget: string, required: false }
+      - label: Search & Social Sharing
+        name: seo
+        widget: object
+        required: false
+        collapsed: true
+        summary: "Search and social sharing settings"
+        fields:
+          - { label: SEO Title, name: seo_title, widget: string, required: false, hint: "Optional browser/search title. Leave blank to use the post title." }
+          - { label: SEO Description, name: seo_description, widget: text, required: false, hint: "Optional description for search engines and link previews." }
+          - { label: Social Sharing Image, name: social_image, widget: image, required: false, media_folder: "/assets/images/uploads", public_folder: "/nuggetofjoy-jekyll/assets/images/uploads" }
+          - { label: Canonical URL, name: canonical_url, widget: string, required: false, hint: "Only set this when this content's preferred URL is different from this page's URL." }
       - label: Categories
         name: categories
         widget: list
@@ -65,6 +85,15 @@ collections:
         required: false
         field: { label: Tag, name: tag, widget: string }
       - { label: WordPress ID (legacy), name: wordpress_id, widget: hidden, required: false }
+      - label: Related Resources
+        name: related_links
+        widget: list
+        required: false
+        label_singular: Resource
+        summary: "{{fields.label}}"
+        fields:
+          - { label: Link Text, name: label, widget: string }
+          - { label: URL, name: url, widget: string }
       - label: Body
         name: body
         widget: richtext
@@ -89,6 +118,17 @@ collections:
       - { label: Title, name: title, widget: string }
       - { label: URL Slug, name: permalink, widget: string, required: false, hint: "Use the existing public URL when editing an established page." }
       - { label: Description, name: description, widget: text, required: false }
+      - label: Search & Social Sharing
+        name: seo
+        widget: object
+        required: false
+        collapsed: true
+        summary: "Search and social sharing settings"
+        fields:
+          - { label: SEO Title, name: seo_title, widget: string, required: false }
+          - { label: SEO Description, name: seo_description, widget: text, required: false }
+          - { label: Social Sharing Image, name: social_image, widget: image, required: false, media_folder: "/assets/images/uploads", public_folder: "/nuggetofjoy-jekyll/assets/images/uploads" }
+          - { label: Canonical URL, name: canonical_url, widget: string, required: false }
       - { label: WordPress ID (legacy), name: wordpress_id, widget: hidden, required: false }
       - label: Body
         name: body
