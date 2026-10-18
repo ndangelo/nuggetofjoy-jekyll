@@ -2,6 +2,11 @@ name: Audit and bundle local media
 
 on:
   workflow_dispatch:
+  push:
+    branches:
+      - main
+    paths:
+      - .github/workflows/media-migration.yml
 
 permissions:
   contents: read
