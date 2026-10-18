@@ -6,14 +6,21 @@ layout: default
     <p class="noj-kicker">{{ page.date | date: "%B %-d, %Y" }}</p>
     <h1>{{ page.title | escape }}</h1>
     {% if page.description %}<p class="noj-intro">{{ page.description | escape }}</p>{% endif %}
+    {% if page.author %}<p class="noj-entry-byline">By {{ page.author | escape }}</p>{% endif %}
     {% if page.categories.size > 0 %}<p class="noj-entry-taxonomy">{% for category in page.categories %}<a href="{{ '/category/' | append: category | slugify | append: '/' | relative_url }}">{{ category | replace: '-', ' ' | replace: '_', ' ' }}</a>{% unless forloop.last %}, {% endunless %}{% endfor %}</p>{% endif %}
   </header>
-  {% if page.image %}<figure class="noj-featured-image"><img src="{{ page.image }}" alt="{{ page.image_alt | default: page.title | escape }}"></figure>{% endif %}
+  {% if page.image %}<figure class="noj-featured-image"><img src="{{ page.image }}" alt="{{ page.image_alt | default: page.title | escape }}">{% if page.image_caption %}<figcaption>{{ page.image_caption | escape }}</figcaption>{% endif %}</figure>{% endif %}
   <div class="noj-entry-content">
     {{ content }}
   </div>
   {% if page.tags.size > 0 %}
   <footer class="article-tags"><strong>Tags:</strong> {% for tag in page.tags %}<span>{{ tag }}</span>{% unless forloop.last %}, {% endunless %}{% endfor %}</footer>
+  {% endif %}
+  {% if page.related_links.size > 0 %}
+  <aside class="noj-related-resources">
+    <h2>Related resources</h2>
+    <ul>{% for resource in page.related_links %}<li><a href="{{ resource.url | escape }}">{{ resource.label | escape }}</a></li>{% endfor %}</ul>
+  </aside>
   {% endif %}
   <p class="noj-text-link"><a href="{{ '/' | relative_url }}">← Back to the archive</a></p>
 </article>
