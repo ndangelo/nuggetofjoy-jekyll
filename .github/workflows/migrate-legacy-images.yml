@@ -34,7 +34,7 @@ jobs:
           media_dir = root / "assets/images/wordpress-legacy"
           media_dir.mkdir(parents=True, exist_ok=True)
           post_files = list((root / "_posts").rglob("*.md")) + list((root / "_pages").rglob("*.md"))
-          pattern = re.compile(r"""https?://(?:www\\.)?nuggetofjoy\\.com/wp-content/uploads/[^\\s"'<>\\\\)]+""", re.I)
+          pattern = re.compile(r"""https?://(?:www\.)?nuggetofjoy\.com/wp-content/uploads/[^\s"'<>\\)]+""", re.I)
           urls = set()
           for path in post_files:
               urls.update(match.rstrip(".,;") for match in pattern.findall(path.read_text(encoding="utf-8")))
@@ -104,6 +104,6 @@ jobs:
       - name: Summarize migration
         if: always()
         run: |
-          echo "Localized images: \${{ steps.migrate.outputs.downloaded }}"
-          echo "Failed downloads: \${{ steps.migrate.outputs.failed }}"
-          echo "Updated Markdown files: \${{ steps.migrate.outputs.updated_files }}"
+          echo "Localized images: ${{ steps.migrate.outputs.downloaded }}"
+          echo "Failed downloads: ${{ steps.migrate.outputs.failed }}"
+          echo "Updated Markdown files: ${{ steps.migrate.outputs.updated_files }}"
