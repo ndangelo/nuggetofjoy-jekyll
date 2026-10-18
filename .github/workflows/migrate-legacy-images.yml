@@ -1,0 +1,109 @@
+name: Migrate legacy WordPress images
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - ".github/workflows/migrate-legacy-images.yml"
+
+permissions:
+  contents: write
+
+jobs:
+  migrate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out staging repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Download legacy images and rewrite article references
+        id: migrate
+        shell: bash
+        run: |
+          python3 <<'PY'
+          import hashlib
+          import os
+          import re
+          import urllib.parse
+          import urllib.request
+          from pathlib import Path
+
+          root = Path(".")
+          media_dir = root / "assets/images/wordpress-legacy"
+          media_dir.mkdir(parents=True, exist_ok=True)
+          post_files = list((root / "_posts").rglob("*.md")) + list((root / "_pages").rglob("*.md"))
+          pattern = re.compile(r"""https?://(?:www\\.)?nuggetofjoy\\.com/wp-content/uploads/[^\\s"'<>\\\\)]+""", re.I)
+          urls = set()
+          for path in post_files:
+              urls.update(match.rstrip(".,;") for match in pattern.findall(path.read_text(encoding="utf-8")))
+
+          print(f"Found {len(urls)} unique legacy image URLs across {len(post_files)} Markdown files.")
+          migrated = {}
+          failed = []
+          for index, original in enumerate(sorted(urls), 1):
+              url = original.replace("http://", "https://", 1)
+              parsed = urllib.parse.urlsplit(url)
+              suffix = Path(urllib.parse.unquote(parsed.path)).suffix.lower()
+              if suffix not in {".jpg", ".jpeg", ".png", ".gif", ".webp", ".svg", ".avif", ".tif", ".tiff"}:
+                  suffix = ".img"
+              name = hashlib.sha256(original.encode("utf-8")).hexdigest()[:20] + suffix
+              destination = media_dir / name
+              if destination.exists() and destination.stat().st_size > 0:
+                  migrated[original] = f"/assets/images/wordpress-legacy/{name}"
+                  continue
+              request = urllib.request.Request(url, headers={"User-Agent": "NuggetOfJoy-Migration/1.0"})
+              try:
+                  with urllib.request.urlopen(request, timeout=25) as response:
+                      data = response.read()
+                  if not data or len(data) < 16:
+                      raise ValueError("response was empty or too small")
+                  if data.lstrip().lower().startswith((b"<!doctype html", b"<html")):
+                      raise ValueError("server returned HTML, not an image")
+                  destination.write_bytes(data)
+                  migrated[original] = f"/assets/images/wordpress-legacy/{name}"
+                  print(f"OK {index}/{len(urls)} {original} ({len(data)} bytes)")
+              except Exception as exc:
+                  failed.append((original, str(exc)))
+                  print(f"FAILED {index}/{len(urls)} {original}: {exc}")
+
+          updated_files = 0
+          for path in post_files:
+              content = path.read_text(encoding="utf-8")
+              updated = content
+              for original, local_path in migrated.items():
+                  if original in updated:
+                      updated = updated.replace(original, "{{ '" + local_path + "' | relative_url }}")
+              if updated != content:
+                  path.write_text(updated, encoding="utf-8")
+                  updated_files += 1
+
+          with open(os.environ["GITHUB_OUTPUT"], "a", encoding="utf-8") as output:
+              output.write(f"downloaded={len(migrated)}\n")
+              output.write(f"failed={len(failed)}\n")
+              output.write(f"updated_files={updated_files}\n")
+          report = ["# Legacy WordPress image migration report", "", f"- Unique source URLs found: {len(urls)}", f"- Downloaded and localized: {len(migrated)}", f"- Failed downloads: {len(failed)}", f"- Markdown files updated: {updated_files}", "", "## Failed source URLs"]
+          report += [f"- {url} — {reason}" for url, reason in failed]
+          (root / "LEGACY-IMAGE-MIGRATION-REPORT.md").write_text("\n".join(report) + "\n", encoding="utf-8")
+          PY
+
+      - name: Commit localized images and updated article links
+        shell: bash
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add assets/images/wordpress-legacy _posts _pages LEGACY-IMAGE-MIGRATION-REPORT.md
+          if git diff --cached --quiet; then
+            echo "No changes to commit."
+          else
+            git commit -m "Localize accessible legacy WordPress images"
+            git push
+          fi
+
+      - name: Summarize migration
+        if: always()
+        run: |
+          echo "Localized images: \${{ steps.migrate.outputs.downloaded }}"
+          echo "Failed downloads: \${{ steps.migrate.outputs.failed }}"
+          echo "Updated Markdown files: \${{ steps.migrate.outputs.updated_files }}"
