@@ -3,9 +3,28 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Nugget of Joy — Content Editor</title>
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="theme-color" content="#f8f6f0">
+  <title>Nugget of Joy — Content Manager</title>
+  <style>
+    html, body { min-height: 100%; margin: 0; background: #f8f6f0; }
+    body { font-family: Arial, Helvetica, sans-serif; color: #222426; }
+    .cms-loading { max-width: 42rem; margin: 12vh auto; padding: 2rem; }
+    .cms-loading .brand { margin: 0 0 1rem; font-size: 1.35rem; font-weight: 700; letter-spacing: -.05em; }
+    .cms-loading .brand span:first-child { color: #e9783d; }
+    .cms-loading .brand span:last-child { color: #427fa4; }
+    .cms-loading h1 { font-size: 1.7rem; line-height: 1.2; }
+    .cms-loading p { line-height: 1.65; }
+    .cms-loading a { color: #427fa4; }
+  </style>
 </head>
 <body>
-  <script src="https://cdn.jsdelivr.net/npm/decap-cms@^3.0.0/dist/decap-cms.js"></script>
+  <main class="cms-loading">
+    <p class="brand"><span>nugget</span><span> of joy</span></p>
+    <h1>Content Manager</h1>
+    <p>Loading the editorial workspace…</p>
+    <p>If the editor does not load, refresh this page or check the <a href="https://github.com/ndangelo/nuggetofjoy-jekyll/actions">staging build status</a>.</p>
+  </main>
+  <script src="https://cdn.jsdelivr.net/npm/decap-cms@^3.17.0/dist/decap-cms.js"></script>
 </body>
 </html>
