@@ -1,6 +1,7 @@
 ---
 layout: default
 ---
+{% if page.custom_css and page.custom_css != "" %}<style id="page-custom-css">{{ page.custom_css }}</style>{% endif %}
 <article class="noj-entry noj-wrap page-article">
   <header class="noj-entry-header"><h1>{{ page.title | escape }}</h1></header>
   <div class="noj-entry-content">{{ content }}</div>
