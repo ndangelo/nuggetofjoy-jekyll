@@ -266,3 +266,25 @@ textarea[spellcheck="false"], textarea[class*="code"], textarea[class*="Code"] {
   [class*="CollectionMain"], [class*="collectionMain"] { padding: 12px !important; }
   [class*="EditorPane"], [class*="ControlPane"], [class*="PreviewPane"] { padding: 12px !important; }
 }
+
+
+/* Three-mode body editor: Visual, Markdown, and syntax-highlighted HTML. */
+.noj-body-editor { overflow:hidden; border:1px solid #cbd3dc; border-radius:7px; background:#fff; box-shadow:0 1px 2px rgba(22,31,41,.04); }
+.noj-editor-toolbar { display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:8px; padding:8px 10px; border-bottom:1px solid #d8dde3; background:#f6f8fa; }
+.noj-mode-tabs { display:inline-flex; gap:3px; }
+.noj-mode-tab { min-height:29px; padding:5px 11px!important; border:1px solid transparent!important; border-radius:5px!important; background:transparent!important; color:#53606d!important; font-size:12px!important; font-weight:650; cursor:pointer; }
+.noj-mode-tab:hover { background:#e9eef3!important; }
+.noj-mode-tab.is-active { border-color:#c6d8e7!important; background:#fff!important; color:#205f89!important; box-shadow:0 1px 2px rgba(0,0,0,.06); }
+.noj-editor-hint { color:#697581; font-size:11px; line-height:1.4; }
+.noj-visual-editor, .noj-markdown-editor { display:block; box-sizing:border-box; width:100%; min-height:26rem; max-height:65vh; overflow:auto; padding:22px 24px!important; border:0!important; border-radius:0!important; background:#fff!important; color:#20262d!important; font:14px/1.75 -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif!important; box-shadow:none!important; }
+.noj-visual-editor:focus { outline:2px solid #2878a8; outline-offset:-2px; }
+.noj-visual-editor:empty::before { content:"Start writing…"; color:#9aa4ae; pointer-events:none; }
+.noj-visual-editor h1, .noj-visual-editor h2, .noj-visual-editor h3 { line-height:1.25; margin:1.2em 0 .55em; }
+.noj-visual-editor img { max-width:100%; height:auto; }
+.noj-visual-editor pre, .noj-visual-editor code { font-family:ui-monospace,SFMono-Regular,Consolas,monospace; }
+.noj-markdown-editor { resize:vertical; min-height:26rem; background:#20262e!important; color:#e6edf3!important; font:13px/1.7 ui-monospace,SFMono-Regular,Consolas,monospace!important; tab-size:2; }
+.noj-html-editor { display:none!important; }
+.noj-body-editor .CodeMirror { min-height:26rem; max-height:65vh; border:0!important; border-radius:0!important; padding:8px 0; }
+.noj-body-widget-preview { max-width:100%; overflow-wrap:anywhere; }
+.noj-body-widget-preview img { max-width:100%; height:auto; }
+@media(max-width:700px) { .noj-editor-toolbar { align-items:flex-start; flex-direction:column; } .noj-visual-editor,.noj-markdown-editor { min-height:20rem; padding:15px!important; } }
