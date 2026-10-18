@@ -1,0 +1,105 @@
+/* Nugget of Joy CMS — WordPress-inspired admin polish.
+   Scoped to Decap CMS UI; article preview styling lives in preview.css. */
+:root {
+  --noj-admin-bg: #f0f2f5;
+  --noj-admin-panel: #fff;
+  --noj-admin-ink: #23282d;
+  --noj-admin-muted: #646970;
+  --noj-admin-line: #dcdcde;
+  --noj-admin-blue: #2271b1;
+  --noj-admin-blue-dark: #135e96;
+  --noj-admin-orange: #e9783d;
+}
+html, body { background: var(--noj-admin-bg) !important; color: var(--noj-admin-ink); }
+body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+
+/* WordPress-like toolbar and workspace surfaces. */
+.nc-appHeader, [class*="AppHeader"], header[class*="Header"] {
+  background: #1d2327 !important;
+  color: #f0f0f1 !important;
+  border-bottom: 3px solid var(--noj-admin-orange) !important;
+  box-shadow: 0 1px 3px rgba(0,0,0,.18);
+}
+.nc-appHeader a, .nc-appHeader button, [class*="AppHeader"] a {
+  color: inherit;
+}
+.nc-root, .nc-app, [class*="AppMain"], [class*="CollectionPage"] {
+  color: var(--noj-admin-ink);
+}
+button, [role="button"] { transition: background-color .12s ease, border-color .12s ease; }
+button:focus-visible, input:focus-visible, textarea:focus-visible, select:focus-visible {
+  outline: 2px solid var(--noj-admin-blue) !important;
+  outline-offset: 2px;
+}
+input, textarea, select {
+  border-color: #8c8f94;
+  border-radius: 3px;
+}
+input:focus, textarea:focus, select:focus {
+  border-color: var(--noj-admin-blue) !important;
+  box-shadow: 0 0 0 1px var(--noj-admin-blue) !important;
+}
+a { color: var(--noj-admin-blue); }
+a:hover { color: var(--noj-admin-blue-dark); }
+
+/* Give editors and metadata panels the clean, separated feel of WP admin. */
+.nc-entryEditor, [class*="EntryEditor"], [class*="entryEditor"] {
+  background: var(--noj-admin-bg);
+}
+[class*="EditorControl"], [class*="editorControl"], [class*="ControlPane"] {
+  border-color: var(--noj-admin-line);
+}
+[class*="FieldLabel"], label {
+  color: var(--noj-admin-ink);
+  font-weight: 600;
+}
+[class*="Hint"], [class*="hint"] {
+  color: var(--noj-admin-muted);
+}
+
+/* Syntax-coloured code widget (Decap's CodeMirror editor). */
+.CodeMirror {
+  height: auto;
+  min-height: 13rem;
+  max-height: 38rem;
+  border: 1px solid #303944;
+  border-radius: 5px;
+  background: #1e242c !important;
+  color: #e6edf3 !important;
+  font: 13px/1.65 "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+  padding: .4rem 0;
+}
+.CodeMirror-gutters {
+  background: #171c23 !important;
+  border-right: 1px solid #343d49 !important;
+}
+.CodeMirror-linenumber { color: #7d8998 !important; }
+.CodeMirror-cursor { border-left: 2px solid #f0f6fc !important; }
+.CodeMirror-selected { background: #34445b !important; }
+.CodeMirror-focused { outline: 2px solid var(--noj-admin-blue); outline-offset: 1px; }
+.cm-comment, .cm-meta { color: #8b949e !important; }
+.cm-keyword, .cm-operator, .cm-builtin { color: #ff7b72 !important; }
+.cm-string, .cm-string-2, .cm-quote { color: #a5d6ff !important; }
+.cm-number, .cm-atom, .cm-attribute { color: #79c0ff !important; }
+.cm-def, .cm-variable-2, .cm-property { color: #d2a8ff !important; }
+.cm-tag, .cm-qualifier, .cm-type { color: #7ee787 !important; }
+.cm-variable, .cm-variable-3 { color: #ffa657 !important; }
+.cm-header { color: #d2a8ff !important; font-weight: 700; }
+.cm-link { color: #a5d6ff !important; text-decoration: underline; }
+.cm-error { color: #fff !important; background: #8e1519 !important; }
+
+/* Make code examples visibly distinct even in widgets without CodeMirror. */
+pre, code, [class*="CodeMirror"] {
+  font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+}
+pre {
+  background: #1e242c;
+  color: #e6edf3;
+  border: 1px solid #303944;
+  border-radius: 5px;
+  padding: 1rem;
+  overflow: auto;
+}
+@media (max-width: 700px) {
+  .CodeMirror { min-height: 10rem; font-size: 12px; }
+}
