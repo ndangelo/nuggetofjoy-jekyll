@@ -31,10 +31,10 @@ collections:
       - { label: Categories, name: categories, widget: list, required: false }
       - { label: Tags, name: tags, widget: list, required: false }
       - { label: Body, name: body, widget: markdown }
-  - name: pages
+  - name: content_pages
     label: Pages
     label_singular: Page
-    folder: "pages"
+    folder: "_pages"
     create: true
     slug: "{{slug}}"
     fields:
