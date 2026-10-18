@@ -3,8 +3,8 @@
 # Never place GitHub tokens, OAuth secrets, or passwords in this public file.
 
 backend:
-  name: github
-  repo: ndangelo/nuggetofjoy-jekyll
+  name: turbo-github
+  turbo_site_id: e12e3730-ea7e-48f9-8b69-185654aef7c7
   branch: main
 
 # Uploads are committed to the repository and published with the site.
