@@ -1,0 +1,33 @@
+{% for block in include.blocks %}
+  {% case block.type %}
+    {% when "callout" %}
+      <aside class="noj-content-block noj-callout noj-callout--{{ block.tone | default: 'note' | slugify }}">
+        {% if block.heading %}<h2>{{ block.heading | escape }}</h2>{% endif %}
+        <div>{{ block.text | markdownify }}</div>
+      </aside>
+    {% when "gallery" %}
+      <section class="noj-content-block noj-gallery">
+        {% if block.heading %}<h2>{{ block.heading | escape }}</h2>{% endif %}
+        <div class="noj-gallery-grid">
+          {% for item in block.images %}
+            <figure>
+              {% assign gallery_src = item.image %}
+              {% unless gallery_src contains '://' %}{% assign gallery_src = gallery_src | relative_url %}{% endunless %}
+              <img src="{{ gallery_src | escape }}" alt="{{ item.alt | escape }}" loading="lazy">
+              {% if item.caption %}<figcaption>{{ item.caption | escape }}</figcaption>{% endif %}
+            </figure>
+          {% endfor %}
+        </div>
+      </section>
+    {% when "code_example" %}
+      <section class="noj-content-block noj-code-example">
+        {% if block.heading %}<h2>{{ block.heading | escape }}</h2>{% endif %}
+        <pre><code class="language-{{ block.language | default: 'text' | escape }}">{{ block.code | escape }}</code></pre>
+      </section>
+    {% when "quote" %}
+      <figure class="noj-content-block noj-editorial-quote">
+        <blockquote>{{ block.quote | markdownify }}</blockquote>
+        {% if block.attribution %}<figcaption>{{ block.attribution | escape }}</figcaption>{% endif %}
+      </figure>
+  {% endcase %}
+{% endfor %}
