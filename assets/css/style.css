@@ -237,3 +237,54 @@ h3 { font-size: .88rem; margin: .25rem 0 .65rem; }
   .noj-menu a { white-space: normal; }
 }
 
+/* Color-coded code blocks (Highlight.js + Rouge-compatible token palette) */
+.noj-entry-content pre:has(code),
+.noj-entry-content pre.wp-block-code {
+  background: #22272e !important;
+  color: #adbac7 !important;
+  border: 1px solid #444c56 !important;
+  border-radius: 6px !important;
+  overflow: auto;
+  padding: 1.1rem 1.25rem !important;
+  box-shadow: 0 5px 18px rgb(20 24 28 / 10%);
+}
+.noj-entry-content pre code,
+.noj-entry-content pre code.hljs {
+  display: block;
+  background: transparent !important;
+  color: #adbac7 !important;
+  padding: 0 !important;
+  font: 13px/1.75 ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+  white-space: pre;
+  overflow-wrap: normal;
+  tab-size: 2;
+}
+.noj-entry-content .hljs-comment,
+.noj-entry-content .hljs-quote { color: #768390 !important; font-style: italic; }
+.noj-entry-content .hljs-keyword,
+.noj-entry-content .hljs-selector-tag,
+.noj-entry-content .hljs-literal,
+.noj-entry-content .hljs-type { color: #dcbdfb !important; }
+.noj-entry-content .hljs-string,
+.noj-entry-content .hljs-doctag,
+.noj-entry-content .hljs-regexp { color: #96d0a8 !important; }
+.noj-entry-content .hljs-title,
+.noj-entry-content .hljs-section,
+.noj-entry-content .hljs-name,
+.noj-entry-content .hljs-selector-id,
+.noj-entry-content .hljs-selector-class { color: #f69d50 !important; }
+.noj-entry-content .hljs-number,
+.noj-entry-content .hljs-symbol,
+.noj-entry-content .hljs-bullet,
+.noj-entry-content .hljs-variable,
+.noj-entry-content .hljs-template-variable { color: #6cb6ff !important; }
+.noj-entry-content .hljs-attr,
+.noj-entry-content .hljs-attribute,
+.noj-entry-content .hljs-property { color: #e1a2ff !important; }
+.noj-entry-content .hljs-built_in,
+.noj-entry-content .hljs-builtin-name,
+.noj-entry-content .hljs-function { color: #f47067 !important; }
+.noj-entry-content .hljs-meta,
+.noj-entry-content .hljs-meta .hljs-keyword { color: #8ddb8c !important; }
+.noj-entry-content :not(pre) > code { background: #eef0f2; color: #b34e2b; }
+
