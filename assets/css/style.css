@@ -297,3 +297,27 @@ h3 { font-size: .88rem; margin: .25rem 0 .65rem; }
 .noj-related-resources h2 { margin-top: 0; }
 .noj-related-resources ul { margin-bottom: 0; padding-left: 1.2rem; }
 .noj-related-resources li + li { margin-top: .4rem; }
+
+
+/* Responsive CodePen embeds used throughout legacy tutorials. */
+.noj-entry-content .noj-codepen-embed {
+  width: 100%;
+  max-width: 100%;
+  margin: 1.75rem 0;
+  overflow: hidden;
+  border: 1px solid var(--line, #d8dde3);
+  border-radius: 8px;
+  background: #fff;
+  isolation: isolate;
+}
+.noj-entry-content .noj-codepen-embed iframe {
+  display: block;
+  width: 100% !important;
+  min-height: 420px;
+  border: 0;
+  background: #fff;
+}
+@media (max-width: 640px) {
+  .noj-entry-content .noj-codepen-embed { margin: 1.25rem 0; border-radius: 5px; }
+  .noj-entry-content .noj-codepen-embed iframe { min-height: 360px; }
+}
