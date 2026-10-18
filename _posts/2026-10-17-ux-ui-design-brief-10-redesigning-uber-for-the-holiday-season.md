@@ -337,6 +337,12 @@ wordpress_id: "68044"
 <p>Define the product's purpose, intended user, primary task, and visual direction. Your decisions should support the user flow you created.</p>
 <!-- /wp:paragraph -->
 
+<!-- wp:html -->
+<figure class="uber-reference-image uber-styleguide-overview"><img src="https://www.figma.com/api/mcp/asset/c53b8af3-9dd9-49b8-b29c-af6053d039aa.png" alt="Actual Figma Student UI/UX Style Guide section: foundations" loading="lazy"><figcaption><strong>Actual course template — Foundations.</strong> Use this section to establish the project before designing screens.</figcaption></figure>
+<!-- /wp:html -->
+
+
+
 <!-- wp:heading {"level":3} -->
 <h3 class="wp-block-heading">Color and contrast</h3>
 <!-- /wp:heading -->
@@ -344,6 +350,12 @@ wordpress_id: "68044"
 <!-- wp:paragraph -->
 <p>Establish a small, purposeful color system. Identify the role of each color, including primary actions, backgrounds, text, and error states. Check that text and interface elements remain readable. Color should communicate meaning clearly rather than serve only as decoration.</p>
 <!-- /wp:paragraph -->
+
+<!-- wp:html -->
+<figure class="uber-reference-image uber-styleguide-overview"><img src="https://www.figma.com/api/mcp/asset/dc6c23d3-e208-4de1-80b0-81999bb35d97.png" alt="Actual Figma Student UI/UX Style Guide section: color" loading="lazy"><figcaption><strong>Actual course template — Color.</strong> Apply the color roles to your own redesign and check contrast.</figcaption></figure>
+<!-- /wp:html -->
+
+
 
 
 <!-- wp:heading {"level":3} -->
@@ -353,6 +365,12 @@ wordpress_id: "68044"
 <!-- wp:paragraph -->
 <p>Create a consistent type hierarchy for headings, body text, and captions. Establish spacing values for padding inside elements and gaps between elements.</p>
 <!-- /wp:paragraph -->
+
+<!-- wp:html -->
+<figure class="uber-reference-image uber-styleguide-overview"><img src="https://www.figma.com/api/mcp/asset/109fd972-a72f-404c-900c-9e0458a899bc.png" alt="Actual Figma Student UI/UX Style Guide section: type" loading="lazy"><figcaption><strong>Actual course template — Typography & Spacing.</strong> Use these type and spacing rules consistently across the interface.</figcaption></figure>
+<!-- /wp:html -->
+
+
 
 <!-- wp:paragraph -->
 <p>For example, you might use 16 px inside a card and 24 px between cards. The important thing is to apply your choices consistently.</p>
@@ -367,6 +385,12 @@ wordpress_id: "68044"
 <p>Define reusable interface elements, such as buttons, input fields, cards, and navigation. Components should look and behave consistently throughout the app.</p>
 <!-- /wp:paragraph -->
 
+<!-- wp:html -->
+<figure class="uber-reference-image uber-styleguide-overview"><img src="https://www.figma.com/api/mcp/asset/b2b52fc0-fe1f-42b8-9df3-54546214301f.png" alt="Actual Figma Student UI/UX Style Guide section: components" loading="lazy"><figcaption><strong>Actual course template — Components.</strong> Adapt these reusable elements to your product and document their behavior.</figcaption></figure>
+<!-- /wp:html -->
+
+
+
 
 <!-- wp:heading {"level":3} -->
 <h3 class="wp-block-heading">Interaction states and accessibility</h3>
@@ -375,6 +399,12 @@ wordpress_id: "68044"
 <!-- wp:paragraph -->
 <p>Consider what happens when a user interacts with an element. Depending on the component, relevant states may include default, hover, focus, pressed, disabled, error, or success.</p>
 <!-- /wp:paragraph -->
+
+<!-- wp:html -->
+<figure class="uber-reference-image uber-styleguide-overview"><img src="https://www.figma.com/api/mcp/asset/e95b4662-5403-4563-a3dd-3ad472b300f7.png" alt="Actual Figma Student UI/UX Style Guide section: states" loading="lazy"><figcaption><strong>Actual course template — States.</strong> Document how interactive elements respond to different states.</figcaption></figure>
+<!-- /wp:html -->
+
+
 
 <!-- wp:paragraph -->
 <p>Check contrast, text readability, visible focus indicators, clear labels, and whether meaning depends on color alone.</p>
