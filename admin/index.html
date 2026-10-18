@@ -42,11 +42,18 @@
       CMS.registerPreviewStyle("https://ndangelo.github.io/nuggetofjoy-jekyll/admin/preview.css");
       function previewCustomStyle(entry) {
         var css = entry && entry.getIn(["data", "custom_css"]);
+        // Keep the live stylesheet in the preview DOM and update it from the current entry.
+        // Scope document-level selectors to the preview wrapper because the preview is not
+        // the actual published page's document body.
+        css = String(css || "").replace(/(^|[},\\s])html(?=\\s*[{,.:#\\[])/g, "$1.noj-preview-with-custom-css")
+          .replace(/(^|[},\\s])body(?=\\s*[{,.:#\\[])/g, "$1.noj-preview-with-custom-css")
+          .replace(/:root/g, ".noj-preview-with-custom-css");
         return h("style", {
           key: "noj-live-custom-css",
           type: "text/css",
-          "data-noj-live-custom-css": "true"
-        }, css ? String(css) : "");
+          "data-noj-live-custom-css": "true",
+          dangerouslySetInnerHTML: { __html: css }
+        });
       }
       var PostPreview = createClass({
         componentDidMount: function () {
