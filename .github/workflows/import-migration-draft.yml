@@ -2,6 +2,9 @@ name: Import WordPress migration draft
 
 on:
   workflow_dispatch:
+  push:
+    paths:
+      - 'migration-input/**'
 
 permissions:
   contents: write
