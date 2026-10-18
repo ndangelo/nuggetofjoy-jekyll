@@ -103,3 +103,69 @@ pre {
 @media (max-width: 700px) {
   .CodeMirror { min-height: 10rem; font-size: 12px; }
 }
+
+
+/* WordPress-like editor layout: wider writing canvas, quieter metadata, clear navigation. */
+[class*="EntryEditor"] [class*="EditorContainer"],
+[class*="entryEditor"] [class*="EditorContainer"],
+[class*="EditorPane"] {
+  min-width: 0;
+}
+[class*="EditorPane"] {
+  background: #fff;
+}
+[class*="PreviewPane"] {
+  background: #f8f6f0;
+  border-left: 1px solid var(--noj-admin-line);
+}
+[class*="CollectionMain"], [class*="collectionMain"] {
+  background: var(--noj-admin-bg);
+}
+[class*="Sidebar"], aside[class*="sidebar"] {
+  background: #1d2327;
+  color: #f0f0f1;
+}
+[class*="Sidebar"] a, aside[class*="sidebar"] a {
+  color: #f0f0f1;
+}
+[class*="Sidebar"] a:hover, aside[class*="sidebar"] a:hover {
+  background: #2c3338;
+}
+[class*="Toolbar"], [class*="toolbar"] {
+  border-bottom-color: var(--noj-admin-line);
+}
+[class*="PublishButton"], [class*="publishButton"] {
+  background: var(--noj-admin-blue);
+  color: #fff;
+}
+[class*="PublishButton"]:hover, [class*="publishButton"]:hover {
+  background: var(--noj-admin-blue-dark);
+}
+
+/* Raw HTML/Markdown fields remain easy to scan even when they are plain textareas.
+   Syntax coloring is applied only when the underlying editor supports token spans. */
+textarea[spellcheck="false"], textarea[class*="code"], textarea[class*="Code"],
+textarea[aria-label*="Raw"], textarea[aria-label*="raw"] {
+  min-height: 20rem;
+  background: #1e242c !important;
+  color: #e6edf3 !important;
+  border: 1px solid #303944 !important;
+  border-radius: 5px;
+  padding: 1rem;
+  font: 13px/1.7 "SFMono-Regular", Consolas, "Liberation Mono", monospace !important;
+  tab-size: 2;
+}
+[class*="EditorControl"] {
+  margin-bottom: 1rem;
+}
+[class*="EditorControl"] input,
+[class*="EditorControl"] textarea,
+[class*="EditorControl"] select {
+  max-width: 100%;
+}
+@media (min-width: 1200px) {
+  [class*="EntryEditor"] [class*="EditorPane"],
+  [class*="entryEditor"] [class*="EditorPane"] {
+    min-width: 0;
+  }
+}
