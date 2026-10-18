@@ -25,7 +25,7 @@ Important migration decisions:
 
 ## Development checklist
 
-1. Import and validate published content, categories, tags, original URLs, and homepage behavior.
+1. Upload the migration draft ZIP into `migration-input/`, then run **Actions → Import WordPress migration draft → Run workflow**. The workflow imports published posts and non-homepage pages; the homepage is held for separate review. Then validate content, categories, tags, original URLs, and homepage behavior.
 2. Audit image, PDF, and other downloadable media links.
 3. Match the existing site's custom CSS and responsive layout rather than redesigning it.
 4. Configure Decap CMS authentication securely. The interface exists, but publishing should not be enabled until backend authentication is configured.
