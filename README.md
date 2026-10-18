@@ -4,31 +4,38 @@ This repository is the development version of Nugget of Joy. The existing WordPr
 
 ## Structure
 
-- `_posts/` — blog posts in Markdown with Jekyll front matter
-- `_pages/` — CMS-managed pages (configured as the `content_pages` collection)
+- `_posts/` — 339 imported published WordPress posts in Markdown with original HTML bodies retained
+- `_pages/` — CMS-managed pages, configured as the `content_pages` collection
 - `_layouts/` — shared page and post templates
-- `assets/css/style.css` — styling adapted from the current site direction
-- `assets/images/uploads/` — new media uploaded through the CMS
+- `assets/css/style.css` — current staging stylesheet; the existing WordPress theme CSS still needs a careful migration/adaptation pass
+- `assets/images/uploads/` — destination for new media uploaded through the CMS
 - `admin/` — Decap CMS interface and configuration
-- `.github/workflows/pages.yml` — automated GitHub Pages build and deployment
+- `.github/workflows/pages.yml` — automated Jekyll build and GitHub Pages deployment
+- `migration-input/` — retained source ZIP, excluded from the generated site
 
 ## Migration status
 
-The WordPress export has been converted into a draft package, but the converted posts have **not yet been imported into this repository**. See `reports/migration-audit.md` for the first content and media audit.
+- Imported 339 published posts and four non-homepage pages. See `reports/import-status.md`.
+- Jekyll now builds successfully in GitHub Actions. The GitHub Pages deployment still depends on Pages being enabled for this repository.
+- The original WordPress homepage is intentionally held for a separate migration because it contains its own layout, navigation, and CSS. The current `index.md` remains a temporary placeholder and must not be treated as the final homepage.
+- The existing WordPress site and live domain have not been changed.
 
-Important migration decisions:
-- Preserve original post/page URLs wherever possible; verify the root homepage separately.
+## Important migration decisions
+
+- Preserve original post permalinks wherever possible and audit them against the WordPress export.
 - Keep remote media URLs in place when they are known to be public. Do not bulk-copy media into Git without evidence that it is needed.
-- Audit legacy `/wp-content/uploads/` links separately from direct S3 URLs; they are not interchangeable without confirming the actual object paths.
+- Audit legacy `/wp-content/uploads/` links separately from direct S3 URLs; they are not interchangeable without confirming actual object paths.
 - Exclude private and draft posts from the public site unless explicitly requested.
-- Keep the existing WordPress site untouched until the new site has been built and checked.
+- Adapt the existing custom CSS and markup instead of redesigning the site from scratch.
+- Configure Decap CMS authentication securely. Do not put personal access tokens or other secrets in this public repository.
 
-## Development checklist
+## Next validation steps
 
-1. Upload the migration draft ZIP into `migration-input/`, then run **Actions → Import WordPress migration draft → Run workflow**. The workflow imports published posts and non-homepage pages; the homepage is held for separate review. Then validate content, categories, tags, original URLs, and homepage behavior.
-2. Audit image, PDF, and other downloadable media links.
-3. Match the existing site's custom CSS and responsive layout rather than redesigning it.
-4. Configure Decap CMS authentication securely. The interface exists, but publishing should not be enabled until backend authentication is configured.
-5. Enable GitHub Pages using **Settings → Pages → Build and deployment → GitHub Actions** and test the preview deployment.
+1. Enable GitHub Pages in **Settings → Pages → Build and deployment → GitHub Actions** if GitHub does not allow the workflow to enable it automatically.
+2. Migrate the original homepage deliberately, avoiding duplicate headers, navigation, or footers.
+3. Compare sample posts and pages against their original URLs and verify categories, tags, and media.
+4. Restore/adapt the existing theme CSS and test desktop and mobile layouts.
+5. Configure and test Decap CMS authentication before enabling publishing.
+6. Review the staging site before connecting any live domain or changing WordPress.
 
 No live domain is connected to this repository.
