@@ -34,13 +34,27 @@ collections:
     format: "frontmatter"
     slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
     summary: "{{title}} · {{date}}"
+    search_fields:
+      - title
+      - description
+      - categories
+      - tags
     view_filters:
       - label: Has featured image
         field: image
         pattern: ".+"
+      - label: Missing featured image
+        field: image
+        pattern: "^$"
       - label: Has SEO description
         field: seo.seo_description
         pattern: ".+"
+      - label: Missing excerpt
+        field: description
+        pattern: "^$"
+      - label: Missing image alt text
+        field: image_alt
+        pattern: "^$"
     sortable_fields:
       - title
       - date
@@ -166,6 +180,9 @@ collections:
       value: page
     slug: "{{slug}}"
     summary: "{{title}}"
+    search_fields:
+      - title
+      - description
     fields:
       - { label: Layout, name: layout, widget: hidden, default: page }
       - { label: Title, name: title, widget: string }
