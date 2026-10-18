@@ -37,11 +37,13 @@
           var date = entry.getIn(["data", "date"]);
           var description = entry.getIn(["data", "description"]);
           var image = entry.getIn(["data", "image"]);
+          var asset = image ? this.props.getAsset(image) : null;
+          var imageSrc = asset && (asset.url || asset.path || asset);
           return h("article", { className: "preview-article" },
             h("p", { className: "preview-date" }, date ? String(date) : "Draft preview"),
             h("h1", {}, title),
             description ? h("p", { className: "preview-meta" }, description) : null,
-            image ? h("img", { className: "preview-featured", src: this.props.getAsset(image), alt: "" }) : null,
+            imageSrc ? h("img", { className: "preview-featured", src: String(imageSrc), alt: "" }) : null,
             h("div", { className: "preview-content" }, this.props.widgetFor("body"))
           );
         }
