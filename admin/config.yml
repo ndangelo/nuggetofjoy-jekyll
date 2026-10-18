@@ -33,10 +33,10 @@ collections:
     extension: "md"
     format: "frontmatter"
     slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
-    summary: "{{title}} · {{date | date('MMM D, YYYY')}}"
+    summary: "{{title}}"
     sortable_fields:
       - title
-      - { field: date, default: desc }
+      - date
     view_groups:
       - label: Year
         field: date
