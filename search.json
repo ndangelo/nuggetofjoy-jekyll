@@ -1,0 +1,17 @@
+---
+layout: null
+---
+[
+{% assign searchable_posts = site.posts | sort: "date" | reverse %}
+{% for post in searchable_posts %}
+  {
+    "title": {{ post.title | jsonify }},
+    "url": {{ post.url | relative_url | jsonify }},
+    "date": {{ post.date | date: "%B %-d, %Y" | jsonify }},
+    "categories": {{ post.categories | join: " " | jsonify }},
+    "tags": {{ post.tags | join: " " | jsonify }},
+    "text": {{ post.content | strip_html | normalize_whitespace | jsonify }},
+    "excerpt": {{ post.excerpt | strip_html | normalize_whitespace | truncate: 260 | jsonify }}
+  }{% unless forloop.last %},{% endunless %}
+{% endfor %}
+]
