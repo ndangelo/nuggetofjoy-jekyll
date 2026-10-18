@@ -1,0 +1,44 @@
+# Authentication must be configured before the CMS can publish.
+# Do not add personal access tokens or secrets to this public file.
+backend:
+  name: github
+  repo: ndangelo/nuggetofjoy-jekyll
+  branch: main
+
+media_folder: "assets/images/uploads"
+public_folder: "/nuggetofjoy-jekyll/assets/images/uploads"
+
+site_url: https://ndangelo.github.io/nuggetofjoy-jekyll
+display_url: https://ndangelo.github.io/nuggetofjoy-jekyll
+
+publish_mode: editorial_workflow
+
+collections:
+  - name: posts
+    label: Blog Posts
+    label_singular: Blog Post
+    folder: "_posts"
+    create: true
+    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
+    preview_path: "{{categories}}/{{year}}/{{month}}/{{day}}/{{slug}}/"
+    fields:
+      - { label: Title, name: title, widget: string }
+      - { label: Publish Date, name: date, widget: datetime }
+      - { label: URL Slug, name: slug, widget: string, required: false }
+      - { label: Description / Excerpt, name: description, widget: text, required: false }
+      - { label: Featured Image, name: image, widget: image, required: false }
+      - { label: Image Alt Text, name: image_alt, widget: string, required: false }
+      - { label: Categories, name: categories, widget: list, required: false }
+      - { label: Tags, name: tags, widget: list, required: false }
+      - { label: Body, name: body, widget: markdown }
+  - name: pages
+    label: Pages
+    label_singular: Page
+    folder: "pages"
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - { label: Title, name: title, widget: string }
+      - { label: URL Slug, name: permalink, widget: string, required: false }
+      - { label: Description, name: description, widget: text, required: false }
+      - { label: Body, name: body, widget: markdown }
