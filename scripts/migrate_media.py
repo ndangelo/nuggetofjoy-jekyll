@@ -9,10 +9,10 @@ from urllib.error import HTTPError
 
 OUT = Path("media-migration-output")
 MAX_BYTES = 25 * 1024 * 1024
-URL_RE = re.compile(r'''(?P<q>["'])(?P<url>https?://[^"'\\s<>]+)(?P=q)''', re.I)
-SRCSET_RE = re.compile(r'''(?P<url>https?://[^\\s,)"']+)\\s+(?:\\d+(?:\\.\\d+)?x|\\d+w)''', re.I)
-MD_IMAGE_RE = re.compile(r'''!\\[[^\\]]*\\]\\((https?://[^)\\s]+)(?:\\s+["'][^"']*["'])?\\)''', re.I)
-ATTR_RE = re.compile(r'''\\b(?:src|href|data-src|data-lazy-src|poster)\\s*=\\s*["'](?P<url>https?://[^"']+)["']''', re.I)
+URL_RE = re.compile(r'''(?P<q>["'])(?P<url>https?://[^"'\s<>]+)(?P=q)''', re.I)
+SRCSET_RE = re.compile(r'''(?P<url>https?://[^\s,)"']+)\s+(?:\d+(?:\.\d+)?x|\d+w)''', re.I)
+MD_IMAGE_RE = re.compile(r'''!\[[^\]]*\]\((https?://[^)\s]+)(?:\s+["'][^"']*["'])?\)''', re.I)
+ATTR_RE = re.compile(r'''\b(?:src|href|data-src|data-lazy-src|poster)\s*=\s*["'](?P<url>https?://[^"']+)["']''', re.I)
 
 def content_files():
     out = []
@@ -29,7 +29,7 @@ def collect(body):
             u = m.groupdict().get("url")
             if u:
                 found.add(html.unescape(u).rstrip(".,;"))
-    return {u for u in found if re.search(r"\\.(?:jpe?g|png|gif|webp|avif|svg|bmp|tiff?)(?:$|[?#])", u, re.I)
+    return {u for u in found if re.search(r"\.(?:jpe?g|png|gif|webp|avif|svg|bmp|tiff?)(?:$|[?#])", u, re.I)
             or any(k in urlparse(u).path.lower() for k in ("/wp-content/uploads/", "/blog-images/"))}
 
 def fetch(url):
@@ -107,7 +107,7 @@ def main():
       "Downloaded files are under assets/images/migrated/. Rewritten copies are under content/.",
       "Original repository files are not changed. Review media-report.csv before applying the migration.", "", "## Failed or skipped URLs", ""]
     summary.extend(["- " + r["status"] + " — " + r["url"] for r in failed[:500]])
-    (out / "summary.md").write_text("\\n".join(summary) + "\\n", encoding="utf-8")
+    (out / "summary.md").write_text("\n".join(summary) + "\n", encoding="utf-8")
     (out / "summary.json").write_text(json.dumps({"content_files_scanned":len(files),"unique_urls":len(urls),"downloaded":len(ok),"failed_or_skipped":len(failed),"downloaded_bytes":total,"rewritten_content_files":changed},indent=2),encoding="utf-8")
     print(f"Done: {len(ok)} downloaded; {len(failed)} failed/skipped; {total/(1024*1024):.1f} MiB.")
 if __name__ == "__main__": main()
