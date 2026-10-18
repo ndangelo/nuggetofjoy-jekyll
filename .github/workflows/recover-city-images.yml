@@ -1,0 +1,51 @@
+name: Recover missing Photoshop tutorial images
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - ".github/workflows/recover-city-images.yml"
+
+permissions:
+  contents: write
+
+jobs:
+  recover:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Download original image files and report results
+        shell: bash
+        run: |
+          set +e
+          mkdir -p assets/images/recovered-city-portrait
+          failed=0
+          for name in 2-bw.jpg 2-curves.jpg 3-bw.jpg 3-lvs.jpg 3-curves.jpg 4-bw.jpg 4-lvs.jpg 5-bw.jpg 5-lvs.jpg 5-curves.jpg 6-sel-traf.jpg 6-curves.jpg 6-lvs.jpg 6-bw-2.jpg 6-lvs-2.jpg 7-reds.jpg 7-whites.jpg 7-neu.jpg 7-blacks.jpg 7-vib.jpg; do
+            url="https://www.psdvault.com/img/2016/06/$name"
+            if curl -L --fail --silent --show-error --max-time 25 "$url" -o "assets/images/recovered-city-portrait/$name"; then
+              if file "assets/images/recovered-city-portrait/$name" | grep -qi 'image data'; then
+                echo "OK $name $(wc -c < "assets/images/recovered-city-portrait/$name") bytes"
+              else
+                echo "BAD CONTENT $name"
+                rm -f "assets/images/recovered-city-portrait/$name"
+                failed=$((failed+1))
+              fi
+            else
+              echo "FAILED $name"
+              rm -f "assets/images/recovered-city-portrait/$name"
+              failed=$((failed+1))
+            fi
+          done
+          echo "FAILED_COUNT=$failed" >> "$GITHUB_ENV"
+      - name: Commit recovered image files when available
+        shell: bash
+        run: |
+          if find assets/images/recovered-city-portrait -type f | grep -q .; then
+            git config user.name "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git add assets/images/recovered-city-portrait
+            git commit -m "Recover original Photoshop tutorial images" || true
+            git push
+          fi
