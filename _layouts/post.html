@@ -1,6 +1,7 @@
 ---
 layout: default
 ---
+{% if page.custom_css and page.custom_css != "" %}<style id="page-custom-css">{{ page.custom_css }}</style>{% endif %}
 <article class="noj-entry noj-wrap">
   <header class="noj-entry-header">
     <p class="noj-kicker">{{ page.date | date: "%B %-d, %Y" }}</p>
