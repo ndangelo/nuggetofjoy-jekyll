@@ -1,180 +1,9 @@
-/* Nugget of Joy CMS — WordPress-inspired admin polish.
-   Scoped to Decap CMS UI; article preview styling lives in preview.css. */
-:root {
-  --noj-admin-bg: #f0f2f5;
-  --noj-admin-panel: #fff;
-  --noj-admin-ink: #23282d;
-  --noj-admin-muted: #646970;
-  --noj-admin-line: #dcdcde;
-  --noj-admin-blue: #2271b1;
-  --noj-admin-blue-dark: #135e96;
-  --noj-admin-orange: #e9783d;
-}
-html, body { background: var(--noj-admin-bg) !important; color: var(--noj-admin-ink); }
-body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
-
-/* WordPress-like toolbar and workspace surfaces. */
-.nc-appHeader, [class*="AppHeader"], header[class*="Header"] {
-  background: #1d2327 !important;
-  color: #f0f0f1 !important;
-  border-bottom: 3px solid var(--noj-admin-orange) !important;
-  box-shadow: 0 1px 3px rgba(0,0,0,.18);
-}
-.nc-appHeader a, .nc-appHeader button, [class*="AppHeader"] a {
-  color: inherit;
-}
-.nc-root, .nc-app, [class*="AppMain"], [class*="CollectionPage"] {
-  color: var(--noj-admin-ink);
-}
-button, [role="button"] { transition: background-color .12s ease, border-color .12s ease; }
-button:focus-visible, input:focus-visible, textarea:focus-visible, select:focus-visible {
-  outline: 2px solid var(--noj-admin-blue) !important;
-  outline-offset: 2px;
-}
-input, textarea, select {
-  border-color: #8c8f94;
-  border-radius: 3px;
-}
-input:focus, textarea:focus, select:focus {
-  border-color: var(--noj-admin-blue) !important;
-  box-shadow: 0 0 0 1px var(--noj-admin-blue) !important;
-}
-a { color: var(--noj-admin-blue); }
-a:hover { color: var(--noj-admin-blue-dark); }
-
-/* Give editors and metadata panels the clean, separated feel of WP admin. */
-.nc-entryEditor, [class*="EntryEditor"], [class*="entryEditor"] {
-  background: var(--noj-admin-bg);
-}
-[class*="EditorControl"], [class*="editorControl"], [class*="ControlPane"] {
-  border-color: var(--noj-admin-line);
-}
-[class*="FieldLabel"], label {
-  color: var(--noj-admin-ink);
-  font-weight: 600;
-}
-[class*="Hint"], [class*="hint"] {
-  color: var(--noj-admin-muted);
-}
-
-/* Syntax-coloured code widget (Decap's CodeMirror editor). */
-.CodeMirror {
-  height: auto;
-  min-height: 13rem;
-  max-height: 38rem;
-  border: 1px solid #303944;
-  border-radius: 5px;
-  background: #1e242c !important;
-  color: #e6edf3 !important;
-  font: 13px/1.65 "SFMono-Regular", Consolas, "Liberation Mono", monospace;
-  padding: .4rem 0;
-}
-.CodeMirror-gutters {
-  background: #171c23 !important;
-  border-right: 1px solid #343d49 !important;
-}
-.CodeMirror-linenumber { color: #7d8998 !important; }
-.CodeMirror-cursor { border-left: 2px solid #f0f6fc !important; }
-.CodeMirror-selected { background: #34445b !important; }
-.CodeMirror-focused { outline: 2px solid var(--noj-admin-blue); outline-offset: 1px; }
-.cm-comment, .cm-meta { color: #8b949e !important; }
-.cm-keyword, .cm-operator, .cm-builtin { color: #ff7b72 !important; }
-.cm-string, .cm-string-2, .cm-quote { color: #a5d6ff !important; }
-.cm-number, .cm-atom, .cm-attribute { color: #79c0ff !important; }
-.cm-def, .cm-variable-2, .cm-property { color: #d2a8ff !important; }
-.cm-tag, .cm-qualifier, .cm-type { color: #7ee787 !important; }
-.cm-variable, .cm-variable-3 { color: #ffa657 !important; }
-.cm-header { color: #d2a8ff !important; font-weight: 700; }
-.cm-link { color: #a5d6ff !important; text-decoration: underline; }
-.cm-error { color: #fff !important; background: #8e1519 !important; }
-
-/* Make code examples visibly distinct even in widgets without CodeMirror. */
-pre, code, [class*="CodeMirror"] {
-  font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
-}
-pre {
-  background: #1e242c;
-  color: #e6edf3;
-  border: 1px solid #303944;
-  border-radius: 5px;
-  padding: 1rem;
-  overflow: auto;
-}
-@media (max-width: 700px) {
-  .CodeMirror { min-height: 10rem; font-size: 12px; }
-}
-
-
-/* WordPress-like editor layout: wider writing canvas, quieter metadata, clear navigation. */
-[class*="EntryEditor"] [class*="EditorContainer"],
-[class*="entryEditor"] [class*="EditorContainer"],
-[class*="EditorPane"] {
-  min-width: 0;
-}
-[class*="EditorPane"] {
-  background: #fff;
-}
-[class*="PreviewPane"] {
-  background: #f8f6f0;
-  border-left: 1px solid var(--noj-admin-line);
-}
-[class*="CollectionMain"], [class*="collectionMain"] {
-  background: var(--noj-admin-bg);
-}
-[class*="Sidebar"], aside[class*="sidebar"] {
-  background: #1d2327;
-  color: #f0f0f1;
-}
-[class*="Sidebar"] a, aside[class*="sidebar"] a {
-  color: #f0f0f1;
-}
-[class*="Sidebar"] a:hover, aside[class*="sidebar"] a:hover {
-  background: #2c3338;
-}
-[class*="Toolbar"], [class*="toolbar"] {
-  border-bottom-color: var(--noj-admin-line);
-}
-[class*="PublishButton"], [class*="publishButton"] {
-  background: var(--noj-admin-blue);
-  color: #fff;
-}
-[class*="PublishButton"]:hover, [class*="publishButton"]:hover {
-  background: var(--noj-admin-blue-dark);
-}
-
-/* Raw HTML/Markdown fields remain easy to scan even when they are plain textareas.
-   Syntax coloring is applied only when the underlying editor supports token spans. */
-textarea[spellcheck="false"], textarea[class*="code"], textarea[class*="Code"],
-textarea[aria-label*="Raw"], textarea[aria-label*="raw"] {
-  min-height: 20rem;
-  background: #1e242c !important;
-  color: #e6edf3 !important;
-  border: 1px solid #303944 !important;
-  border-radius: 5px;
-  padding: 1rem;
-  font: 13px/1.7 "SFMono-Regular", Consolas, "Liberation Mono", monospace !important;
-  tab-size: 2;
-}
-[class*="EditorControl"] {
-  margin-bottom: 1rem;
-}
-[class*="EditorControl"] input,
-[class*="EditorControl"] textarea,
-[class*="EditorControl"] select {
-  max-width: 100%;
-}
-@media (min-width: 1200px) {
-  [class*="EntryEditor"] [class*="EditorPane"],
-  [class*="entryEditor"] [class*="EditorPane"] {
-    min-width: 0;
-  }
-}
-
-
-/* Compact editorial workspace: less visual noise, tighter controls, stronger hierarchy. */
+/* Nugget of Joy CMS styling.
+   Keep global rules restrained: Decap's internal class names are implementation details.
+   Custom three-mode editor styles are safely scoped to .noj-* classes. */
 :root {
   --noj-admin-bg: #eef0f2;
-  --noj-admin-panel: #ffffff;
+  --noj-admin-panel: #fff;
   --noj-admin-ink: #20262d;
   --noj-admin-muted: #68727d;
   --noj-admin-line: #d8dde3;
@@ -182,91 +11,23 @@ textarea[aria-label*="Raw"], textarea[aria-label*="raw"] {
   --noj-admin-blue-dark: #1d5d83;
   --noj-admin-orange: #ef8050;
 }
-html, body { font-size: 14px; }
-[class*="AppHeader"], .nc-appHeader {
-  min-height: 48px !important;
-  padding-block: 0 !important;
+html, body { background: var(--noj-admin-bg); color: var(--noj-admin-ink); }
+body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; font-size: 14px; }
+a { color: var(--noj-admin-blue); }
+a:hover { color: var(--noj-admin-blue-dark); }
+button:focus-visible, input:focus-visible, textarea:focus-visible, select:focus-visible {
+  outline: 2px solid var(--noj-admin-blue);
+  outline-offset: 2px;
 }
-[class*="Sidebar"], aside[class*="sidebar"] {
-  width: 220px;
+/* Header only: do not style every element whose class happens to contain "Header". */
+.nc-appHeader {
+  background: #1d2327 !important;
+  color: #f0f0f1 !important;
+  border-bottom: 3px solid var(--noj-admin-orange) !important;
+  box-shadow: 0 1px 3px rgba(0,0,0,.14);
 }
-[class*="CollectionMain"], [class*="collectionMain"] {
-  padding: 16px 22px !important;
-}
-[class*="EntryEditor"], [class*="entryEditor"] {
-  gap: 12px !important;
-}
-[class*="EditorControl"], [class*="editorControl"] {
-  margin-bottom: 10px !important;
-  padding-bottom: 0 !important;
-}
-[class*="FieldLabel"], label {
-  font-size: 12px !important;
-  letter-spacing: .015em;
-  margin-bottom: 4px !important;
-}
-[class*="Hint"], [class*="hint"] {
-  font-size: 11px !important;
-  line-height: 1.45 !important;
-  margin-top: 4px !important;
-}
-input, textarea, select {
-  min-height: 34px;
-  padding: 6px 9px !important;
-  font-size: 13px !important;
-}
-button, [role="button"] {
-  min-height: 32px;
-  font-size: 12px;
-}
-[class*="EditorPane"], [class*="ControlPane"] {
-  padding: 16px !important;
-}
-[class*="PreviewPane"] {
-  padding: 18px !important;
-  background: #f8f7f3 !important;
-  border-left: 1px solid var(--noj-admin-line) !important;
-}
-[class*="PreviewPane"]::before {
-  content: "HTML PREVIEW";
-  display: block;
-  position: sticky;
-  top: 0;
-  z-index: 2;
-  width: fit-content;
-  margin: 0 0 12px;
-  padding: 4px 7px;
-  border: 1px solid #d8dde3;
-  border-radius: 3px;
-  background: #fff;
-  color: #59636e;
-  font-size: 10px;
-  font-weight: 700;
-  letter-spacing: .09em;
-}
-[class*="EditorPane"] textarea,
-textarea[spellcheck="false"], textarea[class*="code"], textarea[class*="Code"] {
-  min-height: 22rem;
-  line-height: 1.65 !important;
-}
-[class*="CollectionTable"], table {
-  font-size: 12px;
-}
-[class*="CollectionTable"] th, [class*="CollectionTable"] td {
-  padding: 8px 10px !important;
-}
-[class*="Toolbar"], [class*="toolbar"] {
-  min-height: 42px;
-}
-[class*="WidgetPreview"], [class*="Preview"] img {
-  max-width: 100%;
-}
-@media (max-width: 900px) {
-  [class*="Sidebar"], aside[class*="sidebar"] { width: auto; }
-  [class*="CollectionMain"], [class*="collectionMain"] { padding: 12px !important; }
-  [class*="EditorPane"], [class*="ControlPane"], [class*="PreviewPane"] { padding: 12px !important; }
-}
-
+.nc-appHeader a, .nc-appHeader button { color: inherit; }
+/* Avoid global sidebar, label, button, and editor-pane sizing overrides. */
 
 /* Three-mode body editor: Visual, Markdown, and syntax-highlighted HTML. */
 .noj-body-editor { overflow:hidden; border:1px solid #cbd3dc; border-radius:7px; background:#fff; box-shadow:0 1px 2px rgba(22,31,41,.04); }
@@ -276,7 +37,8 @@ textarea[spellcheck="false"], textarea[class*="code"], textarea[class*="Code"] {
 .noj-mode-tab:hover { background:#e9eef3!important; }
 .noj-mode-tab.is-active { border-color:#c6d8e7!important; background:#fff!important; color:#205f89!important; box-shadow:0 1px 2px rgba(0,0,0,.06); }
 .noj-editor-hint { color:#697581; font-size:11px; line-height:1.4; }
-.noj-visual-editor, .noj-markdown-editor { display:block; box-sizing:border-box; width:100%; min-height:26rem; max-height:65vh; overflow:auto; padding:22px 24px!important; border:0!important; border-radius:0!important; background:#fff!important; color:#20262d!important; font:14px/1.75 -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif!important; box-shadow:none!important; }
+.noj-visual-editor, .noj-markdown-editor { display:block; box-sizing:border-box; width:100%; min-height:26rem; max-height:65vh; overflow:auto; padding:22px 24px!important; border:0!important; border-radius:0!important; box-shadow:none!important; }
+.noj-visual-editor { background:#fff!important; color:#20262d!important; font:14px/1.75 -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif!important; }
 .noj-visual-editor:focus { outline:2px solid #2878a8; outline-offset:-2px; }
 .noj-visual-editor:empty::before { content:"Start writing…"; color:#9aa4ae; pointer-events:none; }
 .noj-visual-editor h1, .noj-visual-editor h2, .noj-visual-editor h3 { line-height:1.25; margin:1.2em 0 .55em; }
@@ -284,7 +46,25 @@ textarea[spellcheck="false"], textarea[class*="code"], textarea[class*="Code"] {
 .noj-visual-editor pre, .noj-visual-editor code { font-family:ui-monospace,SFMono-Regular,Consolas,monospace; }
 .noj-markdown-editor { resize:vertical; min-height:26rem; background:#20262e!important; color:#e6edf3!important; font:13px/1.7 ui-monospace,SFMono-Regular,Consolas,monospace!important; tab-size:2; }
 .noj-html-editor { display:none!important; }
-.noj-body-editor .CodeMirror { min-height:26rem; max-height:65vh; border:0!important; border-radius:0!important; padding:8px 0; }
+.noj-body-editor .CodeMirror { height:auto; min-height:26rem; max-height:65vh; border:0!important; border-radius:0!important; padding:8px 0; background:#1e242c!important; color:#e6edf3!important; font:13px/1.65 "SFMono-Regular",Consolas,"Liberation Mono",monospace; }
+.noj-body-editor .CodeMirror-gutters { background:#171c23!important; border-right:1px solid #343d49!important; }
+.noj-body-editor .CodeMirror-linenumber { color:#7d8998!important; }
+.noj-body-editor .CodeMirror-cursor { border-left:2px solid #f0f6fc!important; }
+.noj-body-editor .CodeMirror-selected { background:#34445b!important; }
+.noj-body-editor .CodeMirror-focused { outline:2px solid var(--noj-admin-blue); outline-offset:1px; }
+.noj-body-editor .cm-comment, .noj-body-editor .cm-meta { color:#8b949e!important; }
+.noj-body-editor .cm-keyword, .noj-body-editor .cm-operator, .noj-body-editor .cm-builtin { color:#ff7b72!important; }
+.noj-body-editor .cm-string, .noj-body-editor .cm-string-2, .noj-body-editor .cm-quote { color:#a5d6ff!important; }
+.noj-body-editor .cm-number, .noj-body-editor .cm-atom, .noj-body-editor .cm-attribute { color:#79c0ff!important; }
+.noj-body-editor .cm-def, .noj-body-editor .cm-variable-2, .noj-body-editor .cm-property { color:#d2a8ff!important; }
+.noj-body-editor .cm-tag, .noj-body-editor .cm-qualifier, .noj-body-editor .cm-type { color:#7ee787!important; }
+.noj-body-editor .cm-variable, .noj-body-editor .cm-variable-3 { color:#ffa657!important; }
+.noj-body-editor .cm-header { color:#d2a8ff!important; font-weight:700; }
+.noj-body-editor .cm-link { color:#a5d6ff!important; text-decoration:underline; }
+.noj-body-editor .cm-error { color:#fff!important; background:#8e1519!important; }
 .noj-body-widget-preview { max-width:100%; overflow-wrap:anywhere; }
 .noj-body-widget-preview img { max-width:100%; height:auto; }
-@media(max-width:700px) { .noj-editor-toolbar { align-items:flex-start; flex-direction:column; } .noj-visual-editor,.noj-markdown-editor { min-height:20rem; padding:15px!important; } }
+@media(max-width:700px) {
+  .noj-editor-toolbar { align-items:flex-start; flex-direction:column; }
+  .noj-visual-editor, .noj-markdown-editor { min-height:20rem; padding:15px!important; }
+}
