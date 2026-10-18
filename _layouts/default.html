@@ -47,13 +47,36 @@
   </footer>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/highlight.min.js"></script>
   <script>
-    document.addEventListener("DOMContentLoaded", function () {
-      if (window.hljs) {
+    (function () {
+      function highlightNojCode() {
+        if (!window.hljs) return;
         document.querySelectorAll(".noj-entry-content pre code").forEach(function (block) {
-          window.hljs.highlightElement(block);
+          /* WordPress uses "markup" for HTML snippets; Highlight.js calls this "xml". */
+          if (block.classList.contains("language-markup")) {
+            block.classList.remove("language-markup");
+            block.classList.add("language-xml");
+          }
+          if (block.getAttribute("lang") === "markup") {
+            block.setAttribute("lang", "xml");
+          }
+          if (block.getAttribute("lang") === "html") {
+            block.setAttribute("lang", "xml");
+          }
+          if (block.classList.contains("language-html")) {
+            block.classList.remove("language-html");
+            block.classList.add("language-xml");
+          }
+          try {
+            window.hljs.highlightElement(block);
+          } catch (error) {
+            console.warn("Nugget of Joy: code highlighting skipped for one block.", error);
+          }
         });
       }
-    });
+      /* The script is at the end of the document, so initialize immediately. */
+      highlightNojCode();
+      document.addEventListener("DOMContentLoaded", highlightNojCode);
+    })();
   </script>
 </body>
 </html>
