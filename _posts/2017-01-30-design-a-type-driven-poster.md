@@ -1,13 +1,13 @@
 ---
-title: "DESIGN A TYPE-DRIVEN POSTER"
-date: "2017-01-30 11:59:26"
 layout: post
-permalink: "/design-a-type-driven-poster/"
-categories: ["dmet-350-media-graphics-and-design"]
+title: DESIGN A TYPE-DRIVEN POSTER
+date: 2026-10-18 13:53:00
+permalink: /design-a-type-driven-poster/
+categories:
+  - dmet-350-media-graphics-and-design
 tags: []
 wordpress_id: "2028"
 ---
-
 <h3>DESIGN A TYPE-DRIVEN POSTER</h3>
 <div class="page" title="Page 114">
 <div class="layoutArea">
