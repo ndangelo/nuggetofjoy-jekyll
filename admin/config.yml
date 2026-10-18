@@ -14,9 +14,9 @@ public_folder: "/nuggetofjoy-jekyll/assets/images/uploads"
 site_url: "https://ndangelo.github.io/nuggetofjoy-jekyll"
 display_url: "https://ndangelo.github.io/nuggetofjoy-jekyll"
 
-# Publish directly to the staging branch so new posts appear in Contents immediately.
-# GitHub Pages rebuilds the staging site after each commit.
-publish_mode: simple
+# Use the editorial workflow so content can be saved as drafts before publishing.
+# Drafts are kept in the CMS Drafts area; publishing promotes them to main.
+publish_mode: editorial_workflow
 
 # Make the interface useful for a large archive.
 show_preview_links: true
