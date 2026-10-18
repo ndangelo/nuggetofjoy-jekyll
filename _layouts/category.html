@@ -7,7 +7,20 @@ layout: default
     <h1>{{ page.title | escape }}</h1>
     <p class="noj-intro">Articles, tutorials, and course resources filed under {{ page.title | escape }}.</p>
     <div class="noj-content-list">
-      {% assign matching_posts = site.posts | where_exp: "post", "post.categories contains page.category_slug" | sort: "date" | reverse %}
+      {% assign matching_posts = "" | split: "" %}
+      {% for candidate in site.posts %}
+        {% assign post_matches_category = false %}
+        {% for post_category in candidate.categories %}
+          {% assign normalized_post_category = post_category | slugify %}
+          {% if normalized_post_category == page.category_slug or post_category == page.category_slug %}
+            {% assign post_matches_category = true %}
+          {% endif %}
+        {% endfor %}
+        {% if post_matches_category %}
+          {% assign matching_posts = matching_posts | push: candidate %}
+        {% endif %}
+      {% endfor %}
+      {% assign matching_posts = matching_posts | sort: "date" | reverse %}
       {% for post in matching_posts %}
       <a class="noj-content-row" href="{{ post.url | relative_url }}">
         <span class="noj-row-date">{{ post.date | date: "%b %-d, %Y" }}</span>
