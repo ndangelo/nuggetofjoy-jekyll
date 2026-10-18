@@ -7,6 +7,7 @@
   <meta name="description" content="{{ page.description | default: site.description | escape }}">
   <link rel="stylesheet" href="{{ '/assets/css/nuggetofjoy-theme.css' | relative_url }}">
   <link rel="stylesheet" href="{{ '/assets/css/style.css' | relative_url }}">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/styles/github-dark-dimmed.min.css">
 </head>
 <body>
   <a class="noj-skip" href="#main">Skip to content</a>
@@ -44,5 +45,15 @@
       <p>© {{ site.time | date: "%Y" }} Communication, Art, Design &amp; Instruction</p>
     </div>
   </footer>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/highlight.min.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      if (window.hljs) {
+        document.querySelectorAll(".noj-entry-content pre code").forEach(function (block) {
+          window.hljs.highlightElement(block);
+        });
+      }
+    });
+  </script>
 </body>
 </html>
