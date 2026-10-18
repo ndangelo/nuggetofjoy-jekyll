@@ -165,7 +165,7 @@ collections:
         name: body
         widget: richtext
         modes: [rich_text, raw]
-        hint: "Use the visual editor for ordinary text. Switch to Raw mode for legacy WordPress blocks, HTML, embeds, or code-heavy posts. Test changes to older posts carefully before publishing."
+        hint: "Use Rich Text for visual editing. Use Raw mode for Markdown and embedded HTML/source. The preview pane shows the rendered HTML result. A separate third HTML-editing mode would require a custom editor widget; do not switch modes on older posts until the preview looks correct."
 
   - name: content_pages
     label: Pages
