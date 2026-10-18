@@ -12,7 +12,14 @@
   <a class="noj-skip" href="#main">Skip to content</a>
   <header class="noj-header">
     <div class="noj-wrap noj-header-inner">
-      <a class="noj-brand" href="{{ '/' | relative_url }}"><span class="noj-brand-orange">nugget</span><span class="noj-brand-blue"> of joy</span></a>
+      <div class="noj-header-top">
+        <a class="noj-brand" href="{{ '/' | relative_url }}"><span class="noj-brand-orange">nugget</span><span class="noj-brand-blue"> of joy</span></a>
+        <form class="noj-search" role="search" action="{{ '/' | relative_url }}" method="get">
+        <label class="screen-reader-text" for="noja-search-header">Search all content</label>
+        <input id="noja-search-header" type="search" name="s" placeholder="Search the archive…">
+        <button type="submit">Search</button>
+        </form>
+      </div>
       <nav class="noj-nav" aria-label="Main navigation">
         <ul class="noj-menu">
           <li><a href="{{ '/' | relative_url }}">Home</a></li>
@@ -25,11 +32,6 @@
           <li><a href="{{ '/about/' | relative_url }}">About</a></li>
         </ul>
       </nav>
-      <form class="noj-search" role="search" action="{{ '/' | relative_url }}" method="get">
-        <label class="screen-reader-text" for="noja-search-header">Search all content</label>
-        <input id="noja-search-header" type="search" name="s" placeholder="Search the archive…">
-        <button type="submit">Search</button>
-      </form>
     </div>
   </header>
   <main id="main">
