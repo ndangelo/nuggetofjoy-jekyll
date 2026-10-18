@@ -163,8 +163,7 @@ collections:
               - { label: Attribution, name: attribution, widget: string, required: false }
       - label: Body
         name: body
-        widget: richtext
-        modes: [rich_text, raw]
+        widget: noj_body
         hint: "Use Rich Text for visual editing. Use Raw mode for Markdown and embedded HTML/source. The preview pane shows the rendered HTML result. A separate third HTML-editing mode would require a custom editor widget; do not switch modes on older posts until the preview looks correct."
 
   - name: content_pages
@@ -202,5 +201,4 @@ collections:
       - { label: WordPress ID (legacy), name: wordpress_id, widget: hidden, required: false }
       - label: Body
         name: body
-        widget: richtext
-        modes: [rich_text, raw]
+        widget: noj_body
