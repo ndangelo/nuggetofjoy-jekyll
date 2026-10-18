@@ -1,0 +1,23 @@
+---
+layout: default
+---
+<section class="noj-section">
+  <div class="noj-wrap">
+    <p class="noj-kicker">browse by topic</p>
+    <h1>{{ page.title | escape }}</h1>
+    <p class="noj-intro">Articles, tutorials, and course resources filed under {{ page.title | escape }}.</p>
+    <div class="noj-content-list">
+      {% assign matching_posts = site.posts | where_exp: "post", "post.categories contains page.category_slug" | sort: "date" | reverse %}
+      {% for post in matching_posts %}
+      <a class="noj-content-row" href="{{ post.url | relative_url }}">
+        <span class="noj-row-date">{{ post.date | date: "%b %-d, %Y" }}</span>
+        <span><h3 class="noj-row-title">{{ post.title | escape }}</h3><p class="noj-row-excerpt">{{ post.description | default: post.excerpt | strip_html | normalize_whitespace | truncate: 220 }}</p><span class="noj-row-type">Post</span></span>
+        <span class="noj-row-arrow" aria-hidden="true">↗</span>
+      </a>
+      {% else %}
+      <p class="noj-empty">No published posts are currently assigned to this topic.</p>
+      {% endfor %}
+    </div>
+    <p><a class="noj-text-link" href="{{ '/' | relative_url }}">← Back to the archive</a></p>
+  </div>
+</section>
