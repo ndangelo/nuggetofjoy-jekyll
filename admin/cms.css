@@ -68,3 +68,42 @@ button:focus-visible, input:focus-visible, textarea:focus-visible, select:focus-
   .noj-editor-toolbar { align-items:flex-start; flex-direction:column; }
   .noj-visual-editor, .noj-markdown-editor { min-height:20rem; padding:15px!important; }
 }
+
+
+/* Fix scrolling in the HTML/CodeMirror editor.
+   Give CodeMirror a bounded viewport and make its own scroll area handle long documents. */
+.noj-body-editor .CodeMirror {
+  box-sizing: border-box;
+  height: 65vh !important;
+  min-height: 26rem;
+  max-height: 65vh;
+  overflow: hidden !important;
+}
+.noj-body-editor .CodeMirror-scroll {
+  height: 100% !important;
+  min-height: 0 !important;
+  max-height: 65vh;
+  overflow: auto !important;
+  overscroll-behavior: contain;
+  scrollbar-gutter: stable;
+}
+.noj-body-editor .CodeMirror-sizer {
+  min-width: 0;
+}
+.noj-body-editor .CodeMirror-lines {
+  padding-bottom: 2rem;
+}
+.noj-markdown-editor {
+  overflow: auto !important;
+  overscroll-behavior: contain;
+}
+@media (max-width: 700px) {
+  .noj-body-editor .CodeMirror {
+    height: 55vh !important;
+    min-height: 20rem;
+    max-height: 55vh;
+  }
+  .noj-body-editor .CodeMirror-scroll {
+    max-height: 55vh;
+  }
+}
