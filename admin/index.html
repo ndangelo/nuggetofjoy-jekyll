@@ -42,6 +42,8 @@
       CMS.registerPreviewStyle("https://ndangelo.github.io/nuggetofjoy-jekyll/admin/preview.css");
       function previewCustomStyle(entry) {
         var css = entry && entry.getIn(["data", "custom_css"]);
+        // Decap's code widget stores source as { code, lang }, not always a plain string.
+        if (css && typeof css === "object") css = css.code || "";
         // Keep the live stylesheet in the preview DOM and update it from the current entry.
         // Scope document-level selectors to the preview wrapper because the preview is not
         // the actual published page's document body.
