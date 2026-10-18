@@ -40,12 +40,33 @@
         repairLegacyImages: function () {
           var root = this.previewRoot;
           if (!root) return;
-          root.querySelectorAll("img[src]").forEach(function (img) {
+          function repair(img) {
+            if (!img || !img.getAttribute) return;
             var src = img.getAttribute("src");
-            if (src && src.indexOf("http://nuggetofjoy.com/wp-content/uploads/") === 0) {
-              img.setAttribute("src", src.replace("http://nuggetofjoy.com/", "https://nuggetofjoy.com/"));
+            if (src && /^http:\/\/nuggetofjoy\.com\/wp-content\/uploads\//i.test(src)) {
+              img.setAttribute("src", src.replace(/^http:\/\//i, "https://"));
             }
-          });
+            if (img.dataset.nojHttpsRetry !== "1") {
+              img.dataset.nojHttpsRetry = "1";
+              img.addEventListener("error", function () {
+                var current = img.getAttribute("src") || "";
+                if (/^http:\/\//i.test(current)) img.setAttribute("src", current.replace(/^http:\/\//i, "https://"));
+              }, { once: true });
+            }
+          }
+          root.querySelectorAll("img[src]").forEach(repair);
+          if (!this.previewObserver && window.MutationObserver) {
+            this.previewObserver = new MutationObserver(function (mutations) {
+              mutations.forEach(function (mutation) {
+                mutation.addedNodes.forEach(function (node) {
+                  if (node.nodeType !== 1) return;
+                  if (node.matches && node.matches("img[src]")) repair(node);
+                  if (node.querySelectorAll) node.querySelectorAll("img[src]").forEach(repair);
+                });
+              });
+            });
+            this.previewObserver.observe(root, { childList: true, subtree: true });
+          }
         },
         render: function () {
           var entry = this.props.entry;
