@@ -10,7 +10,7 @@ description: A working archive of design briefs, course materials, tutorials, an
     <h1>Ideas for making,<br><em>thinking, and learning.</em></h1>
     <p class="noj-intro">A working archive of design briefs, course materials, tutorials, and creative experiments. Search a topic or browse the resources below.</p>
     <div class="noj-hero-tools">
-      <form class="noj-search" role="search" action="{{ '/' | relative_url }}" method="get">
+      <form class="noj-search" role="search" action="{{ '/search/' | relative_url }}" method="get">
         <label class="screen-reader-text" for="noja-search-hero">Search all content</label>
         <input id="noja-search-hero" type="search" name="s" placeholder="Search the archive…">
         <button type="submit">Search</button>
