@@ -11,8 +11,7 @@ kramdown:
 permalink: /:categories/:year/:month/:day/:title/
 
 collections:
-  content_pages:
-    path: _pages
+  pages:
     output: true
     permalink: /:name/
 
@@ -24,7 +23,7 @@ defaults:
       layout: post
   - scope:
       path: ""
-      type: content_pages
+      type: pages
     values:
       layout: page
 
