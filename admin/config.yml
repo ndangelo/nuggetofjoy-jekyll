@@ -1,47 +1,96 @@
-# Authentication must be configured before the CMS can publish.
-# Do not add personal access tokens or secrets to this public file.
+# Decap CMS configuration for the Nugget of Joy Jekyll archive.
+# Authentication must be configured before editors can publish.
+# Never place GitHub tokens, OAuth secrets, or passwords in this public file.
+
 backend:
   name: github
   repo: ndangelo/nuggetofjoy-jekyll
   branch: main
 
+# Uploads are committed to the repository and published with the site.
 media_folder: "assets/images/uploads"
 public_folder: "/nuggetofjoy-jekyll/assets/images/uploads"
 
-site_url: https://ndangelo.github.io/nuggetofjoy-jekyll
-display_url: https://ndangelo.github.io/nuggetofjoy-jekyll
+site_url: "https://ndangelo.github.io/nuggetofjoy-jekyll"
+display_url: "https://ndangelo.github.io/nuggetofjoy-jekyll"
 
+# Drafts and review changes go through GitHub pull requests.
 publish_mode: editorial_workflow
+
+# Make the interface useful for a large archive.
+show_preview_links: true
+slug:
+  encoding: "ascii"
+  clean_accents: true
 
 collections:
   - name: posts
     label: Blog Posts
     label_singular: Blog Post
+    description: "Manage published articles, tutorials, design briefs, and course resources."
     folder: "_posts"
     create: true
+    extension: "md"
+    format: "frontmatter"
     slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
-    preview_path: "{{categories}}/{{year}}/{{month}}/{{day}}/{{slug}}/"
+    summary: "{{title}} · {{date | date('MMM D, YYYY')}}"
+    sortable_fields:
+      - title
+      - { field: date, default: desc }
+    view_groups:
+      - label: Year
+        field: date
+        pattern: "\\d{4}"
     fields:
+      - { label: Layout, name: layout, widget: hidden, default: post }
       - { label: Title, name: title, widget: string }
-      - { label: Publish Date, name: date, widget: datetime }
-      - { label: URL Slug, name: slug, widget: string, required: false }
+      - label: Publish Date
+        name: date
+        widget: datetime
+        format: "YYYY-MM-DD HH:mm:ss"
+        date_format: "YYYY-MM-DD"
+        time_format: "HH:mm:ss"
+      - { label: Permalink / Public URL, name: permalink, widget: string, required: false, hint: "Preserve the existing URL for older posts. Changing this can break links." }
       - { label: Description / Excerpt, name: description, widget: text, required: false }
       - { label: Featured Image, name: image, widget: image, required: false }
       - { label: Image Alt Text, name: image_alt, widget: string, required: false }
-      - { label: Categories, name: categories, widget: list, required: false }
-      - { label: Tags, name: tags, widget: list, required: false }
-      - { label: Body, name: body, widget: markdown }
+      - label: Categories
+        name: categories
+        widget: list
+        required: false
+        field: { label: Category, name: category, widget: string }
+      - label: Tags
+        name: tags
+        widget: list
+        required: false
+        field: { label: Tag, name: tag, widget: string }
+      - { label: WordPress ID (legacy), name: wordpress_id, widget: hidden, required: false }
+      - label: Body
+        name: body
+        widget: richtext
+        modes: [rich_text, raw]
+        hint: "Use the visual editor for ordinary text. Switch to Raw mode for legacy WordPress blocks, HTML, embeds, or code-heavy posts. Test changes to older posts carefully before publishing."
+
   - name: content_pages
     label: Pages
     label_singular: Page
+    description: "Manage standalone site pages. The homepage is maintained separately because it contains Jekyll template logic."
     folder: "_pages"
     create: true
+    extension: "md"
+    format: "frontmatter"
     filter:
       field: layout
       value: page
     slug: "{{slug}}"
+    summary: "{{title}}"
     fields:
+      - { label: Layout, name: layout, widget: hidden, default: page }
       - { label: Title, name: title, widget: string }
-      - { label: URL Slug, name: permalink, widget: string, required: false }
+      - { label: URL Slug, name: permalink, widget: string, required: false, hint: "Use the existing public URL when editing an established page." }
       - { label: Description, name: description, widget: text, required: false }
-      - { label: Body, name: body, widget: markdown }
+      - { label: WordPress ID (legacy), name: wordpress_id, widget: hidden, required: false }
+      - label: Body
+        name: body
+        widget: richtext
+        modes: [rich_text, raw]
