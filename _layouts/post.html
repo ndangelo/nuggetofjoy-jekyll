@@ -1,0 +1,18 @@
+---
+layout: default
+---
+<article class="article">
+  <header class="article-header">
+    <p class="post-meta">{{ page.date | date: "%B %-d, %Y" }}</p>
+    <h1>{{ page.title | escape }}</h1>
+    {% if page.description %}<p class="intro">{{ page.description | escape }}</p>{% endif %}
+    {% if page.categories.size > 0 %}<p class="taxonomy">{% for category in page.categories %}<span>{{ category }}</span>{% endfor %}</p>{% endif %}
+  </header>
+  {% if page.image %}<figure class="featured-image"><img src="{{ page.image | relative_url }}" alt="{{ page.image_alt | default: page.title | escape }}"></figure>{% endif %}
+  <div class="article-content">
+    {{ content }}
+  </div>
+  {% if page.tags.size > 0 %}
+  <footer class="article-tags"><strong>Tags:</strong> {% for tag in page.tags %}<span>{{ tag }}</span>{% unless forloop.last %}, {% endunless %}{% endfor %}</footer>
+  {% endif %}
+</article>
