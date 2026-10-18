@@ -31,6 +31,22 @@
       if (!window.CMS) return;
       CMS.registerPreviewStyle("https://ndangelo.github.io/nuggetofjoy-jekyll/admin/preview.css");
       var PostPreview = createClass({
+        componentDidMount: function () {
+          this.repairLegacyImages();
+        },
+        componentDidUpdate: function () {
+          this.repairLegacyImages();
+        },
+        repairLegacyImages: function () {
+          var root = this.previewRoot;
+          if (!root) return;
+          root.querySelectorAll("img[src]").forEach(function (img) {
+            var src = img.getAttribute("src");
+            if (src && src.indexOf("http://nuggetofjoy.com/wp-content/uploads/") === 0) {
+              img.setAttribute("src", src.replace("http://nuggetofjoy.com/", "https://nuggetofjoy.com/"));
+            }
+          });
+        },
         render: function () {
           var entry = this.props.entry;
           var title = entry.getIn(["data", "title"]) || "Untitled";
@@ -44,7 +60,7 @@
             h("h1", {}, title),
             description ? h("p", { className: "preview-meta" }, description) : null,
             imageSrc ? h("img", { className: "preview-featured", src: String(imageSrc), alt: "" }) : null,
-            h("div", { className: "preview-content" }, this.props.widgetFor("body"))
+            h("div", { className: "preview-content", ref: function (node) { this.previewRoot = node; }.bind(this) }, this.props.widgetFor("body"))
           );
         }
       });
