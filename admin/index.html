@@ -40,26 +40,20 @@
     (function () {
       if (!window.CMS) return;
       CMS.registerPreviewStyle("https://ndangelo.github.io/nuggetofjoy-jekyll/admin/preview.css");
-      function syncPreviewCustomCss(entry) {
-        if (!entry || !document.head) return;
-        var css = entry.getIn(["data", "custom_css"]) || "";
-        var style = document.getElementById("noj-live-custom-css");
-        if (!style) {
-          style = document.createElement("style");
-          style.id = "noj-live-custom-css";
-          style.type = "text/css";
-          document.head.appendChild(style);
-        }
-        style.textContent = String(css);
+      function previewCustomStyle(entry) {
+        var css = entry && entry.getIn(["data", "custom_css"]);
+        return h("style", {
+          key: "noj-live-custom-css",
+          type: "text/css",
+          "data-noj-live-custom-css": "true"
+        }, css ? String(css) : "");
       }
       var PostPreview = createClass({
         componentDidMount: function () {
           this.repairLegacyImages();
-          syncPreviewCustomCss(this.props.entry);
         },
         componentDidUpdate: function () {
           this.repairLegacyImages();
-          syncPreviewCustomCss(this.props.entry);
         },
         repairLegacyImages: function () {
           var root = this.previewRoot;
@@ -98,10 +92,10 @@
           var date = entry.getIn(["data", "date"]);
           var description = entry.getIn(["data", "description"]);
           var image = entry.getIn(["data", "image"]);
-          var customCss = entry.getIn(["data", "custom_css"]) || "";
           var asset = image ? this.props.getAsset(image) : null;
           var imageSrc = asset && (asset.url || asset.path || asset);
           return h("div", { className: "noj-preview-with-custom-css" },
+            previewCustomStyle(entry),
             h("article", { className: "preview-article noj-entry noj-wrap" },
               h("p", { className: "preview-date" }, date ? String(date) : "Draft preview"),
               h("h1", {}, title),
@@ -114,11 +108,10 @@
       });
       CMS.registerPreviewTemplate("posts", PostPreview);
       CMS.registerPreviewTemplate("content_pages", createClass({
-        componentDidMount: function () { syncPreviewCustomCss(this.props.entry); },
-        componentDidUpdate: function () { syncPreviewCustomCss(this.props.entry); },
         render: function () {
           var entry = this.props.entry;
           return h("div", { className: "noj-preview-with-custom-css" },
+            previewCustomStyle(entry),
             h("article", { className: "preview-article noj-entry noj-wrap page-article" },
               h("h1", {}, entry.getIn(["data", "title"]) || "Untitled"),
               h("div", { className: "preview-content noj-entry-content" }, this.props.widgetFor("body"))
