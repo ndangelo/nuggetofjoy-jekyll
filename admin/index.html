@@ -88,14 +88,14 @@
           var asset = image ? this.props.getAsset(image) : null;
           var imageSrc = asset && (asset.url || asset.path || asset);
           return h("div", { className: "noj-preview-with-custom-css" },
-            customCss ? h("style", { dangerouslySetInnerHTML: { __html: String(customCss) } }) : null,
             h("article", { className: "preview-article noj-entry noj-wrap" },
-            h("p", { className: "preview-date" }, date ? String(date) : "Draft preview"),
-            h("h1", {}, title),
-            description ? h("p", { className: "preview-meta" }, description) : null,
-            imageSrc ? h("img", { className: "preview-featured", src: String(imageSrc), alt: "" }) : null,
-            h("div", { className: "preview-content noj-entry-content", ref: function (node) { this.previewRoot = node; }.bind(this) }, this.props.widgetFor("body"))
-            )
+              h("p", { className: "preview-date" }, date ? String(date) : "Draft preview"),
+              h("h1", {}, title),
+              description ? h("p", { className: "preview-meta" }, description) : null,
+              imageSrc ? h("img", { className: "preview-featured", src: String(imageSrc), alt: "" }) : null,
+              h("div", { className: "preview-content noj-entry-content", ref: function (node) { this.previewRoot = node; }.bind(this) }, this.props.widgetFor("body"))
+            ),
+            customCss ? h("style", { type: "text/css", "data-noj-custom-css": "true", dangerouslySetInnerHTML: { __html: String(customCss) } }) : null
           );
         }
       });
@@ -105,11 +105,11 @@
           var entry = this.props.entry;
           var customCss = entry.getIn(["data", "custom_css"]) || "";
           return h("div", { className: "noj-preview-with-custom-css" },
-            customCss ? h("style", { dangerouslySetInnerHTML: { __html: String(customCss) } }) : null,
             h("article", { className: "preview-article noj-entry noj-wrap page-article" },
               h("h1", {}, entry.getIn(["data", "title"]) || "Untitled"),
               h("div", { className: "preview-content noj-entry-content" }, this.props.widgetFor("body"))
-            )
+            ),
+            customCss ? h("style", { type: "text/css", "data-noj-custom-css": "true", dangerouslySetInnerHTML: { __html: String(customCss) } }) : null
           );
         }
       }));
