@@ -169,3 +169,100 @@ textarea[aria-label*="Raw"], textarea[aria-label*="raw"] {
     min-width: 0;
   }
 }
+
+
+/* Compact editorial workspace: less visual noise, tighter controls, stronger hierarchy. */
+:root {
+  --noj-admin-bg: #eef0f2;
+  --noj-admin-panel: #ffffff;
+  --noj-admin-ink: #20262d;
+  --noj-admin-muted: #68727d;
+  --noj-admin-line: #d8dde3;
+  --noj-admin-blue: #2878a8;
+  --noj-admin-blue-dark: #1d5d83;
+  --noj-admin-orange: #ef8050;
+}
+html, body { font-size: 14px; }
+[class*="AppHeader"], .nc-appHeader {
+  min-height: 48px !important;
+  padding-block: 0 !important;
+}
+[class*="Sidebar"], aside[class*="sidebar"] {
+  width: 220px;
+}
+[class*="CollectionMain"], [class*="collectionMain"] {
+  padding: 16px 22px !important;
+}
+[class*="EntryEditor"], [class*="entryEditor"] {
+  gap: 12px !important;
+}
+[class*="EditorControl"], [class*="editorControl"] {
+  margin-bottom: 10px !important;
+  padding-bottom: 0 !important;
+}
+[class*="FieldLabel"], label {
+  font-size: 12px !important;
+  letter-spacing: .015em;
+  margin-bottom: 4px !important;
+}
+[class*="Hint"], [class*="hint"] {
+  font-size: 11px !important;
+  line-height: 1.45 !important;
+  margin-top: 4px !important;
+}
+input, textarea, select {
+  min-height: 34px;
+  padding: 6px 9px !important;
+  font-size: 13px !important;
+}
+button, [role="button"] {
+  min-height: 32px;
+  font-size: 12px;
+}
+[class*="EditorPane"], [class*="ControlPane"] {
+  padding: 16px !important;
+}
+[class*="PreviewPane"] {
+  padding: 18px !important;
+  background: #f8f7f3 !important;
+  border-left: 1px solid var(--noj-admin-line) !important;
+}
+[class*="PreviewPane"]::before {
+  content: "HTML PREVIEW";
+  display: block;
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  width: fit-content;
+  margin: 0 0 12px;
+  padding: 4px 7px;
+  border: 1px solid #d8dde3;
+  border-radius: 3px;
+  background: #fff;
+  color: #59636e;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: .09em;
+}
+[class*="EditorPane"] textarea,
+textarea[spellcheck="false"], textarea[class*="code"], textarea[class*="Code"] {
+  min-height: 22rem;
+  line-height: 1.65 !important;
+}
+[class*="CollectionTable"], table {
+  font-size: 12px;
+}
+[class*="CollectionTable"] th, [class*="CollectionTable"] td {
+  padding: 8px 10px !important;
+}
+[class*="Toolbar"], [class*="toolbar"] {
+  min-height: 42px;
+}
+[class*="WidgetPreview"], [class*="Preview"] img {
+  max-width: 100%;
+}
+@media (max-width: 900px) {
+  [class*="Sidebar"], aside[class*="sidebar"] { width: auto; }
+  [class*="CollectionMain"], [class*="collectionMain"] { padding: 12px !important; }
+  [class*="EditorPane"], [class*="ControlPane"], [class*="PreviewPane"] { padding: 12px !important; }
+}
