@@ -414,6 +414,12 @@ wordpress_id: "68044"
 <p><strong>Deliverable:</strong> Complete the relevant sections of the Figma style guide and keep it available while designing your prototype.</p>
 <!-- /wp:paragraph -->
 
+<!-- wp:html -->
+<figure class="uber-reference-image uber-styleguide-overview"><img src="https://www.figma.com/api/mcp/asset/6efc91f7-9a9f-4de0-80c3-20521f419f83.png" alt="Actual Figma Student UI/UX Style Guide section: Accessibility" loading="lazy"><figcaption><strong>Actual course template — Accessibility.</strong> Check contrast, readable type, visible focus, clear labels, and distinct feedback.</figcaption></figure>
+<!-- /wp:html -->
+
+
+
 <!-- wp:heading -->
 <h2 class="wp-block-heading">03 — Design Key Screens in Figma Design First</h2>
 <!-- /wp:heading -->
