@@ -1,0 +1,31 @@
+title: "Nugget of Joy"
+description: "Design, creativity, and user experience"
+url: "https://ndangelo.github.io"
+baseurl: "/nuggetofjoy-jekyll"
+
+markdown: kramdown
+permalink: /:categories/:year/:month/:day/:title/
+
+collections:
+  pages:
+    output: true
+    permalink: /:name/
+
+defaults:
+  - scope:
+      path: ""
+      type: posts
+    values:
+      layout: post
+  - scope:
+      path: ""
+      type: pages
+    values:
+      layout: page
+
+exclude:
+  - README.md
+  - Gemfile
+  - Gemfile.lock
+  - node_modules
+  - vendor
