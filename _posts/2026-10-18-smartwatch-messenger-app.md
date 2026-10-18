@@ -13,7 +13,7 @@ custom_css:
 
     .wrap{width:min(1120px,calc(100% - 40px));margin:auto}
 
-    .hero{margin:22px auto 0;min-height:410px;overflow:hidden;border-radius:24px;background:radial-gradient(circle at 75% 35%,#333d4a 0,#11151b 44%,#090b0f 100%);color:white;display:grid;grid-template-columns:1fr 1fr;align-items:center;gap:20px;padding:clamp(28px,5vw,62px);position:relative}
+    .hero{margin:25px auto 0;min-height:410px;overflow:hidden;border-radius:24px;background:radial-gradient(circle at 75% 35%,#333d4a 0,#11151b 44%,#090b0f 100%);color:white;display:grid;grid-template-columns:1fr 1fr;align-items:center;gap:20px;padding:clamp(28px,5vw,62px);position:relative}
 
     .eyebrow{font-size:.75rem;letter-spacing:.18em;text-transform:uppercase;color:#c6baff;font-weight:800}
 
