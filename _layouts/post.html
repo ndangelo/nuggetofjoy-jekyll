@@ -6,7 +6,7 @@ layout: default
     <p class="noj-kicker">{{ page.date | date: "%B %-d, %Y" }}</p>
     <h1>{{ page.title | escape }}</h1>
     {% if page.description %}<p class="noj-intro">{{ page.description | escape }}</p>{% endif %}
-    {% if page.categories.size > 0 %}<p class="noj-entry-taxonomy">{% for category in page.categories %}<a href="{{ '/category/' | append: category | append: '/' | relative_url }}">{{ category | replace: '-', ' ' | replace: '_', ' ' }}</a>{% unless forloop.last %}, {% endunless %}{% endfor %}</p>{% endif %}
+    {% if page.categories.size > 0 %}<p class="noj-entry-taxonomy">{% for category in page.categories %}<a href="{{ '/category/' | append: category | slugify | append: '/' | relative_url }}">{{ category | replace: '-', ' ' | replace: '_', ' ' }}</a>{% unless forloop.last %}, {% endunless %}{% endfor %}</p>{% endif %}
   </header>
   {% if page.image %}<figure class="noj-featured-image"><img src="{{ page.image }}" alt="{{ page.image_alt | default: page.title | escape }}"></figure>{% endif %}
   <div class="noj-entry-content">
