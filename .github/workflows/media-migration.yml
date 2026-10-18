@@ -1,0 +1,28 @@
+name: Audit and bundle local media
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  media-audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    steps:
+      - name: Check out staging repository
+        uses: actions/checkout@v4
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Download referenced media and prepare rewritten copies
+        run: python scripts/migrate_media.py
+      - name: Upload migration bundle and audit report
+        uses: actions/upload-artifact@v4
+        with:
+          name: nuggetofjoy-media-migration
+          path: media-migration-output/
+          if-no-files-found: error
+          retention-days: 14
