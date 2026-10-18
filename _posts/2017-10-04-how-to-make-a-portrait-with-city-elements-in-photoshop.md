@@ -67,7 +67,7 @@ Apply the following adjustment layers as clipping masks for the model layer crea
 
 Black and White
 
-<img class="alignnone size-full wp-image-26249" src="" alt="2 bw" width="284" height="395" / src="https://www.psdvault.com/img/2016/06/2-bw.jpg">
+<img class="alignnone size-full wp-image-26249" src="" alt="2 bw" width="284" height="395" / src="{{ '/assets/images/recovered-city-portrait/2-bw.jpg' | relative_url }}">
 
 On the layer mask of the black and white adjustment layer, use the splatter brush as eraser, remove some parts around the face and fingers as shown below:
 
@@ -77,7 +77,7 @@ On the layer mask of the black and white adjustment layer, use the splatter brus
 
 Curves
 
-<img class="alignnone size-full wp-image-26251" src="" alt="2 curves" width="284" height="395" / src="https://www.psdvault.com/img/2016/06/2-curves.jpg">
+<img class="alignnone size-full wp-image-26251" src="" alt="2 curves" width="284" height="395" / src="{{ '/assets/images/recovered-city-portrait/2-curves.jpg' | relative_url }}">
 
 And here is the effect so far:
 
@@ -103,15 +103,15 @@ Apply the following image adjustment layers as clip masks for this building laye
 
 Black and White
 
-<img class="alignnone size-full wp-image-26253" src="" alt="3 bw" width="284" height="395" / src="https://www.psdvault.com/img/2016/06/3-bw.jpg">
+<img class="alignnone size-full wp-image-26253" src="" alt="3 bw" width="284" height="395" / src="{{ '/assets/images/recovered-city-portrait/3-bw.jpg' | relative_url }}">
 
 Levels
 
-<img class="alignnone size-full wp-image-26257" src="" alt="3 lvs" width="284" height="395" / src="https://www.psdvault.com/img/2016/06/3-lvs.jpg">
+<img class="alignnone size-full wp-image-26257" src="" alt="3 lvs" width="284" height="395" / src="{{ '/assets/images/recovered-city-portrait/3-lvs.jpg' | relative_url }}">
 
 Curves
 
-<img class="alignnone size-full wp-image-26254" src="" alt="3 curves" width="284" height="395" / src="https://www.psdvault.com/img/2016/06/3-curves.jpg">
+<img class="alignnone size-full wp-image-26254" src="" alt="3 curves" width="284" height="395" / src="{{ '/assets/images/recovered-city-portrait/3-curves.jpg' | relative_url }}">
 
 Here is the effect so far:
 
@@ -129,11 +129,11 @@ Apply the following adjustment layers to this building layer:
 
 Black and white
 
-<img class="alignnone size-full wp-image-26261" src="" alt="4 bw" width="284" height="395" / src="https://www.psdvault.com/img/2016/06/4-bw.jpg">
+<img class="alignnone size-full wp-image-26261" src="" alt="4 bw" width="284" height="395" / src="{{ '/assets/images/recovered-city-portrait/4-bw.jpg' | relative_url }}">
 
 Levels
 
-<img class="alignnone size-full wp-image-26263" src="" alt="4 lvs" width="284" height="395" / src="https://www.psdvault.com/img/2016/06/4-lvs.jpg">
+<img class="alignnone size-full wp-image-26263" src="" alt="4 lvs" width="284" height="395" / src="{{ '/assets/images/recovered-city-portrait/4-lvs.jpg' | relative_url }}">
 
 and here is the effect so far:
 
@@ -151,15 +151,15 @@ Apply the following image adjustments to this road layer:
 
 Black and White
 
-<img class="alignnone size-full wp-image-26265" src="" alt="5 bw" width="284" height="395" / src="https://www.psdvault.com/img/2016/06/5-bw.jpg">
+<img class="alignnone size-full wp-image-26265" src="" alt="5 bw" width="284" height="395" / src="{{ '/assets/images/recovered-city-portrait/5-bw.jpg' | relative_url }}">
 
 Levels
 
-<img class="alignnone size-full wp-image-26268" src="" alt="5 lvs" width="284" height="395" / src="https://www.psdvault.com/img/2016/06/5-lvs.jpg">
+<img class="alignnone size-full wp-image-26268" src="" alt="5 lvs" width="284" height="395" / src="{{ '/assets/images/recovered-city-portrait/5-lvs.jpg' | relative_url }}">
 
 Curves
 
-<img class="size-full wp-image-26266 alignnone" src="" alt="5 curves" width="284" height="395" / src="https://www.psdvault.com/img/2016/06/5-curves.jpg">
+<img class="size-full wp-image-26266 alignnone" src="" alt="5 curves" width="284" height="395" / src="{{ '/assets/images/recovered-city-portrait/5-curves.jpg' | relative_url }}">
 
 and you will have the following effect:
 
@@ -167,7 +167,7 @@ and you will have the following effect:
 <h3>Step 6</h3>
 We will be adding a couple traffic lights and street signs to our image. Go to “City stock 1” and select the following traffic light:
 
-<img class="alignnone size-full wp-image-26279" src="" alt="6 sel traf" width="363" height="475" / src="https://www.psdvault.com/img/2016/06/6-sel-traf.jpg">
+<img class="alignnone size-full wp-image-26279" src="" alt="6 sel traf" width="363" height="475" / src="{{ '/assets/images/recovered-city-portrait/6-sel-traf.jpg' | relative_url }}">
 
 Copy and paste the selection to our document, re-size and place it over to the city street:
 
@@ -177,11 +177,11 @@ Apply the following image adjustments to this traffic light:
 
 Curves
 
-<img class="alignnone size-full wp-image-26272" src="" alt="6 curves" width="284" height="395" / src="https://www.psdvault.com/img/2016/06/6-curves.jpg">
+<img class="alignnone size-full wp-image-26272" src="" alt="6 curves" width="284" height="395" / src="{{ '/assets/images/recovered-city-portrait/6-curves.jpg' | relative_url }}">
 
 Levels
 
-<img class="alignnone size-full wp-image-26276" src="" alt="6 lvs" width="284" height="395" / src="https://www.psdvault.com/img/2016/06/6-lvs.jpg">
+<img class="alignnone size-full wp-image-26276" src="" alt="6 lvs" width="284" height="395" / src="{{ '/assets/images/recovered-city-portrait/6-lvs.jpg' | relative_url }}">
 
 and here is the effect:
 
@@ -195,11 +195,11 @@ Copy and paste it to our document and apply the following image adjustments:
 
 Black and white
 
-<img class="alignnone size-full wp-image-26271" src="" alt="6 bw 2" width="284" height="395" / src="https://www.psdvault.com/img/2016/06/6-bw-2.jpg">
+<img class="alignnone size-full wp-image-26271" src="" alt="6 bw 2" width="284" height="395" / src="{{ '/assets/images/recovered-city-portrait/6-bw-2.jpg' | relative_url }}">
 
 Levels
 
-<img class="alignnone size-full wp-image-26275" src="" alt="6 lvs 2" width="284" height="395" / src="https://www.psdvault.com/img/2016/06/6-lvs-2.jpg">
+<img class="alignnone size-full wp-image-26275" src="" alt="6 lvs 2" width="284" height="395" / src="{{ '/assets/images/recovered-city-portrait/6-lvs-2.jpg' | relative_url }}">
 
 Attach this element to the model as shown below:
 
@@ -209,17 +209,17 @@ We’re almost done! To finalise this photo manipulation, I added a couple of im
 
 Selective Color
 
-<img class="alignnone size-full wp-image-26282" src="" alt="7 reds" width="284" height="395" / src="https://www.psdvault.com/img/2016/06/7-reds.jpg">
+<img class="alignnone size-full wp-image-26282" src="" alt="7 reds" width="284" height="395" / src="{{ '/assets/images/recovered-city-portrait/7-reds.jpg' | relative_url }}">
 
-<img class="alignnone size-full wp-image-26284" src="" alt="7 whites" width="284" height="395" / src="https://www.psdvault.com/img/2016/06/7-whites.jpg">
+<img class="alignnone size-full wp-image-26284" src="" alt="7 whites" width="284" height="395" / src="{{ '/assets/images/recovered-city-portrait/7-whites.jpg' | relative_url }}">
 
-<img class="alignnone size-full wp-image-26281" src="" alt="7 neu" width="284" height="395" / src="https://www.psdvault.com/img/2016/06/7-neu.jpg">
+<img class="alignnone size-full wp-image-26281" src="" alt="7 neu" width="284" height="395" / src="{{ '/assets/images/recovered-city-portrait/7-neu.jpg' | relative_url }}">
 
-<img class="alignnone size-full wp-image-26280" src="" alt="7 blacks" width="284" height="395" / src="https://www.psdvault.com/img/2016/06/7-blacks.jpg">
+<img class="alignnone size-full wp-image-26280" src="" alt="7 blacks" width="284" height="395" / src="{{ '/assets/images/recovered-city-portrait/7-blacks.jpg' | relative_url }}">
 
 Vibrance
 
-<img class="alignnone size-full wp-image-26283" src="" alt="7 vib" width="284" height="395" / src="https://www.psdvault.com/img/2016/06/7-vib.jpg">
+<img class="alignnone size-full wp-image-26283" src="" alt="7 vib" width="284" height="395" / src="{{ '/assets/images/recovered-city-portrait/7-vib.jpg' | relative_url }}">
 
 and here is my final effect: (click to enlarge)
 
