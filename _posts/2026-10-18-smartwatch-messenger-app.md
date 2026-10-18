@@ -80,14 +80,12 @@ footer{padding:40px 0 60px;color:var(--muted);font-size:.9rem}
 @media(max-width:760px){.hero{grid-template-columns:1fr}.hero-art{min-height:240px}.span-4,.span-5,.span-6,.span-7,.span-8{grid-column:span 12}.screen-board{grid-template-columns:repeat(2,1fr)}.branch{grid-template-columns:1fr}.prototype{align-items:flex-start;flex-direction:column}.wire-grid{grid-template-columns:repeat(2,1fr)}}
 @media(max-width:430px){.wrap{width:min(100% - 24px,1120px)}.screen-board{grid-template-columns:1fr 1fr;gap:10px}.mini-watch{width:145px;min-height:195px}.card{padding:17px}.hero{padding:26px}.wire-grid{grid-template-columns:1fr 1fr}}
 </style>
-</head>
-<body>
 <header class="wrap hero" id="top">
   <div>
     <div class="eyebrow">UX/UI Design Brief</div>
     <h1>Smartwatch<br>Messenger App</h1>
-    <p>Design a messaging experience that makes sending and receiving messages simple, fast, and accessible on a small screen.</p>
-    <div class="pills"><span class="pill">User Flow</span><span class="pill">UI/UX Style Guide</span><span class="pill">Prototype</span></div>
+    <p>Design a messaging experience that makes sending and receiving messages simple, fast, and accessible on a small screen.</p><p><br></p>
+    <div class="pills"><span class="pill">User Flow</span><span class="pill">UI/UX Style Guide Prototype</span></div>
   </div>
   <div class="hero-art" aria-label="Illustration of a smartwatch displaying a message">
     <div class="watch">
@@ -118,12 +116,12 @@ footer{padding:40px 0 60px;color:var(--muted);font-size:.9rem}
   <div class="grid" style="margin-top:18px">
     <div class="span-4 card"><div class="number">01</div><h3>User Flow</h3><p>Map the messaging journey, decisions, alternate paths, and error recovery in FigJam.</p></div>
     <div class="span-4 card"><div class="number">02</div><h3>UI/UX Style Guide</h3><p>Complete the existing course style-guide template before designing final screens.</p></div>
-    <div class="span-4 card"><div class="number">03</div><h3>Prototype & Test</h3><p>Build with Figma Make, test with five participants, revise, and test with five more.</p></div>
+    <div class="span-4 card"><div class="number">03</div><h3>Prototype &amp; Test</h3><p>Build with Figma Make, test with five participants, revise, and test with five more.</p></div>
   </div>
 </section>
 
 <section id="research">
-  <div class="kicker">01 / Research & Analysis</div>
+  <div class="kicker">01 / Research &amp; Analysis</div>
   <h2>Understand the user before designing.</h2>
   <p class="lead">Investigate existing smartwatch messaging experiences. Identify common usability problems and validate a meaningful user need before choosing a solution.</p>
   <div class="grid">
@@ -138,13 +136,13 @@ footer{padding:40px 0 60px;color:var(--muted);font-size:.9rem}
     </div>
   </div>
   <figure class="figure">
-    <img class="brief-img" src="images/smartwatch-brief-overview.png" alt="Visual overview of a smartwatch messenger app design brief, with smartwatch screens, user flow, style guide, prototype, and deliverables" onerror="this.style.display='none'">
+    <img class="brief-img" src="images/smartwatch-brief-overview.png" alt="Visual overview of a smartwatch messenger app design brief, with smartwatch screens, user flow, style guide, prototype, and deliverables">
     <figcaption>Visual reference for the project structure. Create your own final screens and diagrams; do not submit the reference image as your design work.</figcaption>
   </figure>
 </section>
 
 <section id="flow">
-  <div class="kicker">02 / Information Architecture & User Flow</div>
+  <div class="kicker">02 / Information Architecture &amp; User Flow</div>
   <h2>Plan the experience in FigJam.</h2>
   <p class="lead">Use the existing course FigJam User Flow Template. Duplicate it and map the primary messaging journey before you design the interface.</p>
   <div class="grid">
@@ -201,11 +199,11 @@ footer{padding:40px 0 60px;color:var(--muted);font-size:.9rem}
   </div>
   <div class="grid">
     <div class="span-6 card">
-      <h3>Color & Contrast</h3><p>Define backgrounds, text, primary actions, and status colors. Make sure the interface remains legible at watch size.</p>
+      <h3>Color &amp; Contrast</h3><p>Define backgrounds, text, primary actions, and status colors. Make sure the interface remains legible at watch size.</p>
       <div class="palette"><div class="swatch"><div class="dot" style="background:#087aff"></div>Primary</div><div class="swatch"><div class="dot" style="background:#6557e8"></div>Secondary</div><div class="swatch"><div class="dot" style="background:#27c76f"></div>Success</div><div class="swatch"><div class="dot" style="background:#ff9f1a"></div>Warning</div><div class="swatch"><div class="dot" style="background:#ff514b"></div>Error</div><div class="swatch"><div class="dot" style="background:#17191d"></div>Background</div></div>
     </div>
     <div class="span-6 card">
-      <h3>Typography & Spacing</h3><p>Set a hierarchy for names, message text, timestamps, labels, and controls. Check type at realistic device scale.</p><div class="type-sample">Aa</div><p><strong>Headline</strong> · Semibold<br><strong>Body</strong> · Regular<br><strong>Caption</strong> · Regular</p>
+      <h3>Typography &amp; Spacing</h3><p>Set a hierarchy for names, message text, timestamps, labels, and controls. Check type at realistic device scale.</p><div class="type-sample">Aa</div><p><strong>Headline</strong> · Semibold<br><strong>Body</strong> · Regular<br><strong>Caption</strong> · Regular</p>
     </div>
     <div class="span-6 card">
       <h3>Components</h3><p>Define reusable buttons, conversation items, message bubbles, reply controls, and navigation.</p><div class="component">Primary Action</div><div class="component dark">Secondary Action</div><div class="component light">Quick Reply</div>
@@ -214,7 +212,7 @@ footer{padding:40px 0 60px;color:var(--muted);font-size:.9rem}
       <h3>Accessibility</h3><ul><li>Readable text and sufficient contrast.</li><li>Clear labels and predictable navigation.</li><li>Controls easy to identify and activate.</li><li>Alternatives to tiny-keyboard typing.</li><li>Feedback for success and failure.</li></ul><p class="muted">A grayscale review can help evaluate hierarchy, but does not by itself establish accessibility compliance.</p>
     </div>
   </div>
-  <p><strong>Course asset:</strong> Insert actual screenshots from your existing style-guide template for Visual Research & Moodboard, Color & Contrast, Typography & Spacing, and Components. Keep the course template consistent with the one used in class.</p>
+  <p><strong>Course asset:</strong> Insert actual screenshots from your existing style-guide template for Visual Research &amp; Moodboard, Color &amp; Contrast, Typography &amp; Spacing, and Components. Keep the course template consistent with the one used in class.</p>
 </section>
 
 <section id="screens">
@@ -261,8 +259,8 @@ footer{padding:40px 0 60px;color:var(--muted);font-size:.9rem}
   <h2>Deliverables checklist</h2>
   <p class="lead">Organize your work so another person can understand the research, follow the design process, and test the prototype.</p>
   <div class="grid">
-    <div class="span-6 card"><h3>Research & Planning</h3><ul class="checklist"><li>Research notes and user problem</li><li>Primary user persona</li><li>FigJam user flow with decisions and recovery</li><li>Completed existing UI/UX Style Guide template</li><li>Design rationale</li></ul></div>
-    <div class="span-6 card"><h3>Design & Validation</h3><ul class="checklist"><li>Flat screens in Figma Design</li><li>Interactive Figma Make prototype</li><li>First test with five participants</li><li>Revised screens and prototype</li><li>Second test with five participants</li><li>Summary of findings and iterations</li><li>Google Doc with ChatGPT prompts and useful results</li><li>Shareable project links with correct permissions</li></ul></div>
+    <div class="span-6 card"><h3>Research &amp; Planning</h3><ul class="checklist"><li>Research notes and user problem</li><li>Primary user persona</li><li>FigJam user flow with decisions and recovery</li><li>Completed existing UI/UX Style Guide template</li><li>Design rationale</li></ul></div>
+    <div class="span-6 card"><h3>Design &amp; Validation</h3><ul class="checklist"><li>Flat screens in Figma Design</li><li>Interactive Figma Make prototype</li><li>First test with five participants</li><li>Revised screens and prototype</li><li>Second test with five participants</li><li>Summary of findings and iterations</li><li>Google Doc with ChatGPT prompts and useful results</li><li>Shareable project links with correct permissions</li></ul></div>
   </div>
 </section>
 
@@ -272,7 +270,7 @@ footer{padding:40px 0 60px;color:var(--muted);font-size:.9rem}
   <div class="grid">
     <div class="span-4 card"><h3>Usability</h3><p>Users can complete the messaging task efficiently and understand what to do next.</p></div>
     <div class="span-4 card"><h3>Visual Design</h3><p>Color, typography, spacing, and components create a cohesive interface.</p></div>
-    <div class="span-4 card"><h3>Interaction & Accessibility</h3><p>The prototype responds appropriately and the design addresses real access needs.</p></div>
+    <div class="span-4 card"><h3>Interaction &amp; Accessibility</h3><p>The prototype responds appropriately and the design addresses real access needs.</p></div>
   </div>
   <div class="figure" style="padding:28px"><h3>Remember the process</h3><p class="lead">Research → User Flow → UI/UX Style Guide → Flat Screens → Interactive Prototype → User Testing → Iteration.</p><p><strong>Design for the smartwatch—not a miniature smartphone.</strong> Your goal is a focused, accessible messaging experience that helps people communicate with as little friction as possible.</p></div>
 </section>
