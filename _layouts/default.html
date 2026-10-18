@@ -3,7 +3,9 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  {% assign seo_title = page.seo.seo_title | default: page.title | default: site.title %}
+  {% assign default_title = page.title %}
+  {% if page.title == "Home" or page.title == nil %}{% assign default_title = site.title %}{% endif %}
+  {% assign seo_title = page.seo.seo_title | default: default_title %}
   {% assign seo_description = page.seo.seo_description | default: page.description | default: site.description %}
   {% assign share_image = page.seo.social_image | default: page.image %}
   <title>{{ seo_title | escape }}{% unless page.title == "Home" %} · {{ site.title | escape }}{% endunless %}</title>
