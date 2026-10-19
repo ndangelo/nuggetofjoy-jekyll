@@ -15,7 +15,7 @@
     else {target.innerHTML=filtered.slice(0,40).map(function(item){
       var cls=item.type==="page"?" page":"";
       var excerpt=item.description||item.categories||"";
-      return '<tr><td class="title-cell"><a href="'+esc(cmsHref(item))+'">'+esc(item.title||"Untitled")+'</a><small>'+esc(excerpt)+'</small></td><td><span class="type-pill'+cls+'">'+(item.type==="page"?"Page":"Blog post")+'</span></td><td class="date-cell">'+esc(dateText(item.date))+'</td><td><a class="public-link" href="'+esc(base+item.url)+'" target="_blank" rel="noopener">View ↗</a></td><td><a class="edit-link" href="'+esc(cmsHref(item))+'">Edit item</a></td></tr>'
+      return '<tr><td class="title-cell"><a href="'+esc(cmsHref(item))+'">'+esc(item.title||"Untitled")+'</a><small>'+esc(excerpt)+'</small></td><td><span class="type-pill'+cls+'">'+(item.type==="page"?"Page":"Blog post")+'</span></td><td class="date-cell">'+esc(dateText(item.date))+'</td><td><a class="public-link" href="'+esc(item.url)+'" target="_blank" rel="noopener">View ↗</a></td><td><a class="edit-link" href="'+esc(cmsHref(item))+'">Edit item</a></td></tr>'
     }).join("")}
     els.result.textContent="Showing "+Math.min(filtered.length,40)+" of "+filtered.length+" items";
   }
