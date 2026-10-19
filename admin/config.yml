@@ -74,7 +74,7 @@ collections:
         time_format: "HH:mm:ss"
       - { label: Permalink / Public URL, name: permalink, widget: string, required: false, hint: "Preserve the existing URL for older posts. Changing this can break links." }
       - { label: Description / Excerpt, name: description, widget: text, required: false, hint: "Short summary used on archive cards and as the default search/social description." }
-      - { label: Custom CSS, name: custom_css, widget: code, default_language: css, allow_language_selection: false, required: false, hint: "Optional CSS applied only to this post. Do not include <style> tags. Scope rules to this post when possible." }
+      - { label: Custom CSS, name: custom_css, widget: noj_css, default_language: css, allow_language_selection: false, required: false, hint: "Optional CSS applied only to this post. Do not include <style> tags. Scope rules to this post when possible." }
       - { label: Author, name: author, widget: string, required: false, default: "Nicholas D’Angelo" }
       - { label: Featured Image, name: image, widget: image, required: false, media_folder: "assets/images/uploads", public_folder: "/nuggetofjoy-jekyll/assets/images/uploads" }
       - { label: Image Alt Text, name: image_alt, widget: string, required: false, hint: "Describe the image for screen readers; do not repeat the post title." }
