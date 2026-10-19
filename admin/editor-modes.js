@@ -119,13 +119,17 @@
 
   CMS.registerWidget("noj_body", BodyEditor, BodyPreview);
 
-  // Dedicated CSS widget: CodeMirror emits a plain string to front matter.
+  // Dedicated CSS widget: normalize legacy {code, lang} values and plain strings.
+  function cssString(value) {
+    if (value && typeof value === "object") value = value.code || "";
+    return String(value || "");
+  }
   var CssEditor = createClass({
     componentDidMount: function () { this.mountEditor(); },
     componentDidUpdate: function () {
       if (!this.cm && this.textarea) this.mountEditor();
-      if (this.cm && this.cm.getValue() !== String(this.props.value || "")) {
-        this.cm.setValue(String(this.props.value || ""));
+      if (this.cm && this.cm.getValue() !== cssString(this.props.value)) {
+        this.cm.setValue(cssString(this.props.value));
       }
       if (this.cm) this.cm.refresh();
     },
@@ -139,10 +143,10 @@
         tabSize: 2, indentUnit: 2, viewportMargin: 30,
         extraKeys: { "Tab": function (cm) { cm.replaceSelection("  ", "end"); } }
       });
-      this.cm.setValue(String(this.props.value || ""));
+      this.cm.setValue(cssString(this.props.value));
       this.cm.on("change", function (editor) {
         var value = editor.getValue();
-        if (value !== String(this.props.value || "")) this.props.onChange(value);
+        if (value !== cssString(this.props.value)) this.props.onChange(value);
       }.bind(this));
       this.cm.refresh();
     },
@@ -154,7 +158,7 @@
         ),
         h("textarea", {
           ref: function (node) { this.textarea = node; }.bind(this),
-          defaultValue: String(this.props.value || ""),
+          defaultValue: cssString(this.props.value),
           spellCheck: false,
           "aria-label": "Custom CSS source"
         })
