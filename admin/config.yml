@@ -52,7 +52,7 @@ collections:
       - label: Publish Date
         name: date
         widget: datetime
-        type: datetime
+        type: datetime-local
         format: "YYYY-MM-DD HH:mm:ss"
         default: "{{now}}"
       - { label: Permalink / Public URL, name: permalink, widget: string, required: false, hint: "Preserve existing permalinks to avoid breaking links." }
@@ -111,7 +111,7 @@ collections:
     fields:
       - { label: Layout, name: layout, widget: hidden, default: page }
       - { label: Title, name: title, widget: string, required: true }
-      - { label: Publish / Update Date, name: date, widget: datetime, type: datetime, format: "YYYY-MM-DD HH:mm:ss", required: false }
+      - { label: Publish / Update Date, name: date, widget: datetime, type: datetime-local, format: "YYYY-MM-DD HH:mm:ss", required: false }
       - { label: Permalink / Public URL, name: permalink, widget: string, required: false, hint: "Preserve existing permalinks to avoid breaking links." }
       - { label: Categories, name: categories, widget: list, required: false, field: { label: Category, name: category, widget: string } }
       - { label: Tags, name: tags, widget: list, required: false, field: { label: Tag, name: tag, widget: string } }
