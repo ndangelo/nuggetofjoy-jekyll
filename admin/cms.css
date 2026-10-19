@@ -107,3 +107,22 @@ button:focus-visible, input:focus-visible, textarea:focus-visible, select:focus-
     max-height: 55vh;
   }
 }
+
+
+/* Dedicated syntax-highlighted CSS field used by custom_css front matter. */
+.noj-css-field { overflow:hidden; border:1px solid #cbd3dc; border-radius:7px; background:#1e242c; }
+.noj-css-field-head { display:flex; justify-content:space-between; align-items:center; gap:12px; padding:9px 12px; background:#171c23; color:#e6edf3; border-bottom:1px solid #343d49; font-size:12px; font-weight:650; }
+.noj-css-field-note { color:#9aa7b5; font-size:11px; font-weight:400; }
+.noj-css-field textarea { display:none!important; }
+.noj-css-field .CodeMirror { height:320px; max-height:55vh; background:#1e242c!important; color:#e6edf3!important; font:13px/1.65 ui-monospace,SFMono-Regular,Consolas,monospace; }
+.noj-css-field .CodeMirror-gutters { background:#171c23!important; border-right:1px solid #343d49!important; }
+.noj-css-field .CodeMirror-linenumber { color:#7d8998!important; }
+.noj-css-field .cm-comment { color:#8b949e!important; }
+.noj-css-field .cm-property { color:#d2a8ff!important; }
+.noj-css-field .cm-atom, .noj-css-field .cm-number { color:#79c0ff!important; }
+.noj-css-field .cm-string { color:#a5d6ff!important; }
+.noj-css-field .cm-keyword, .noj-css-field .cm-meta { color:#ff7b72!important; }
+.noj-css-field .cm-def, .noj-css-field .cm-variable-2 { color:#ffa657!important; }
+.noj-css-field .cm-tag, .noj-css-field .cm-qualifier { color:#7ee787!important; }
+.noj-css-preview-value { white-space:pre-wrap; overflow-wrap:anywhere; padding:12px; background:#20262e; color:#c9d1d9; border-radius:6px; font:12px/1.6 ui-monospace,monospace; }
+@media(max-width:700px){.noj-css-field-head{align-items:flex-start;flex-direction:column;gap:4px}.noj-css-field .CodeMirror{height:260px}}
