@@ -458,3 +458,138 @@ header[class*="AppHeader"] {
   [class*="ControlPane"] { padding: 12px !important; }
   [class*="PreviewPane"] { border-left: 0 !important; border-top: 1px solid var(--noj-admin-line) !important; }
 }
+
+
+/* Studio visual system — bring the Decap editing workspace into the same
+   typography, spacing, surfaces and accent palette as dashboard.css. */
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap');
+:root {
+  --noj-admin-bg: #f3f5f6;
+  --noj-admin-panel: #ffffff;
+  --noj-admin-ink: #252a30;
+  --noj-admin-muted: #737c86;
+  --noj-admin-line: #e2e6e9;
+  --noj-admin-blue: #367fa5;
+  --noj-admin-blue-dark: #286a8c;
+  --noj-admin-orange: #ef8050;
+  --noj-admin-sidebar: #20262d;
+  --noj-admin-sidebar-hover: #303a44;
+  --noj-admin-sidebar-active: #367fa5;
+}
+html, body, #nc-root {
+  background: var(--noj-admin-bg) !important;
+  color: var(--noj-admin-ink) !important;
+  font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif !important;
+  font-size: 14px !important;
+}
+#nc-root h1, #nc-root h2, #nc-root h3 {
+  font-family: 'Space Grotesk', 'DM Sans', sans-serif !important;
+  color: var(--noj-admin-ink) !important;
+  letter-spacing: -.035em !important;
+}
+#nc-root button, #nc-root input, #nc-root select, #nc-root textarea {
+  font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif !important;
+}
+#nc-root a { color: var(--noj-admin-blue); }
+#nc-root button { border-radius: 6px !important; }
+#nc-root input, #nc-root textarea, #nc-root select {
+  border-radius: 6px !important;
+  border-color: #d7dfe4 !important;
+  box-shadow: none !important;
+}
+#nc-root input:focus, #nc-root textarea:focus, #nc-root select:focus {
+  border-color: var(--noj-admin-blue) !important;
+  outline: 2px solid #367fa526 !important;
+}
+#nc-root button[class*="primary"], #nc-root [role="button"][class*="primary"] {
+  background: var(--noj-admin-blue) !important;
+  color: #fff !important;
+  border-color: var(--noj-admin-blue) !important;
+  border-radius: 6px !important;
+  font-weight: 700 !important;
+}
+#nc-root button[class*="primary"]:hover { background: var(--noj-admin-blue-dark) !important; }
+/* Consistent light canvas and editorial cards. */
+#nc-root [class*="CollectionPage"],
+#nc-root [class*="CollectionMain"],
+#nc-root [class*="EntryEditor"],
+#nc-root [class*="ControlPane"],
+#nc-root [class*="MediaLibrary"],
+#nc-root [class*="WorkflowList"],
+#nc-root [class*="EditorContainer"] {
+  background-color: var(--noj-admin-bg) !important;
+}
+#nc-root [class*="ControlPane"] { padding: 24px !important; }
+#nc-root [class*="ControlContainer"] { margin-bottom: 18px !important; }
+#nc-root [class*="ControlLabel"], #nc-root label {
+  color: #4f5b65 !important;
+  font-weight: 600 !important;
+}
+#nc-root [class*="PreviewPane"] {
+  background: #e9edef !important;
+  border-left: 1px solid var(--noj-admin-line) !important;
+  padding: 18px !important;
+}
+#nc-root [class*="PreviewPane"] iframe {
+  background: #fff !important;
+  border: 1px solid var(--noj-admin-line) !important;
+  border-radius: 8px !important;
+  box-shadow: 0 4px 16px rgba(24,37,48,.07) !important;
+}
+/* The custom editor itself uses the same rounded panels and blue active state
+   as the Studio's action cards and controls. */
+.noj-body-editor, .noj-css-editor {
+  overflow: hidden !important;
+  border: 1px solid var(--noj-admin-line) !important;
+  border-radius: 8px !important;
+  background: #fff !important;
+  box-shadow: 0 3px 12px rgba(24,37,48,.045) !important;
+}
+.noj-editor-toolbar, .noj-mode-tabs, .noj-css-toolbar {
+  background: #f7f8f9 !important;
+  border-bottom: 1px solid #e7ebee !important;
+}
+.noj-mode-tab {
+  border-radius: 5px !important;
+  color: #65717b !important;
+  font-weight: 600 !important;
+}
+.noj-mode-tab.is-active {
+  background: var(--noj-admin-sidebar) !important;
+  color: #fff !important;
+  box-shadow: none !important;
+}
+.noj-editor-hint { color: #87919a !important; font-size: 11px !important; }
+.noj-visual-editor, .noj-markdown-editor, .noj-html-editor {
+  background: #fff !important;
+  color: #252a30 !important;
+  font-family: 'DM Sans', sans-serif !important;
+}
+.noj-markdown-editor, .noj-html-editor, #nc-root .CodeMirror {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace !important;
+  font-size: 13px !important;
+  line-height: 1.65 !important;
+}
+#nc-root .CodeMirror {
+  min-height: 360px !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  background: #fff !important;
+}
+#nc-root .CodeMirror-gutters { background: #f7f8f9 !important; border-right: 1px solid #e6eaed !important; }
+#nc-root .CodeMirror-linenumber { color: #9aa3ab !important; }
+#nc-root [role="dialog"] {
+  border-radius: 10px !important;
+  box-shadow: 0 16px 44px rgba(24,37,48,.16) !important;
+}
+#nc-root table { border-color: var(--noj-admin-line) !important; }
+#nc-root th { background: #f7f8f9 !important; color: #7d8790 !important; font-size: 10px !important; letter-spacing: .08em !important; text-transform: uppercase !important; }
+#nc-root td { border-color: #edf0f2 !important; }
+#nc-root a:focus-visible, #nc-root button:focus-visible {
+  outline: 2px solid var(--noj-admin-orange) !important;
+  outline-offset: 2px !important;
+}
+@media(max-width:800px) {
+  #nc-root [class*="ControlPane"] { padding: 13px !important; }
+  #nc-root [class*="PreviewPane"] { padding: 10px !important; border-left: 0 !important; border-top: 1px solid var(--noj-admin-line) !important; }
+}
