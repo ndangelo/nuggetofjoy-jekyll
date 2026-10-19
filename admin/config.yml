@@ -171,7 +171,7 @@ collections:
   - name: content_pages
     label: Pages
     label_singular: Page
-    description: "Manage standalone site pages. The homepage is maintained separately because it contains Jekyll template logic."
+    description: "Manage standalone site pages. Homepage copy and navigation are managed in Homepage & Navigation."
     folder: "_pages"
     create: true
     extension: "md"
