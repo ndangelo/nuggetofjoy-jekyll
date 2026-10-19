@@ -153,7 +153,6 @@ collections:
           - { label: Archive Description, name: archive_description, widget: text }
           - { label: Return Link Text, name: return_link_text, widget: string }
           - { label: Year List Eyebrow, name: year_list_kicker, widget: string }
-          - { label: Header Search Placeholder, name: search_placeholder_header, widget: string, required: false }
           - label: Main Navigation
             name: navigation
             widget: list
