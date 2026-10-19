@@ -303,3 +303,158 @@ a:hover { color:var(--noj-admin-blue-dark); }
   .nc-collectionPage table { display:block; overflow-x:auto; }
   .nc-entryEditor-previewPane { border-left:0!important; border-top:1px solid #d8dde3!important; }
 }
+
+
+/* Actual Decap CMS shell: target its rendered component names, not the old
+   .nc-* placeholders. Keep selectors broad enough to survive generated classes. */
+:root {
+  --noj-admin-bg: #f0f2f4;
+  --noj-admin-sidebar: #20262d;
+  --noj-admin-sidebar-hover: #303a44;
+  --noj-admin-sidebar-active: #2878a8;
+  --noj-admin-blue: #2878a8;
+  --noj-admin-blue-dark: #1d5d83;
+  --noj-admin-orange: #ef8050;
+  --noj-admin-line: #d8dde3;
+}
+body, #nc-root, #nc-root > div {
+  min-height: 100vh !important;
+  background: var(--noj-admin-bg) !important;
+  color: #20262d !important;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif !important;
+}
+/* Top admin bar */
+[class*="AppHeader-header"], [class*="AppHeader-content"],
+header[class*="AppHeader"] {
+  background: #20262d !important;
+  color: #f4f6f8 !important;
+  border-bottom: 3px solid var(--noj-admin-orange) !important;
+  box-shadow: 0 2px 7px rgba(20,30,40,.16) !important;
+}
+[class*="AppHeader"] a, [class*="AppHeader"] button,
+[class*="AppHeader"] span, [class*="AppHeader"] svg {
+  color: #f4f6f8 !important;
+}
+/* Left collection navigation */
+[class*="SidebarContainer"], [class*="SidebarNav"], nav[aria-label*="Collection"] {
+  background: var(--noj-admin-sidebar) !important;
+  color: #d7dce1 !important;
+  border-right: 0 !important;
+}
+[class*="SidebarContainer"] a, [class*="SidebarNav"] a,
+[class*="SidebarContainer"] button, [class*="SidebarNav"] button {
+  color: #d7dce1 !important;
+  border-radius: 4px !important;
+  text-decoration: none !important;
+}
+[class*="SidebarContainer"] a:hover, [class*="SidebarNav"] a:hover,
+[class*="SidebarContainer"] button:hover, [class*="SidebarNav"] button:hover {
+  color: #fff !important;
+  background: var(--noj-admin-sidebar-hover) !important;
+}
+[class*="SidebarContainer"] [aria-current="page"],
+[class*="SidebarContainer"] [aria-selected="true"],
+[class*="SidebarNav"] [aria-current="page"],
+[class*="SidebarNav"] [aria-selected="true"] {
+  color: #fff !important;
+  background: var(--noj-admin-sidebar-active) !important;
+}
+/* Collection list and editor surfaces */
+[class*="CollectionPage"], [class*="CollectionMain"],
+[class*="EntryEditor"], [class*="ControlPane"],
+[class*="MediaLibrary"], [class*="WorkflowList"] {
+  background: var(--noj-admin-bg) !important;
+  color: #20262d !important;
+}
+[class*="CollectionPage"] h1, [class*="CollectionMain"] h1,
+[class*="EntryEditor"] h1, [class*="MediaLibrary"] h1 {
+  color: #20262d !important;
+  font-weight: 750 !important;
+  letter-spacing: -.03em !important;
+}
+[class*="CollectionPage"] table, [class*="CollectionMain"] table {
+  width: 100% !important;
+  background: #fff !important;
+  border: 1px solid var(--noj-admin-line) !important;
+  border-collapse: separate !important;
+  border-spacing: 0 !important;
+  border-radius: 8px !important;
+  overflow: hidden !important;
+  box-shadow: 0 2px 8px rgba(20,30,40,.045) !important;
+}
+[class*="CollectionPage"] th, [class*="CollectionMain"] th {
+  background: #f7f8f9 !important;
+  color: #5b6570 !important;
+  font-size: 11px !important;
+  font-weight: 750 !important;
+  text-transform: uppercase !important;
+  letter-spacing: .05em !important;
+}
+[class*="CollectionPage"] td, [class*="CollectionPage"] th,
+[class*="CollectionMain"] td, [class*="CollectionMain"] th {
+  padding: 13px 15px !important;
+  border-bottom: 1px solid #e8ebee !important;
+}
+[class*="CollectionPage"] tbody tr:hover td,
+[class*="CollectionMain"] tbody tr:hover td {
+  background: #f4f8fb !important;
+}
+[class*="CollectionPage"] input, [class*="CollectionPage"] select,
+[class*="EntryEditor"] input, [class*="EntryEditor"] textarea,
+[class*="EntryEditor"] select {
+  border: 1px solid #cbd2d9 !important;
+  border-radius: 5px !important;
+  box-shadow: none !important;
+}
+[class*="CollectionPage"] input:focus, [class*="CollectionPage"] select:focus,
+[class*="EntryEditor"] input:focus, [class*="EntryEditor"] textarea:focus,
+[class*="EntryEditor"] select:focus {
+  border-color: var(--noj-admin-blue) !important;
+  outline: 2px solid rgba(40,120,168,.18) !important;
+}
+[class*="CollectionPage"] button, [class*="EntryEditor"] button,
+[class*="MediaLibrary"] button {
+  border-radius: 5px !important;
+}
+[class*="CollectionPage"] button[class*="primary"],
+[class*="EntryEditor"] button[class*="primary"] {
+  background: var(--noj-admin-blue) !important;
+  color: #fff !important;
+}
+/* Editor: keep the controls readable and separate the preview visually. */
+[class*="ControlPane"] { padding: 24px !important; }
+[class*="PreviewPane"] {
+  background: #e5e9ed !important;
+  border-left: 1px solid var(--noj-admin-line) !important;
+}
+[class*="PreviewPane"] iframe {
+  background: #fff !important;
+  box-shadow: 0 2px 12px rgba(20,30,40,.09) !important;
+}
+[class*="ControlPane"] label {
+  color: #39434d !important;
+  font-weight: 650 !important;
+}
+.noj-body-editor, .noj-css-editor {
+  border: 1px solid #cbd3dc !important;
+  border-radius: 7px !important;
+  background: #fff !important;
+  box-shadow: 0 2px 8px rgba(20,30,40,.045) !important;
+}
+.noj-mode-tabs, .noj-editor-toolbar {
+  background: #f7f8fa !important;
+}
+.noj-mode-tab.is-active {
+  background: #20262d !important;
+  color: #fff !important;
+}
+.CodeMirror {
+  min-height: 300px !important;
+  border: 1px solid #d8dde3 !important;
+  border-radius: 5px !important;
+  font: 13px/1.6 ui-monospace, SFMono-Regular, Menlo, monospace !important;
+}
+@media (max-width: 800px) {
+  [class*="ControlPane"] { padding: 12px !important; }
+  [class*="PreviewPane"] { border-left: 0 !important; border-top: 1px solid var(--noj-admin-line) !important; }
+}
