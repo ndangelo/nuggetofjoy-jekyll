@@ -65,8 +65,8 @@
       function codePenURL(url) {
         try {
           var parsed = new URL(url, window.location.href);
-          if (!/(^|\.)codepen\.io$/i.test(parsed.hostname)) return null;
-          var match = parsed.pathname.match(/^\/([^/]+)\/(?:pen|embed)\/([A-Za-z0-9_-]+)/);
+          if (!/(^|\\.)codepen\\.io$/i.test(parsed.hostname)) return null;
+          var match = parsed.pathname.match(/^\\/([^/]+)\\/(?:pen|embed)\\/([A-Za-z0-9_-]+)/);
           if (!match) return null;
           return "https://codepen.io/" + match[1] + "/embed/" + match[2] + "?default-tab=result&theme-id=light";
         } catch (e) { return null; }
@@ -76,7 +76,7 @@
         if (!root) return;
         root.querySelectorAll("iframe[src]").forEach(function (frame) {
           var src = frame.getAttribute("src") || "";
-          if (!/codepen\.io/i.test(src)) return;
+          if (!/codepen\\.io/i.test(src)) return;
           frame.setAttribute("loading", "lazy");
           frame.setAttribute("title", frame.getAttribute("title") || "Interactive CodePen example");
           frame.setAttribute("allowfullscreen", "");
@@ -88,6 +88,7 @@
           var parent = frame.parentElement;
           if (parent) parent.classList.add("noj-codepen-embed");
         });
+        /* Convert plain CodePen links and legacy blockquotes into dependable iframe embeds. */
         root.querySelectorAll("a[href*='codepen.io']").forEach(function (link) {
           if (link.closest("iframe, .noj-codepen-embed")) return;
           var src = codePenURL(link.href);
@@ -102,11 +103,61 @@
           frame.setAttribute("sandbox", "allow-scripts allow-same-origin allow-forms allow-popups");
           wrapper.appendChild(frame);
           var block = link.closest("p, blockquote");
-          if (block) block.replaceWith(wrapper); else link.replaceWith(wrapper);
+          if (block && block.textContent.trim() === link.textContent.trim()) block.replaceWith(wrapper);
+          else link.insertAdjacentElement("afterend", wrapper);
+        });
+        root.querySelectorAll("blockquote[class*='codepen'], p > a[href*='codepen.io/pen/']").forEach(function (node) {
+          var link = node.matches("a") ? node : node.querySelector("a[href*='codepen.io']");
+          if (!link || node.closest(".noj-codepen-embed")) return;
+          var src = codePenURL(link.href);
+          if (!src) return;
+          var wrapper = document.createElement("div");
+          wrapper.className = "noj-codepen-embed";
+          var frame = document.createElement("iframe");
+          frame.src = src;
+          frame.title = "Interactive CodePen example";
+          frame.loading = "lazy";
+          frame.setAttribute("allowfullscreen", "");
+          frame.setAttribute("sandbox", "allow-scripts allow-same-origin allow-forms allow-popups");
+          wrapper.appendChild(frame);
+          (node.closest("blockquote") || node.closest("p") || node).replaceWith(wrapper);
         });
       }
       if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", repairCodePens);
       else repairCodePens();
+    })();
+  </script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/highlight.min.js"></script>
+  <script>
+    (function () {
+      function highlightNojCode() {
+        if (!window.hljs) return;
+        document.querySelectorAll(".noj-entry-content pre code").forEach(function (block) {
+          /* WordPress uses "markup" for HTML snippets; Highlight.js calls this "xml". */
+          if (block.classList.contains("language-markup")) {
+            block.classList.remove("language-markup");
+            block.classList.add("language-xml");
+          }
+          if (block.getAttribute("lang") === "markup") {
+            block.setAttribute("lang", "xml");
+          }
+          if (block.getAttribute("lang") === "html") {
+            block.setAttribute("lang", "xml");
+          }
+          if (block.classList.contains("language-html")) {
+            block.classList.remove("language-html");
+            block.classList.add("language-xml");
+          }
+          try {
+            window.hljs.highlightElement(block);
+          } catch (error) {
+            console.warn("Nugget of Joy: code highlighting skipped for one block.", error);
+          }
+        });
+      }
+      /* The script is at the end of the document, so initialize immediately. */
+      highlightNojCode();
+      document.addEventListener("DOMContentLoaded", highlightNojCode);
     })();
   </script>
 </body>
