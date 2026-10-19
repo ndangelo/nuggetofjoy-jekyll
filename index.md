@@ -4,23 +4,24 @@ title: Home
 description: A working archive of design briefs, course materials, tutorials, and creative experiments.
 ---
 
+{% assign home = site.data.homepage %}
 <section class="noj-hero">
   <div class="noj-wrap">
-    <p class="noj-kicker">communication · art · design · instruction</p>
-    <h1>Ideas for making,<br><em>thinking, and learning.</em></h1>
-    <p class="noj-intro">A working archive of design briefs, course materials, tutorials, and creative experiments. Search a topic or browse the resources below.</p>
+    <p class="noj-kicker">{{ home.hero_kicker | default: "communication · art · design · instruction" | escape }}</p>
+    <h1>{{ home.hero_heading_start | default: "Ideas for making," | escape }}<br><em>{{ home.hero_heading_emphasis | default: "thinking, and learning." | escape }}</em></h1>
+    <p class="noj-intro">{{ home.hero_intro | default: "A working archive of design briefs, course materials, tutorials, and creative experiments." | escape }}</p>
     <div class="noj-hero-tools">
       <form class="noj-search" role="search" action="{{ '/search/' | relative_url }}" method="get">
         <label class="screen-reader-text" for="noja-search-hero">Search all content</label>
-        <input id="noja-search-hero" type="search" name="s" placeholder="Search the archive…">
+        <input id="noja-search-hero" type="search" name="s" placeholder="{{ home.search_placeholder | default: 'Search the archive…' | escape }}">
         <button type="submit">Search</button>
       </form>
-      <a class="noj-text-link" href="#archive">browse the archive ↓</a>
+      <a class="noj-text-link" href="#archive">{{ home.browse_link_text | default: "browse the archive ↓" | escape }}</a>
     </div>
     <div class="noj-category-list" aria-label="Popular topics">
-      <a href="#recent">Recently added</a>
-      <a href="#archive">Browse by year</a>
-      <a href="{{ '/about/' | relative_url }}">About Nugget of Joy</a>
+      {% for item in home.homepage_links %}
+      <a href="{{ item.url | relative_url }}">{{ item.label | escape }}</a>
+      {% endfor %}
     </div>
   </div>
 </section>
@@ -29,14 +30,15 @@ description: A working archive of design briefs, course materials, tutorials, an
   <div class="noj-wrap">
     <div class="noj-section-head">
       <div>
-        <p class="noj-kicker">recently added</p>
-        <h2>From the archive</h2>
-        <p class="noj-small-note">New and updated resources, newest first.</p>
+        <p class="noj-kicker">{{ home.recent_kicker | default: "recently added" | escape }}</p>
+        <h2>{{ home.recent_heading | default: "From the archive" | escape }}</h2>
+        <p class="noj-small-note">{{ home.recent_description | default: "New and updated resources, newest first." | escape }}</p>
       </div>
     </div>
     <div class="noj-content-list">
       {% assign recent_posts = site.posts | sort: "date" | reverse %}
-      {% for post in recent_posts limit: 12 %}
+      {% assign recent_limit = home.recent_posts_limit | default: 12 %}
+      {% for post in recent_posts limit: recent_limit %}
       <a class="noj-content-row" href="{{ post.url | relative_url }}">
         <span class="noj-row-date">{{ post.date | date: "%b %-d, %Y" }}</span>
         <span>
@@ -54,13 +56,13 @@ description: A working archive of design briefs, course materials, tutorials, an
 <section id="archive" class="noj-archive">
   <div class="noj-wrap noj-archive-grid">
     <div>
-      <p class="noj-kicker">keep exploring</p>
-      <h2>Good ideas are worth revisiting.</h2>
-      <p>Browse older course materials and design resources. This archive is generated from published posts, rather than a manually maintained list.</p>
-      <a class="noj-text-link" href="#recent">return to recent resources ↑</a>
+      <p class="noj-kicker">{{ home.archive_kicker | default: "keep exploring" | escape }}</p>
+      <h2>{{ home.archive_heading | default: "Good ideas are worth revisiting." | escape }}</h2>
+      <p>{{ home.archive_description | default: "Browse older course materials and design resources. This archive is generated from published posts, rather than a manually maintained list." | escape }}</p>
+      <a class="noj-text-link" href="#recent">{{ home.return_link_text | default: "return to recent resources ↑" | escape }}</a>
     </div>
     <div>
-      <p class="noj-kicker">browse by year</p>
+      <p class="noj-kicker">{{ home.year_list_kicker | default: "browse by year" | escape }}</p>
       <ul class="noj-year-list">
         {% assign year_groups = site.posts | group_by_exp: "post", "post.date | date: '%Y'" | sort: "name" | reverse %}
         {% for year in year_groups %}
