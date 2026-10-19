@@ -1,25 +1,21 @@
-# Decap CMS configuration for the Nugget of Joy Jekyll archive.
-# Authentication must be configured before editors can publish.
-# Never place GitHub tokens, OAuth secrets, or passwords in this public file.
+# Sveltia CMS configuration for the Nugget of Joy Jekyll staging site.
+# This CMS writes to the staging repository only: ndangelo/nuggetofjoy-jekyll.
+# Sign in with a GitHub personal access token that has Contents: Read and write.
+# Never put the token in this file.
 
 backend:
-  name: turbo-github
-  turbo_site_id: e12e3730-ea7e-48f9-8b69-185654aef7c7
+  name: github
+  repo: ndangelo/nuggetofjoy-jekyll
   branch: main
-
-# Uploads are committed to the repository and published with the site.
-media_folder: "assets/images/uploads"
-public_folder: "/nuggetofjoy-jekyll/assets/images/uploads"
+  auth_methods: [token]
+  prompt_commit_messages: true
 
 site_url: "https://ndangelo.github.io/nuggetofjoy-jekyll"
 display_url: "https://ndangelo.github.io/nuggetofjoy-jekyll"
 
-# Use the editorial workflow so content can be saved as drafts before publishing.
-# Drafts are kept in the CMS Drafts area; publishing promotes them to main.
-publish_mode: editorial_workflow
+media_folder: "assets/images/uploads"
+public_folder: "/nuggetofjoy-jekyll/assets/images/uploads"
 
-# Make the interface useful for a large archive.
-show_preview_links: true
 slug:
   encoding: "ascii"
   clean_accents: true
@@ -28,18 +24,14 @@ collections:
   - name: posts
     label: Blog Posts
     label_singular: Blog Post
-    description: "Manage published articles, tutorials, design briefs, and course resources."
+    description: "Edit articles, tutorials, design briefs, and course resources."
     folder: "_posts"
     create: true
     extension: "md"
-    format: "frontmatter"
-    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
+    format: "yaml-frontmatter"
+    slug: "{{date | date('YYYY-MM-DD')}}-{{slug}}"
     summary: "{{title}} · {{date}}"
-    search_fields:
-      - title
-      - description
-      - categories
-      - tags
+    sortable_fields: [date, title]
     view_filters:
       - label: Has featured image
         field: image
@@ -47,49 +39,29 @@ collections:
       - label: Missing featured image
         field: image
         pattern: "^$"
-      - label: Has SEO description
-        field: seo.seo_description
-        pattern: ".+"
       - label: Missing excerpt
         field: description
         pattern: "^$"
-      - label: Missing image alt text
-        field: image_alt
-        pattern: "^$"
-    sortable_fields:
-      - title
-      - date
     view_groups:
       - label: Year
         field: date
         pattern: "\\d{4}"
     fields:
       - { label: Layout, name: layout, widget: hidden, default: post }
-      - { label: Title, name: title, widget: string }
+      - { label: Title, name: title, widget: string, required: true }
       - label: Publish Date
         name: date
         widget: datetime
+        type: datetime
         format: "YYYY-MM-DD HH:mm:ss"
-        date_format: "YYYY-MM-DD"
-        time_format: "HH:mm:ss"
-      - { label: Permalink / Public URL, name: permalink, widget: string, required: false, hint: "Preserve the existing URL for older posts. Changing this can break links." }
-      - { label: Description / Excerpt, name: description, widget: text, required: false, hint: "Short summary used on archive cards and as the default search/social description." }
-      - { label: Custom CSS, name: custom_css, widget: noj_css, default_language: css, allow_language_selection: false, required: false, hint: "Optional CSS applied only to this post. Do not include <style> tags. Scope rules to this post when possible." }
+        default: "{{now}}"
+      - { label: Permalink / Public URL, name: permalink, widget: string, required: false, hint: "Preserve existing permalinks to avoid breaking links." }
+      - { label: Description / Excerpt, name: description, widget: text, required: false }
+      - { label: Custom CSS, name: custom_css, widget: code, default_language: css, output_code_only: true, allow_language_selection: false, required: false, hint: "CSS applied to this post by the site's layout, if configured. Do not include style tags." }
       - { label: Author, name: author, widget: string, required: false, default: "Nicholas D’Angelo" }
-      - { label: Featured Image, name: image, widget: image, required: false, media_folder: "assets/images/uploads", public_folder: "/nuggetofjoy-jekyll/assets/images/uploads" }
-      - { label: Image Alt Text, name: image_alt, widget: string, required: false, hint: "Describe the image for screen readers; do not repeat the post title." }
+      - { label: Featured Image, name: image, widget: image, required: false }
+      - { label: Image Alt Text, name: image_alt, widget: string, required: false }
       - { label: Featured Image Caption, name: image_caption, widget: string, required: false }
-      - label: Search & Social Sharing
-        name: seo
-        widget: object
-        required: false
-        collapsed: true
-        summary: "Search and social sharing settings"
-        fields:
-          - { label: SEO Title, name: seo_title, widget: string, required: false, hint: "Optional browser/search title. Leave blank to use the post title." }
-          - { label: SEO Description, name: seo_description, widget: text, required: false, hint: "Optional description for search engines and link previews." }
-          - { label: Social Sharing Image, name: social_image, widget: image, required: false, media_folder: "assets/images/uploads", public_folder: "/nuggetofjoy-jekyll/assets/images/uploads" }
-          - { label: Canonical URL, name: canonical_url, widget: string, required: false, hint: "Only set this when this content's preferred URL is different from this page's URL." }
       - label: Categories
         name: categories
         widget: list
@@ -100,7 +72,17 @@ collections:
         widget: list
         required: false
         field: { label: Tag, name: tag, widget: string }
-      - { label: WordPress ID (legacy), name: wordpress_id, widget: hidden, required: false }
+      - label: Search & Social Sharing
+        name: seo
+        widget: object
+        required: false
+        collapsed: true
+        fields:
+          - { label: SEO Title, name: seo_title, widget: string, required: false }
+          - { label: SEO Description, name: seo_description, widget: text, required: false }
+          - { label: Social Sharing Image, name: social_image, widget: image, required: false }
+          - { label: Canonical URL, name: canonical_url, widget: string, required: false }
+      - { label: Legacy WordPress ID, name: wordpress_id, widget: hidden, required: false }
       - label: Related Resources
         name: related_links
         widget: list
@@ -110,137 +92,101 @@ collections:
         fields:
           - { label: Link Text, name: label, widget: string }
           - { label: URL, name: url, widget: string }
-      - label: Content Blocks
-        name: content_blocks
-        widget: list
-        required: false
-        collapsed: true
-        summary: "{{fields.heading}}"
-        hint: "Optional structured sections that appear after the main article body. Reorder blocks to change their order."
-        types:
-          - label: Callout / Note
-            name: callout
-            widget: object
-            fields:
-              - { label: Heading, name: heading, widget: string, required: false }
-              - label: Style
-                name: tone
-                widget: select
-                options:
-                  - { label: Tip, value: tip }
-                  - { label: Note, value: note }
-                  - { label: Important, value: important }
-                default: note
-              - { label: Text, name: text, widget: markdown, required: true }
-          - label: Image Gallery
-            name: gallery
-            widget: object
-            fields:
-              - { label: Heading, name: heading, widget: string, required: false }
-              - label: Images
-                name: images
-                widget: list
-                label_singular: Gallery Image
-                summary: "{{fields.alt}}"
-                fields:
-                  - { label: Image, name: image, widget: image }
-                  - { label: Alt Text, name: alt, widget: string }
-                  - { label: Caption, name: caption, widget: string, required: false }
-          - label: Code Example
-            name: code_example
-            widget: object
-            fields:
-              - { label: Heading, name: heading, widget: string, required: false }
-              - label: Code
-                name: code
-                widget: code
-                default_language: html
-                allow_language_selection: true
-                keys: { code: code, lang: language }
-          - label: Quote
-            name: quote
-            widget: object
-            fields:
-              - { label: Quote, name: quote, widget: text }
-              - { label: Attribution, name: attribution, widget: string, required: false }
-      - label: Body
+      - label: Article Content
         name: body
-        widget: noj_body
-        hint: "Switch between Visual, Markdown, and syntax-highlighted HTML modes. All three edit the same content field. Use Preview to confirm the result before publishing."
+        widget: richtext
+        format: html
+        hint: "Use the Visual mode for ordinary text and the Raw mode for legacy HTML, WordPress block markup, embeds, and CodePen projects. Inspect the raw source before changing complex posts."
 
   - name: content_pages
     label: Pages
     label_singular: Page
-    description: "Manage standalone site pages. Homepage copy and navigation are managed in Homepage & Navigation."
     folder: "_pages"
     create: true
     extension: "md"
-    format: "frontmatter"
-    filter:
-      field: layout
-      value: page
+    format: "yaml-frontmatter"
     slug: "{{slug}}"
     summary: "{{title}}"
-    search_fields:
-      - title
-      - description
+    sortable_fields: [title, date]
     fields:
       - { label: Layout, name: layout, widget: hidden, default: page }
-      - { label: Title, name: title, widget: string }
-      - { label: URL Slug, name: permalink, widget: string, required: false, hint: "Use the existing public URL when editing an established page." }
-      - { label: Description, name: description, widget: text, required: false }
-      - { label: Custom CSS, name: custom_css, widget: noj_css, default_language: css, allow_language_selection: false, required: false, hint: "Optional CSS applied only to this page. Do not include <style> tags. Scope rules to this page when possible." }
-      - label: Search & Social Sharing
-        name: seo
-        widget: object
-        required: false
-        collapsed: true
-        summary: "Search and social sharing settings"
-        fields:
-          - { label: SEO Title, name: seo_title, widget: string, required: false }
-          - { label: SEO Description, name: seo_description, widget: text, required: false }
-          - { label: Social Sharing Image, name: social_image, widget: image, required: false, media_folder: "assets/images/uploads", public_folder: "/nuggetofjoy-jekyll/assets/images/uploads" }
-          - { label: Canonical URL, name: canonical_url, widget: string, required: false }
-      - { label: WordPress ID (legacy), name: wordpress_id, widget: hidden, required: false }
-      - label: Body
+      - { label: Title, name: title, widget: string, required: true }
+      - { label: Publish / Update Date, name: date, widget: datetime, type: datetime, format: "YYYY-MM-DD HH:mm:ss", required: false }
+      - { label: Permalink / Public URL, name: permalink, widget: string, required: false, hint: "Preserve existing permalinks to avoid breaking links." }
+      - { label: Categories, name: categories, widget: list, required: false, field: { label: Category, name: category, widget: string } }
+      - { label: Tags, name: tags, widget: list, required: false, field: { label: Tag, name: tag, widget: string } }
+      - { label: Legacy WordPress ID, name: wordpress_id, widget: hidden, required: false }
+      - label: Page Content
         name: body
-        widget: noj_body
+        widget: richtext
+        format: html
+        hint: "Use Raw mode for legacy WordPress markup or embeds."
 
-# Site-level content settings. Edit the homepage and navigation here; the Liquid
-# template stays in index.md so the CMS cannot accidentally remove its logic.
-files:
-  - label: "Homepage & Navigation"
-    name: homepage_settings
-    file: "_data/homepage.yml"
-    description: "Edit homepage copy, recent-post display, archive text, and site navigation."
-    fields:
-      - { label: Hero Eyebrow, name: hero_kicker, widget: string }
-      - { label: Main Heading — First Line, name: hero_heading_start, widget: string }
-      - { label: Main Heading — Emphasized Line, name: hero_heading_emphasis, widget: string }
-      - { label: Introductory Text, name: hero_intro, widget: text }
-      - { label: Search Placeholder, name: search_placeholder, widget: string }
-      - { label: Header Search Placeholder, name: search_placeholder_header, widget: string, required: false }
-      - { label: Browse Link Text, name: browse_link_text, widget: string }
-      - label: Homepage Quick Links
-        name: homepage_links
-        widget: list
-        summary: "{{fields.label}}"
+  - name: homepage_settings
+    label: Homepage & Navigation
+    files:
+      - name: homepage
+        label: Homepage Content & Navigation
+        file: "_data/homepage.yml"
+        format: yaml
         fields:
-          - { label: Link Label, name: label, widget: string }
-          - { label: URL, name: url, widget: string }
-      - { label: Recent Posts Eyebrow, name: recent_kicker, widget: string }
-      - { label: Recent Posts Heading, name: recent_heading, widget: string }
-      - { label: Recent Posts Description, name: recent_description, widget: text }
-      - { label: Number of Recent Posts, name: recent_posts_limit, widget: number, value_type: int, min: 1, max: 30 }
-      - { label: Archive Eyebrow, name: archive_kicker, widget: string }
-      - { label: Archive Heading, name: archive_heading, widget: string }
-      - { label: Archive Description, name: archive_description, widget: text }
-      - { label: Return Link Text, name: return_link_text, widget: string }
-      - { label: Year List Eyebrow, name: year_list_kicker, widget: string }
-      - label: Main Navigation
-        name: navigation
-        widget: list
-        summary: "{{fields.label}}"
+          - { label: Hero Eyebrow, name: hero_kicker, widget: string }
+          - { label: Main Heading — First Line, name: hero_heading_start, widget: string }
+          - { label: Main Heading — Emphasized Line, name: hero_heading_emphasis, widget: string }
+          - { label: Introductory Text, name: hero_intro, widget: text }
+          - { label: Search Placeholder, name: search_placeholder, widget: string }
+          - { label: Header Search Placeholder, name: search_placeholder_header, widget: string, required: false }
+          - { label: Browse Link Text, name: browse_link_text, widget: string }
+          - label: Homepage Quick Links
+            name: homepage_links
+            widget: list
+            summary: "{{fields.label}}"
+            fields:
+              - { label: Link Label, name: label, widget: string }
+              - { label: URL, name: url, widget: string }
+          - { label: Recent Posts Eyebrow, name: recent_kicker, widget: string }
+          - { label: Recent Posts Heading, name: recent_heading, widget: string }
+          - { label: Recent Posts Description, name: recent_description, widget: text }
+          - { label: Number of Recent Posts, name: recent_posts_limit, widget: number, value_type: int, min: 1, max: 30 }
+          - { label: Archive Eyebrow, name: archive_kicker, widget: string }
+          - { label: Archive Heading, name: archive_heading, widget: string }
+          - { label: Archive Description, name: archive_description, widget: text }
+          - { label: Return Link Text, name: return_link_text, widget: string }
+          - { label: Year List Eyebrow, name: year_list_kicker, widget: string }
+          - { label: Header Search Placeholder, name: search_placeholder_header, widget: string, required: false }
+          - label: Main Navigation
+            name: navigation
+            widget: list
+            summary: "{{fields.label}}"
+            fields:
+              - { label: Navigation Label, name: label, widget: string }
+              - { label: Destination URL, name: url, widget: string }
+
+  - name: site_code
+    label: Design & CSS
+    description: "Edit the actual stylesheet files. Changes are committed to the staging repository and published by the Jekyll build."
+    editor:
+      preview: false
+    files:
+      - name: global_css
+        label: Global CSS — Site-wide styles
+        file: "assets/css/style.css"
+        format: raw
         fields:
-          - { label: Navigation Label, name: label, widget: string }
-          - { label: Destination URL, name: url, widget: string }
+          - name: body
+            label: CSS Source
+            widget: code
+            output_code_only: true
+            allow_language_selection: false
+            default_language: css
+      - name: theme_css
+        label: Theme CSS — Design system
+        file: "assets/css/nuggetofjoy-theme.css"
+        format: raw
+        fields:
+          - name: body
+            label: CSS Source
+            widget: code
+            output_code_only: true
+            allow_language_selection: false
+            default_language: css
