@@ -166,7 +166,7 @@ collections:
       - label: Body
         name: body
         widget: noj_body
-        hint: "Use Rich Text for visual editing. Use Raw mode for Markdown and embedded HTML/source. The preview pane shows the rendered HTML result. A separate third HTML-editing mode would require a custom editor widget; do not switch modes on older posts until the preview looks correct."
+        hint: "Switch between Visual, Markdown, and syntax-highlighted HTML modes. All three edit the same content field. Use Preview to confirm the result before publishing."
 
   - name: content_pages
     label: Pages
