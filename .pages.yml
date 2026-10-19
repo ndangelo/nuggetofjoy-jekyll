@@ -1,0 +1,244 @@
+# Pages CMS configuration for Nugget of Joy.
+# This runs alongside the current admin during evaluation; it does not change the live WordPress site.
+# Content stays in the Jekyll repository and is published by the existing GitHub Pages workflow.
+
+media:
+  - name: uploads
+    label: Site uploads
+    input: assets/images/uploads
+    output: /nuggetofjoy-jekyll/assets/images/uploads
+    rename: false
+    categories: [image, document, video, audio, compressed]
+
+settings:
+  content: true
+  commit:
+    templates:
+      create: "content: create {path}"
+      update: "content: update {path}"
+      delete: "content: delete {path}"
+      rename: "content: rename {oldPath} -> {newPath}"
+
+content:
+  - name: posts
+    label: Blog Posts
+    type: collection
+    path: _posts
+    format: yaml-frontmatter
+    filename: "{year}-{month}-{day}-{title}.md"
+    operations:
+      rename: false
+    view:
+      primary: title
+      fields: [title, date, categories, image]
+      sort: [date, title]
+      search: [title, description, categories, tags, permalink]
+      default:
+        sort: date
+        order: desc
+    fields:
+      - name: title
+        label: Title
+        type: string
+        required: true
+      - name: date
+        label: Publish date
+        type: date
+        options:
+          time: true
+          format: "yyyy-MM-dd HH:mm:ss"
+      - name: layout
+        label: Layout
+        type: string
+        hidden: true
+      - name: permalink
+        label: Public URL / permalink
+        type: string
+        description: Preserve the existing URL for older posts. Changing it may break links.
+      - name: description
+        label: Excerpt / description
+        type: text
+      - name: author
+        label: Author
+        type: string
+      - name: image
+        label: Featured image
+        type: image
+        options:
+          media: uploads
+          path: assets/images/uploads
+      - name: image_alt
+        label: Featured image alt text
+        type: string
+      - name: image_caption
+        label: Featured image caption
+        type: string
+      - name: categories
+        label: Categories
+        type: string
+        list: true
+      - name: tags
+        label: Tags
+        type: string
+        list: true
+      - name: seo
+        label: Search & social
+        type: object
+        fields:
+          - name: seo_title
+            label: SEO title
+            type: string
+          - name: seo_description
+            label: SEO description
+            type: text
+          - name: social_image
+            label: Social sharing image
+            type: image
+            options:
+              media: uploads
+          - name: canonical_url
+            label: Canonical URL
+            type: string
+      - name: custom_css
+        label: Custom CSS
+        type: text
+        description: Optional CSS for this post. Keep the CSS as source text; this field is intentionally not rich-text formatted.
+      - name: wordpress_id
+        label: Legacy WordPress ID
+        type: string
+        hidden: true
+      - name: body
+        label: Post content (HTML source)
+        type: code
+        options:
+          format: html
+        description: Source editor preserves legacy HTML, embeds, CodePen projects, and WordPress block markup. Avoid converting the whole body through a rich-text editor.
+
+  - name: pages
+    label: Pages
+    type: collection
+    path: _pages
+    format: yaml-frontmatter
+    filename: "{title}.md"
+    operations:
+      rename: false
+    view:
+      primary: title
+      fields: [title, permalink, date]
+      sort: [title]
+      search: [title, permalink]
+    fields:
+      - name: title
+        label: Title
+        type: string
+        required: true
+      - name: date
+        label: Last updated / date
+        type: date
+        options:
+          time: true
+          format: "yyyy-MM-dd HH:mm:ss"
+      - name: layout
+        label: Layout
+        type: string
+        hidden: true
+      - name: permalink
+        label: Public URL / permalink
+        type: string
+        description: Preserve the current permalink to keep existing links working.
+      - name: categories
+        label: Categories
+        type: string
+        list: true
+      - name: tags
+        label: Tags
+        type: string
+        list: true
+      - name: wordpress_id
+        label: Legacy WordPress ID
+        type: string
+        hidden: true
+      - name: body
+        label: Page content (HTML source)
+        type: code
+        options:
+          format: html
+
+  - name: homepage
+    label: Homepage & Navigation
+    type: file
+    path: _data/homepage.yml
+    format: yaml
+    operations:
+      delete: false
+    fields:
+      - name: hero_kicker
+        label: Hero eyebrow
+        type: string
+      - name: hero_heading_start
+        label: Hero heading
+        type: string
+      - name: hero_heading_emphasis
+        label: Emphasized heading
+        type: string
+      - name: hero_intro
+        label: Introductory text
+        type: text
+      - name: search_placeholder
+        label: Search placeholder
+        type: string
+      - name: browse_link_text
+        label: Browse link text
+        type: string
+      - name: homepage_links
+        label: Homepage quick links
+        type: object
+        list: true
+        fields:
+          - name: label
+            label: Link label
+            type: string
+          - name: url
+            label: URL
+            type: string
+      - name: recent_kicker
+        label: Recent section eyebrow
+        type: string
+      - name: recent_heading
+        label: Recent section heading
+        type: string
+      - name: recent_description
+        label: Recent section description
+        type: text
+      - name: recent_posts_limit
+        label: Number of recent posts
+        type: number
+      - name: archive_kicker
+        label: Archive section eyebrow
+        type: string
+      - name: archive_heading
+        label: Archive section heading
+        type: string
+      - name: archive_description
+        label: Archive section description
+        type: text
+      - name: return_link_text
+        label: Return link text
+        type: string
+      - name: year_list_kicker
+        label: Year archive eyebrow
+        type: string
+      - name: search_placeholder_header
+        label: Header search placeholder
+        type: string
+      - name: navigation
+        label: Main navigation
+        type: object
+        list: true
+        fields:
+          - name: label
+            label: Link label
+            type: string
+          - name: url
+            label: URL
+            type: string
