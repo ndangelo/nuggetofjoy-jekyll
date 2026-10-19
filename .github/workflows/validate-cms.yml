@@ -22,7 +22,9 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Check editor JavaScript syntax
-        run: node --check admin/editor-modes.js
+        run: |
+          node --check admin/editor-modes.js
+          node --check admin/studio.js
 
       - name: Setup Ruby
         uses: ruby/setup-ruby@v1

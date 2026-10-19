@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="theme-color" content="#f8f6f0">
+  <link rel="stylesheet" href="https://ndangelo.github.io/nuggetofjoy-jekyll/admin/cms.css">
+  <title>Nugget of Joy — Authenticated Publisher</title>
+  <style>
+    html, body { min-height: 100%; margin: 0; background: #f8f6f0; }
+    body { font-family: Arial, Helvetica, sans-serif; color: #222426; }
+    .cms-loading { max-width: 42rem; margin: 12vh auto; padding: 2rem; }
+    .cms-loading .brand { margin: 0 0 1rem; font-size: 1.35rem; font-weight: 700; letter-spacing: -.05em; }
+    .cms-loading .brand span:first-child { color: #e9783d; }
+    .cms-loading .brand span:last-child { color: #427fa4; }
+    .cms-loading h1 { font-size: 1.7rem; line-height: 1.2; }
+    .cms-loading p { line-height: 1.65; }
+    .cms-loading a { color: #427fa4; }
+  </style>
+</head>
+<body>
+  <main class="cms-loading">
+    <p class="brand"><span>nugget</span><span> of joy</span></p>
+    <h1>Authenticated Publisher</h1>
+    <p>Loading the editorial workspace…</p>
+    <p>If the editor does not load, refresh this page or check the <a href="https://github.com/ndangelo/nuggetofjoy-jekyll/actions">staging build status</a>.</p>
+  </main>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/codemirror.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/marked@15.0.7/marked.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/dompurify@3.2.6/dist/purify.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/codemirror.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/mode/xml/xml.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/mode/javascript/javascript.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/mode/css/css.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/mode/htmlmixed/htmlmixed.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/decap-cms@^3.17.0/dist/decap-cms.js"></script>
+  <script src="https://ndangelo.github.io/nuggetofjoy-jekyll/admin/editor-modes.js"></script>
+  <script>
+    (function () {
+      if (!window.CMS) return;
+      CMS.registerPreviewStyle("https://ndangelo.github.io/nuggetofjoy-jekyll/admin/preview.css");
+      function previewCustomStyle(entry) {
+        var css = entry && entry.getIn(["data", "custom_css"]);
+        // Decap's code widget stores source as { code, lang }, not always a plain string.
+        if (css && typeof css === "object") css = css.code || "";
+        // Keep the live stylesheet in the preview DOM and update it from the current entry.
+        // Scope document-level selectors to the preview wrapper because the preview is not
+        // the actual published page's document body.
+        css = String(css || "").replace(/(^|[},\s])html(?=\s*[{,.:#\\[])/g, "$1.noj-preview-with-custom-css")
+          .replace(/(^|[},\s])body(?=\s*[{,.:#\\[])/g, "$1.noj-preview-with-custom-css")
+          .replace(/:root/g, ".noj-preview-with-custom-css");
+        return h("style", {
+          key: "noj-live-custom-css",
+          type: "text/css",
+          "data-noj-live-custom-css": "true",
+          dangerouslySetInnerHTML: { __html: css }
+        });
+      }
+      var PostPreview = createClass({
+        componentDidMount: function () {
+          this.repairLegacyImages();
+        },
+        componentDidUpdate: function () {
+          this.repairLegacyImages();
+        },
+        repairLegacyImages: function () {
+          var root = this.previewRoot;
+          if (!root) return;
+          function repair(img) {
+            if (!img || !img.getAttribute) return;
+            var src = img.getAttribute("src");
+            if (src && /^http:\/\/nuggetofjoy\.com\/wp-content\/uploads\//i.test(src)) {
+              img.setAttribute("src", src.replace(/^http:\/\//i, "https://"));
+            }
+            if (img.dataset.nojHttpsRetry !== "1") {
+              img.dataset.nojHttpsRetry = "1";
+              img.addEventListener("error", function () {
+                var current = img.getAttribute("src") || "";
+                if (/^http:\/\//i.test(current)) img.setAttribute("src", current.replace(/^http:\/\//i, "https://"));
+              }, { once: true });
+            }
+          }
+          root.querySelectorAll("img[src]").forEach(repair);
+          if (!this.previewObserver && window.MutationObserver) {
+            this.previewObserver = new MutationObserver(function (mutations) {
+              mutations.forEach(function (mutation) {
+                mutation.addedNodes.forEach(function (node) {
+                  if (node.nodeType !== 1) return;
+                  if (node.matches && node.matches("img[src]")) repair(node);
+                  if (node.querySelectorAll) node.querySelectorAll("img[src]").forEach(repair);
+                });
+              });
+            });
+            this.previewObserver.observe(root, { childList: true, subtree: true });
+          }
+        },
+        render: function () {
+          var entry = this.props.entry;
+          var title = entry.getIn(["data", "title"]) || "Untitled";
+          var date = entry.getIn(["data", "date"]);
+          var description = entry.getIn(["data", "description"]);
+          var image = entry.getIn(["data", "image"]);
+          var asset = image ? this.props.getAsset(image) : null;
+          var imageSrc = asset && (asset.url || asset.path || asset);
+          return h("div", { className: "noj-preview-with-custom-css" },
+            previewCustomStyle(entry),
+            h("article", { className: "preview-article noj-entry noj-wrap" },
+              h("p", { className: "preview-date" }, date ? String(date) : "Draft preview"),
+              h("h1", {}, title),
+              description ? h("p", { className: "preview-meta" }, description) : null,
+              imageSrc ? h("img", { className: "preview-featured", src: String(imageSrc), alt: "" }) : null,
+              h("div", { className: "preview-content noj-entry-content", ref: function (node) { this.previewRoot = node; }.bind(this) }, this.props.widgetFor("body"))
+            )
+          );
+        }
+      });
+      CMS.registerPreviewTemplate("posts", PostPreview);
+      CMS.registerPreviewTemplate("content_pages", createClass({
+        render: function () {
+          var entry = this.props.entry;
+          return h("div", { className: "noj-preview-with-custom-css" },
+            previewCustomStyle(entry),
+            h("article", { className: "preview-article noj-entry noj-wrap page-article" },
+              h("h1", {}, entry.getIn(["data", "title"]) || "Untitled"),
+              h("div", { className: "preview-content noj-entry-content" }, this.props.widgetFor("body"))
+            )
+          );
+        }
+      }));
+    })();
+  </script>
+</body>
+</html>
