@@ -205,3 +205,42 @@ collections:
       - label: Body
         name: body
         widget: noj_body
+
+# Site-level content settings. Edit the homepage and navigation here; the Liquid
+# template stays in index.md so the CMS cannot accidentally remove its logic.
+files:
+  - label: "Homepage & Navigation"
+    name: homepage_settings
+    file: "_data/homepage.yml"
+    description: "Edit homepage copy, recent-post display, archive text, and site navigation."
+    fields:
+      - { label: Hero Eyebrow, name: hero_kicker, widget: string }
+      - { label: Main Heading — First Line, name: hero_heading_start, widget: string }
+      - { label: Main Heading — Emphasized Line, name: hero_heading_emphasis, widget: string }
+      - { label: Introductory Text, name: hero_intro, widget: text }
+      - { label: Search Placeholder, name: search_placeholder, widget: string }
+      - { label: Header Search Placeholder, name: search_placeholder_header, widget: string, required: false }
+      - { label: Browse Link Text, name: browse_link_text, widget: string }
+      - label: Homepage Quick Links
+        name: homepage_links
+        widget: list
+        summary: "{{fields.label}}"
+        fields:
+          - { label: Link Label, name: label, widget: string }
+          - { label: URL, name: url, widget: string }
+      - { label: Recent Posts Eyebrow, name: recent_kicker, widget: string }
+      - { label: Recent Posts Heading, name: recent_heading, widget: string }
+      - { label: Recent Posts Description, name: recent_description, widget: text }
+      - { label: Number of Recent Posts, name: recent_posts_limit, widget: number, value_type: int, min: 1, max: 30 }
+      - { label: Archive Eyebrow, name: archive_kicker, widget: string }
+      - { label: Archive Heading, name: archive_heading, widget: string }
+      - { label: Archive Description, name: archive_description, widget: text }
+      - { label: Return Link Text, name: return_link_text, widget: string }
+      - { label: Year List Eyebrow, name: year_list_kicker, widget: string }
+      - label: Main Navigation
+        name: navigation
+        widget: list
+        summary: "{{fields.label}}"
+        fields:
+          - { label: Navigation Label, name: label, widget: string }
+          - { label: Destination URL, name: url, widget: string }
