@@ -126,3 +126,180 @@ button:focus-visible, input:focus-visible, textarea:focus-visible, select:focus-
 .noj-css-field .cm-tag, .noj-css-field .cm-qualifier { color:#7ee787!important; }
 .noj-css-preview-value { white-space:pre-wrap; overflow-wrap:anywhere; padding:12px; background:#20262e; color:#c9d1d9; border-radius:6px; font:12px/1.6 ui-monospace,monospace; }
 @media(max-width:700px){.noj-css-field-head{align-items:flex-start;flex-direction:column;gap:4px}.noj-css-field .CodeMirror{height:260px}}
+
+
+/* --------------------------------------------------------------------------
+   WordPress-inspired single CMS shell.
+   Intentionally targets stable Decap CMS class names; the custom editor widgets
+   above remain independent of the outer administration theme.
+   -------------------------------------------------------------------------- */
+:root {
+  --noj-admin-bg: #f0f2f5;
+  --noj-admin-panel: #ffffff;
+  --noj-admin-ink: #20252b;
+  --noj-admin-muted: #69727d;
+  --noj-admin-line: #dfe3e8;
+  --noj-admin-blue: #2271b1;
+  --noj-admin-blue-dark: #135e96;
+  --noj-admin-orange: #ee7d49;
+  --noj-admin-sidebar: #1d2327;
+  --noj-admin-sidebar-hover: #2c3338;
+  --noj-admin-sidebar-active: #2271b1;
+}
+html, body, #nc-root { min-height:100%; background:var(--noj-admin-bg)!important; }
+body { color:var(--noj-admin-ink)!important; font-size:14px; }
+a { color:var(--noj-admin-blue); }
+a:hover { color:var(--noj-admin-blue-dark); }
+
+/* Top application bar */
+.nc-appHeader {
+  min-height:58px!important;
+  padding:0 22px!important;
+  background:var(--noj-admin-sidebar)!important;
+  color:#f0f0f1!important;
+  border:0!important;
+  border-bottom:3px solid var(--noj-admin-orange)!important;
+  box-shadow:0 2px 6px rgba(0,0,0,.12)!important;
+}
+.nc-appHeader * { color:inherit; }
+.nc-appHeader a { text-decoration:none; }
+.nc-appHeader button { border-radius:4px; }
+.nc-appHeader button:hover { background:var(--noj-admin-sidebar-hover)!important; }
+
+/* Main application workspace */
+.nc-appMain { background:var(--noj-admin-bg)!important; }
+.nc-appSidebar {
+  width:238px!important;
+  min-width:218px!important;
+  background:var(--noj-admin-sidebar)!important;
+  border-right:0!important;
+  box-shadow:1px 0 0 rgba(0,0,0,.08);
+  padding:16px 10px!important;
+}
+.nc-appSidebar, .nc-appSidebar * { color:#d7dadc; }
+.nc-appSidebar a, .nc-appSidebar button {
+  border-radius:4px!important;
+  text-decoration:none!important;
+  transition:background .15s ease,color .15s ease;
+}
+.nc-appSidebar a:hover, .nc-appSidebar button:hover {
+  background:var(--noj-admin-sidebar-hover)!important;
+  color:#fff!important;
+}
+.nc-appSidebar [aria-current="page"],
+.nc-appSidebar [aria-selected="true"],
+.nc-appSidebar .active {
+  background:var(--noj-admin-sidebar-active)!important;
+  color:#fff!important;
+}
+.nc-appSidebar svg { opacity:.92; }
+
+/* Content area and editorial panels */
+.nc-collectionPage, .nc-entryEditor, .nc-mediaLibrary {
+  background:var(--noj-admin-bg)!important;
+}
+.nc-collectionPage-main, .nc-entryEditor-controlPane {
+  padding:26px!important;
+}
+.nc-collectionPage h1, .nc-entryEditor h1 {
+  color:var(--noj-admin-ink)!important;
+  letter-spacing:-.025em;
+  font-weight:700!important;
+}
+.nc-collectionPage-main > div,
+.nc-entryEditor-controlPane > div {
+  max-width:1500px;
+}
+.nc-collectionPage table {
+  width:100%;
+  border-collapse:separate!important;
+  border-spacing:0!important;
+  background:#fff!important;
+  border:1px solid var(--noj-admin-line)!important;
+  border-radius:7px!important;
+  overflow:hidden;
+  box-shadow:0 1px 2px rgba(20,30,40,.035);
+}
+.nc-collectionPage th {
+  background:#f8f9fa!important;
+  color:#4e5964!important;
+  font-size:12px!important;
+  font-weight:700!important;
+  text-transform:uppercase;
+  letter-spacing:.035em;
+}
+.nc-collectionPage th, .nc-collectionPage td {
+  padding:13px 15px!important;
+  border-bottom:1px solid #e8ebef!important;
+}
+.nc-collectionPage tr:last-child td { border-bottom:0!important; }
+.nc-collectionPage tbody tr:hover td { background:#f6f9fc!important; }
+.nc-collectionPage td a { font-weight:600; text-decoration:none; }
+.nc-collectionPage input, .nc-collectionPage select,
+.nc-entryEditor input, .nc-entryEditor textarea,
+.nc-entryEditor select {
+  border-color:#c8cdd2!important;
+  border-radius:4px!important;
+  box-shadow:none!important;
+}
+.nc-collectionPage input:focus, .nc-collectionPage select:focus,
+.nc-entryEditor input:focus, .nc-entryEditor textarea:focus,
+.nc-entryEditor select:focus {
+  border-color:var(--noj-admin-blue)!important;
+  outline:1px solid var(--noj-admin-blue)!important;
+}
+.nc-collectionPage button, .nc-entryEditor button {
+  border-radius:4px!important;
+}
+.nc-collectionPage button[class*="primary"],
+.nc-entryEditor button[class*="primary"] {
+  background:var(--noj-admin-blue)!important;
+  border-color:var(--noj-admin-blue)!important;
+  color:#fff!important;
+}
+.nc-collectionPage button[class*="primary"]:hover,
+.nc-entryEditor button[class*="primary"]:hover {
+  background:var(--noj-admin-blue-dark)!important;
+}
+
+/* Editor form: calmer labels, more breathing room, preview divider */
+.nc-entryEditor-controlPane label {
+  color:#39434d!important;
+  font-weight:650!important;
+}
+.nc-entryEditor-controlPane [class*="ControlContainer"] {
+  margin-bottom:17px;
+}
+.nc-entryEditor-previewPane {
+  background:#e8ebef!important;
+  border-left:1px solid #d8dde3!important;
+}
+.nc-entryEditor-previewPane iframe {
+  background:#fff;
+  box-shadow:0 2px 12px rgba(20,30,40,.08);
+}
+.nc-entryEditor-controlPane hr { border-color:#e2e6ea!important; }
+
+/* Media manager and dialogs */
+.nc-mediaLibrary { padding:24px!important; }
+.nc-mediaLibrary img { object-fit:contain; }
+[role="dialog"] {
+  border-radius:8px!important;
+  box-shadow:0 14px 42px rgba(0,0,0,.18)!important;
+}
+[role="dialog"] input, [role="dialog"] textarea, [role="dialog"] select {
+  border-radius:4px!important;
+}
+
+/* Clear status chips and comfortable touch targets */
+.nc-appMain button, .nc-appMain a { min-height:30px; }
+.nc-appMain button:focus-visible, .nc-appMain a:focus-visible {
+  outline:2px solid #ee7d49!important;
+  outline-offset:2px;
+}
+@media(max-width:800px) {
+  .nc-appSidebar { width:66px!important; min-width:66px!important; padding:10px 6px!important; }
+  .nc-collectionPage-main, .nc-entryEditor-controlPane { padding:14px!important; }
+  .nc-collectionPage table { display:block; overflow-x:auto; }
+  .nc-entryEditor-previewPane { border-left:0!important; border-top:1px solid #d8dde3!important; }
+}
