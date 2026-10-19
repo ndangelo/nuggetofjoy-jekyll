@@ -47,8 +47,8 @@
         // Keep the live stylesheet in the preview DOM and update it from the current entry.
         // Scope document-level selectors to the preview wrapper because the preview is not
         // the actual published page's document body.
-        css = String(css || "").replace(/(^|[},\\s])html(?=\\s*[{,.:#\\[])/g, "$1.noj-preview-with-custom-css")
-          .replace(/(^|[},\\s])body(?=\\s*[{,.:#\\[])/g, "$1.noj-preview-with-custom-css")
+        css = String(css || "").replace(/(^|[},\s])html(?=\s*[{,.:#\\[])/g, "$1.noj-preview-with-custom-css")
+          .replace(/(^|[},\s])body(?=\s*[{,.:#\\[])/g, "$1.noj-preview-with-custom-css")
           .replace(/:root/g, ".noj-preview-with-custom-css");
         return h("style", {
           key: "noj-live-custom-css",

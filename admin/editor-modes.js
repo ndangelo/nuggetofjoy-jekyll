@@ -118,4 +118,60 @@
   });
 
   CMS.registerWidget("noj_body", BodyEditor, BodyPreview);
+
+  // Dedicated CSS widget: normalize legacy {code, lang} values and plain strings.
+  function cssString(value) {
+    if (value && typeof value === "object") value = value.code || "";
+    return String(value || "");
+  }
+  var CssEditor = createClass({
+    componentDidMount: function () { this.mountEditor(); },
+    componentDidUpdate: function () {
+      if (!this.cm && this.textarea) this.mountEditor();
+      if (this.cm && this.cm.getValue() !== cssString(this.props.value)) {
+        this.cm.setValue(cssString(this.props.value));
+      }
+      if (this.cm) this.cm.refresh();
+    },
+    componentWillUnmount: function () {
+      if (this.cm) { this.cm.toTextArea(); this.cm = null; }
+    },
+    mountEditor: function () {
+      if (!this.textarea || !window.CodeMirror || this.cm) return;
+      this.cm = window.CodeMirror.fromTextArea(this.textarea, {
+        mode: "css", lineNumbers: true, lineWrapping: true,
+        tabSize: 2, indentUnit: 2, viewportMargin: 30,
+        extraKeys: { "Tab": function (cm) { cm.replaceSelection("  ", "end"); } }
+      });
+      this.cm.setValue(cssString(this.props.value));
+      this.cm.on("change", function (editor) {
+        var value = editor.getValue();
+        if (value !== cssString(this.props.value)) this.props.onChange(value);
+      }.bind(this));
+      this.cm.refresh();
+    },
+    render: function () {
+      return h("div", { className: "noj-css-field" },
+        h("div", { className: "noj-css-field-head" },
+          h("span", {}, "CSS source"),
+          h("span", { className: "noj-css-field-note" }, "Changes appear in the Preview pane")
+        ),
+        h("textarea", {
+          ref: function (node) { this.textarea = node; }.bind(this),
+          defaultValue: cssString(this.props.value),
+          spellCheck: false,
+          "aria-label": "Custom CSS source"
+        })
+      );
+    }
+  });
+  var CssPreview = createClass({
+    render: function () {
+      var value = this.props.value;
+      if (value && typeof value === "object") value = value.code || "";
+      return h("pre", { className: "noj-css-preview-value" }, String(value || "No custom CSS yet."));
+    }
+  });
+  CMS.registerWidget("noj_css", CssEditor, CssPreview);
+
 })();
