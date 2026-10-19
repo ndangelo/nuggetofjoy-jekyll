@@ -164,6 +164,22 @@ content:
         options:
           format: html
 
+  - name: global_css
+    label: Global CSS — Site-wide styles
+    type: file
+    path: assets/css/style.css
+    format: code
+    operations:
+      delete: false
+
+  - name: theme_css
+    label: Theme CSS — Design system
+    type: file
+    path: assets/css/nuggetofjoy-theme.css
+    format: code
+    operations:
+      delete: false
+
   - name: homepage
     label: Homepage & Navigation
     type: file
