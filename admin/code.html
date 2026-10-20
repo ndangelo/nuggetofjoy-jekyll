@@ -40,6 +40,8 @@ permalink: /admin/code.html
   <button class="file" data-file="assets/css/nuggetofjoy-theme.css"><i class="dot css"></i> nuggetofjoy-theme.css</button>
   <div class="section">POST CSS</div>
   <button class="file" data-file="_posts/2026-10-18-smartwatch-messenger-app.md"><i class="dot html"></i> Smartwatch assignment</button>
+  <div class="section">POSTS</div>
+  <button class="file" id="newPost"><i class="dot html"></i> + Create new .md post</button>
   <div class="section">CUSTOM FILE</div>
   <div style="padding:6px 8px"><input id="customPath" placeholder="assets/css/custom.css" style="width:100%;background:#171b20;border:1px solid #48535f;border-radius:6px;color:white;padding:9px;font:12px 'DM Mono',monospace"><button class="btn" id="openCustom" style="margin-top:7px;width:100%">Open repository file</button></div>
   <div class="aside-note">Edits are saved directly to the staging GitHub repository. The site's public build updates after GitHub Pages deploys. The live WordPress site is not connected to this editor.</div>
@@ -71,6 +73,80 @@ function headers(){return {'Authorization':'Bearer '+token,'Accept':'application
 async function api(url,opts={}){const res=await fetch(url,{...opts,headers:{...headers(),...(opts.headers||{})}});const data=await res.json().catch(()=>({}));if(!res.ok)throw Error(data.message||('GitHub API error '+res.status));return data}
 async function load(){if(!token){state('Enter a GitHub token in the browser prompt to load.',true);const v=window.prompt('GitHub fine-grained token for ndangelo/nuggetofjoy-jekyll (Contents: Read and write). The token stays in memory and is not stored.');if(!v)return;token=v.trim()}loading=true;$('save').disabled=true;state('Loading '+path+'…');try{const data=await api('https://api.github.com/repos/'+repo+'/contents/'+path+'?ref='+branch);if(data.encoding!=='base64')throw Error('Unexpected file encoding');const bytes=Uint8Array.from(atob(data.content.replace(/\s/g,'')),c=>c.charCodeAt(0));const text=new TextDecoder().decode(bytes);sha=data.sha;original=text;editor.setValue(text);editor.clearHistory();state('Loaded from GitHub. Unsaved changes are local until you save.');}catch(e){state(e.message,true)}finally{loading=false;$('save').disabled=false}}
 async function save(){if(!token){state('No token available. Reload the file to authenticate.',true);return}if(editor.getValue()===original){state('No changes to save.');return}if(!confirm('Save '+path+' to the STAGING repository? This creates a GitHub commit.'))return;$('save').disabled=true;state('Saving commit…');try{const bytes=new TextEncoder().encode(editor.getValue());let binary='';for(let i=0;i<bytes.length;i+=0x8000)binary+=String.fromCharCode(...bytes.subarray(i,i+0x8000));const content=btoa(binary);const data=await api('https://api.github.com/repos/'+repo+'/contents/'+path,{method:'PUT',headers:{'Content-Type':'application/json'},body:JSON.stringify({message:'Edit '+path+' in Nugget of Joy Code Studio',content,sha,branch})});sha=data.content.sha;original=editor.getValue();state('Saved to GitHub. The staging site rebuilds automatically.')}catch(e){state(e.message,true)}finally{$('save').disabled=false}}
+
+function slugify(s){return s.toLowerCase().normalize('NFKD').replace(/[\\u0300-\\u036f]/g,'').replace(/[^a-z0-9]+/g,'-').replace(/^-+|-+$/g,'')}
+function newPost(){
+  if(editor.getValue()!==original&&!confirm('Discard unsaved changes and start a new post?'))return;
+  const title=window.prompt('Post title:');if(!title||!title.trim())return;
+  const suggested=slugify(title);
+  const slugInput=window.prompt('Post URL slug (lowercase words separated by hyphens):',suggested);
+  if(!slugInput)return;
+  const slug=slugify(slugInput);if(!slug){state('Please enter a valid post slug.',true);return}
+  const now=new Date(),date=now.getFullYear()+'-'+String(now.getMonth()+1).padStart(2,'0')+'-'+String(now.getDate()).padStart(2,'0');
+  path='_posts/'+date+'-'+slug+'.md';sha='';original='';
+  const safeTitle=title.trim().replace(/"/g,'\\"');
+  const starter=`---
+layout: post
+title: "${safeTitle}"
+date: ${date} ${String(now.getHours()).padStart(2,'0')}:${String(now.getMinutes()).padStart(2,'0')}:00
+custom_css:
+  code: |
+    /* CSS for this post only. Keep each line indented by four spaces. */
+    :root {
+      --post-ink: #17191d;
+      --post-paper: #ffffff;
+      --post-accent: #087aff;
+    }
+
+    .post-custom {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 24px;
+      color: var(--post-ink);
+      background: var(--post-paper);
+    }
+
+    .post-custom h1,
+    .post-custom h2 {
+      line-height: 1.1;
+      letter-spacing: -0.03em;
+    }
+
+    .post-custom .eyebrow {
+      color: var(--post-accent);
+      font-size: .78rem;
+      font-weight: 800;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+    }
+
+    @media (max-width: 700px) {
+      .post-custom { padding: 18px; }
+    }
+---
+
+<div class="post-custom">
+
+  <p class="eyebrow">PROJECT / ASSIGNMENT</p>
+
+  <h1>${title.trim()}</h1>
+
+  <p class="post-intro">Write a short introduction here.</p>
+
+  <section class="post-section">
+    <h2>Section heading</h2>
+    <p>Write your content here. You can use HTML elements, classes, images, links, buttons, and semantic sections.</p>
+  </section>
+
+  <!-- Add more HTML sections here. CSS goes in custom_css.code above. -->
+
+</div>
+`;
+  $('filename').textContent=path;$('mode').textContent='MARKDOWN';document.querySelectorAll('.file').forEach(b=>b.classList.remove('active'));
+  editor.setOption('mode','markdown');editor.setValue(starter);editor.clearHistory();state('New post draft. Add your HTML and CSS, then choose Save to GitHub to create the .md file.');editor.focus();
+}
+$('newPost').addEventListener('click',newPost);
+
 document.querySelectorAll('.file').forEach(b=>b.addEventListener('click',()=>{if(editor.getValue()!==original&&!confirm('Discard unsaved changes and open another file?'))return;setPath(b.dataset.file)}));
 $('openCustom').addEventListener('click',()=>{const p=$('customPath').value.trim().replace(/^\/+/, '');if(!p||p.includes('..')){state('Enter a valid repository-relative file path.',true);return}if(editor.getValue()!==original&&!confirm('Discard unsaved changes and open another file?'))return;setPath(p)});
 $('reload').addEventListener('click',()=>{if(editor.getValue()!==original&&!confirm('Discard unsaved changes and reload from GitHub?'))return;load()});
