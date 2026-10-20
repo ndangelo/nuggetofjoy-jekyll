@@ -24,7 +24,7 @@ permalink: /admin/code.html
     main{display:grid;grid-template-columns:250px minmax(0,1fr);min-height:calc(100vh - 58px)}
     aside{padding:16px 12px;border-right:1px solid var(--line);background:#1c2127;overflow:auto}.section{margin:13px 10px 8px;color:#7f8b97;font-size:10px;font-weight:700;letter-spacing:1.2px}
     .file{display:flex;width:100%;align-items:center;gap:9px;text-align:left;background:transparent;border:0;color:#c6cfd7;padding:10px;border-radius:6px;margin:2px 0}.file:hover,.file.active{background:#303a44;color:white}.dot{width:8px;height:8px;border-radius:50%;background:var(--blue);flex-shrink:0}.dot.css{background:var(--orange)}.dot.html{background:#d6ad65}.dot.js{background:#d7c66c}
-    .aside-note{font-size:12px;color:var(--muted);line-height:1.55;margin:22px 10px}.workspace{min-width:0;display:grid;grid-template-rows:auto 1fr;min-height:0}.toolbar{display:flex;gap:8px;align-items:center;flex-wrap:wrap;padding:10px 14px;border-bottom:1px solid var(--line);background:var(--panel)}.filename{font-family:'DM Mono',monospace;font-size:12px;color:var(--blue);margin-right:8px}
+    .aside-note{font-size:12px;color:var(--muted);line-height:1.55;margin:22px 10px}.post-list{display:flex;flex-direction:column;gap:2px;margin:0 4px 8px}.post-list button{background:transparent;border:0;color:#bfc9d2;text-align:left;padding:8px;border-radius:6px;font-size:12px;line-height:1.35;overflow-wrap:anywhere}.post-list button:hover{background:#303a44;color:white}.connect{display:flex;gap:8px;align-items:center;flex-wrap:wrap;padding:10px 14px;background:#171b20;border-bottom:1px solid var(--line)}.connect input{flex:1;min-width:220px;background:#101418;border:1px solid #48535f;color:white;padding:9px 10px;border-radius:6px}.connect small{width:100%;color:var(--muted);font-size:11px}.workspace{min-width:0;display:grid;grid-template-rows:auto 1fr;min-height:0}.toolbar{display:flex;gap:8px;align-items:center;flex-wrap:wrap;padding:10px 14px;border-bottom:1px solid var(--line);background:var(--panel)}.filename{font-family:'DM Mono',monospace;font-size:12px;color:var(--blue);margin-right:8px}
     .editor-wrap{display:grid;grid-template-rows:1fr auto;min-height:0}.CodeMirror{height:calc(100vh - 170px);min-height:350px;font:13px/1.65 'DM Mono',monospace;background:#171b20}.CodeMirror-gutters{background:#171b20;border-right:1px solid var(--line)}.bottom{display:flex;gap:14px;align-items:center;padding:9px 14px;border-top:1px solid var(--line);color:var(--muted);font-size:11px}.message{color:var(--green)}.message.error{color:#ff938a}
     .empty{padding:26px;color:var(--muted);line-height:1.7}.settings{display:flex;gap:8px;align-items:center}.token{width:min(260px,28vw);background:#171b20;border:1px solid #48535f;color:white;padding:8px;border-radius:6px}.hint{padding:14px 18px;border-bottom:1px solid var(--line);background:#222a32;color:#c5cdd4;font-size:12px;line-height:1.5}
     @media(max-width:760px){main{grid-template-columns:1fr}aside{border-right:0;border-bottom:1px solid var(--line);max-height:190px}.file{display:inline-flex;width:auto}.section{margin-top:4px}.aside-note{display:none}.toolbar{align-items:stretch}.settings{width:100%;flex-wrap:wrap}.token{flex:1}.CodeMirror{height:55vh;min-height:320px}.sub{display:none}}
@@ -42,13 +42,16 @@ permalink: /admin/code.html
   <button class="file" data-file="_posts/2026-10-18-smartwatch-messenger-app.md"><i class="dot html"></i> Smartwatch assignment</button>
   <div class="section">POSTS</div>
   <button class="file" id="newPost"><i class="dot html"></i> + Create new .md post</button>
+  <button class="file" id="refreshPosts"><i class="dot"></i> Refresh post list</button>
+  <div id="postList" class="post-list"><div class="aside-note">Connect to GitHub to list existing posts.</div></div>
   <div class="section">CUSTOM FILE</div>
   <div style="padding:6px 8px"><input id="customPath" placeholder="assets/css/custom.css" style="width:100%;background:#171b20;border:1px solid #48535f;border-radius:6px;color:white;padding:9px;font:12px 'DM Mono',monospace"><button class="btn" id="openCustom" style="margin-top:7px;width:100%">Open repository file</button></div>
   <div class="aside-note">Edits are saved directly to the staging GitHub repository. The site's public build updates after GitHub Pages deploys. The live WordPress site is not connected to this editor.</div>
 </aside>
 <section class="workspace">
 <div>
-<div class="hint">Browser code editor for the staging repository. A GitHub fine-grained token is required to load and save files. Grant access only to <b>ndangelo/nuggetofjoy-jekyll</b>, with Contents read/write permission.</div>
+<div class="hint">Edit Markdown posts, embedded HTML, and post-specific CSS in one file. This editor only accesses the staging repository <b>ndangelo/nuggetofjoy-jekyll</b>.</div>
+<div class="connect"><input id="tokenInput" type="password" autocomplete="off" placeholder="GitHub fine-grained token (Contents: Read and write)"><button id="connect" class="btn primary">Connect to GitHub</button><button id="disconnect" class="btn">Forget token</button><small>Token is kept in this browser tab session only. It is not written to the repository. Grant access only to this repository, with Contents read/write permission.</small></div>
 <div class="toolbar"><span id="filename" class="filename">assets/css/style.css</span><div class="spacer"></div><button id="reload" class="btn">Reload</button><button id="save" class="btn primary">Save to GitHub</button></div>
 </div>
 <div class="editor-wrap"><textarea id="source"></textarea><div class="bottom"><span id="state">Enter a GitHub token to load a file.</span><div class="spacer"></div><span id="mode">CSS</span><span id="linecol">Ln 1, Col 1</span></div></div>
@@ -63,16 +66,17 @@ permalink: /admin/code.html
 <script>
 (function(){
 const repo='ndangelo/nuggetofjoy-jekyll',branch='main';
-const tokenKey=''; // Token is held in memory only; never persisted in browser storage.
-let token='',path='assets/css/style.css',sha='',original='',loading=false;
+const tokenKey='noj_code_studio_token';
+let token=sessionStorage.getItem(tokenKey)||'',path='assets/css/style.css',sha='',original='',loading=false,isNewFile=false;
+if(token)$('tokenInput').value=token;
 const editor=CodeMirror.fromTextArea(document.getElementById('source'),{theme:'material-darker',lineNumbers:true,indentUnit:2,tabSize:2,indentWithTabs:false,lineWrapping:false,mode:'css',matchBrackets:true,viewportMargin:20});
 const $=id=>document.getElementById(id),state=(s,error=false)=>{$('state').textContent=s;$('state').className=error?'message error':'message'};
 function modeFor(p){if(p.endsWith('.css'))return 'css';if(p.endsWith('.html')||p.endsWith('.md'))return p.endsWith('.md')?'markdown':'htmlmixed';if(p.endsWith('.js'))return 'javascript';if(p.endsWith('.yml')||p.endsWith('.yaml'))return 'yaml';return 'text/plain'}
-function setPath(p){path=p;$('filename').textContent=p;$('mode').textContent=modeFor(p).toUpperCase();document.querySelectorAll('.file').forEach(b=>b.classList.toggle('active',b.dataset.file===p));editor.setOption('mode',modeFor(p));load()}
+function setPath(p){path=p;isNewFile=false;$('filename').textContent=p;$('mode').textContent=modeFor(p).toUpperCase();document.querySelectorAll('.file[data-file]').forEach(b=>b.classList.toggle('active',b.dataset.file===p));editor.setOption('mode',modeFor(p));load()}
 function headers(){return {'Authorization':'Bearer '+token,'Accept':'application/vnd.github+json','X-GitHub-Api-Version':'2022-11-28'}}
 async function api(url,opts={}){const res=await fetch(url,{...opts,headers:{...headers(),...(opts.headers||{})}});const data=await res.json().catch(()=>({}));if(!res.ok)throw Error(data.message||('GitHub API error '+res.status));return data}
-async function load(){if(!token){state('Enter a GitHub token in the browser prompt to load.',true);const v=window.prompt('GitHub fine-grained token for ndangelo/nuggetofjoy-jekyll (Contents: Read and write). The token stays in memory and is not stored.');if(!v)return;token=v.trim()}loading=true;$('save').disabled=true;state('Loading '+path+'…');try{const data=await api('https://api.github.com/repos/'+repo+'/contents/'+path+'?ref='+branch);if(data.encoding!=='base64')throw Error('Unexpected file encoding');const bytes=Uint8Array.from(atob(data.content.replace(/\s/g,'')),c=>c.charCodeAt(0));const text=new TextDecoder().decode(bytes);sha=data.sha;original=text;editor.setValue(text);editor.clearHistory();state('Loaded from GitHub. Unsaved changes are local until you save.');}catch(e){state(e.message,true)}finally{loading=false;$('save').disabled=false}}
-async function save(){if(!token){state('No token available. Reload the file to authenticate.',true);return}if(editor.getValue()===original){state('No changes to save.');return}if(!confirm('Save '+path+' to the STAGING repository? This creates a GitHub commit.'))return;$('save').disabled=true;state('Saving commit…');try{const bytes=new TextEncoder().encode(editor.getValue());let binary='';for(let i=0;i<bytes.length;i+=0x8000)binary+=String.fromCharCode(...bytes.subarray(i,i+0x8000));const content=btoa(binary);const data=await api('https://api.github.com/repos/'+repo+'/contents/'+path,{method:'PUT',headers:{'Content-Type':'application/json'},body:JSON.stringify({message:'Edit '+path+' in Nugget of Joy Code Studio',content,sha,branch})});sha=data.content.sha;original=editor.getValue();state('Saved to GitHub. The staging site rebuilds automatically.')}catch(e){state(e.message,true)}finally{$('save').disabled=false}}
+async function load(){if(!token){state('Enter your token above and click Connect to GitHub.',true);return}loading=true;$('save').disabled=true;state('Loading '+path+'…');try{const data=await api('https://api.github.com/repos/'+repo+'/contents/'+path+'?ref='+branch);if(data.encoding!=='base64')throw Error('Unexpected file encoding');const bytes=Uint8Array.from(atob(data.content.replace(/\s/g,'')),c=>c.charCodeAt(0));const text=new TextDecoder().decode(bytes);sha=data.sha;original=text;editor.setValue(text);editor.clearHistory();state('Loaded from GitHub. Unsaved changes are local until you save.');}catch(e){state(e.message,true)}finally{loading=false;$('save').disabled=false}}
+async function save(){if(!token){state('Connect to GitHub before saving.',true);return}if(editor.getValue()===original){state('No changes to save.');return}if(!confirm('Save '+path+' to the STAGING repository? This creates a GitHub commit.'))return;$('save').disabled=true;state('Saving commit…');try{const bytes=new TextEncoder().encode(editor.getValue());let binary='';for(let i=0;i<bytes.length;i+=0x8000)binary+=String.fromCharCode(...bytes.subarray(i,i+0x8000));const content=btoa(binary);const data=await api('https://api.github.com/repos/'+repo+'/contents/'+path,{method:'PUT',headers:{'Content-Type':'application/json'},body:JSON.stringify({message:(isNewFile?'Create ':'Edit ')+path+' in Nugget of Joy Code Studio',content,...(sha?{sha}:{}),branch})});sha=data.content.sha;isNewFile=false;original=editor.getValue();state('Saved to GitHub. The staging site rebuilds automatically.');refreshPosts()}catch(e){state(e.message,true)}finally{$('save').disabled=false}}
 
 function slugify(s){return s.toLowerCase().normalize('NFKD').replace(/[\\u0300-\\u036f]/g,'').replace(/[^a-z0-9]+/g,'-').replace(/^-+|-+$/g,'')}
 function newPost(){
@@ -83,7 +87,7 @@ function newPost(){
   if(!slugInput)return;
   const slug=slugify(slugInput);if(!slug){state('Please enter a valid post slug.',true);return}
   const now=new Date(),date=now.getFullYear()+'-'+String(now.getMonth()+1).padStart(2,'0')+'-'+String(now.getDate()).padStart(2,'0');
-  path='_posts/'+date+'-'+slug+'.md';sha='';original='';
+  path='_posts/'+date+'-'+slug+'.md';sha='';original='';isNewFile=true;
   const safeTitle=title.trim().replace(/"/g,'\\"');
   const starter=`---
 layout: post
@@ -147,13 +151,44 @@ custom_css:
 }
 $('newPost').addEventListener('click',newPost);
 
+async function refreshPosts(){
+ const list=$('postList');list.innerHTML='<div class="aside-note">Loading posts…</div>';
+ if(!token){list.innerHTML='<div class="aside-note">Connect to GitHub to load posts.</div>';return}
+ try{
+  const items=await api('https://api.github.com/repos/'+repo+'/contents/_posts?ref='+branch);
+  const posts=items.filter(x=>x.type==='file'&&x.name.toLowerCase().endsWith('.md')).sort((a,b)=>b.name.localeCompare(a.name));
+  list.innerHTML='';
+  if(!posts.length){list.innerHTML='<div class="aside-note">No Markdown posts found.</div>';return}
+  posts.forEach(item=>{
+   const btn=document.createElement('button');btn.type='button';
+   const label=item.name.replace(/^\\d{4}-\\d{2}-\\d{2}-/,'').replace(/\\.md$/,'').replace(/-/g,' ');
+   btn.textContent=label;btn.title=item.name;
+   btn.addEventListener('click',()=>{if(editor.getValue()!==original&&!confirm('Discard unsaved changes and open another file?'))return;setPath(item.path)});
+   list.appendChild(btn);
+  });
+  state('Connected. '+posts.length+' Markdown posts found.');
+ }catch(e){list.innerHTML='<div class="aside-note">Could not load posts: '+e.message+'</div>';state('Could not load post list: '+e.message,true)}
+}
+$('connect').addEventListener('click',async()=>{
+ const entered=$('tokenInput').value.trim();
+ if(entered){token=entered;sessionStorage.setItem(tokenKey,token)}
+ if(!token){state('Paste a GitHub fine-grained token first.',true);return}
+ state('Checking GitHub connection…');
+ try{await api('https://api.github.com/repos/'+repo);state('Connected to GitHub.');load();refreshPosts()}
+ catch(e){token='';sessionStorage.removeItem(tokenKey);state('Connection failed: '+e.message,true)}
+});
+$('tokenInput').addEventListener('keydown',e=>{if(e.key==='Enter')$('connect').click()});
+$('disconnect').addEventListener('click',()=>{token='';sessionStorage.removeItem(tokenKey);$('tokenInput').value='';state('Token cleared. Connect to GitHub to continue.');$('postList').innerHTML='<div class="aside-note">Connect to GitHub to load posts.</div>'});
+$('refreshPosts').addEventListener('click',refreshPosts);
+
+
 document.querySelectorAll('.file[data-file]').forEach(b=>b.addEventListener('click',()=>{if(editor.getValue()!==original&&!confirm('Discard unsaved changes and open another file?'))return;setPath(b.dataset.file)}));
 $('openCustom').addEventListener('click',()=>{const p=$('customPath').value.trim().replace(/^\/+/, '');if(!p||p.includes('..')){state('Enter a valid repository-relative file path.',true);return}if(editor.getValue()!==original&&!confirm('Discard unsaved changes and open another file?'))return;setPath(p)});
 $('reload').addEventListener('click',()=>{if(editor.getValue()!==original&&!confirm('Discard unsaved changes and reload from GitHub?'))return;load()});
 $('save').addEventListener('click',save);
 editor.on('cursorActivity',()=>{const c=editor.getCursor();$('linecol').textContent='Ln '+(c.line+1)+', Col '+(c.ch+1)});
 editor.on('change',()=>{if(!loading&&editor.getValue()!==original)state('Unsaved changes');});
-setPath(path);
+if(token){$('tokenInput').value=token;load();refreshPosts()}else{editor.setValue('/* Connect to GitHub above to load a file. */');state('Enter your token above and click Connect to GitHub.');}
 })();
 </script>
 </body>
