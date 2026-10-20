@@ -178,7 +178,7 @@ $('connect').addEventListener('click',async()=>{
  catch(e){token='';localStorage.removeItem(tokenKey);state('Connection failed: '+e.message,true)}
 });
 $('tokenInput').addEventListener('keydown',e=>{if(e.key==='Enter')$('connect').click()});
-$('disconnect').addEventListener('click',()=>{token='';sessionStorage.removeItem(tokenKey);$('tokenInput').value='';state('Token cleared. Connect to GitHub to continue.');$('postList').innerHTML='<div class="aside-note">Connect to GitHub to load posts.</div>'});
+$('disconnect').addEventListener('click',()=>{token='';localStorage.removeItem(tokenKey);$('tokenInput').value='';state('Token cleared. Connect to GitHub to continue.');$('postList').innerHTML='<div class="aside-note">Connect to GitHub to load posts.</div>'});
 $('refreshPosts').addEventListener('click',refreshPosts);
 
 
