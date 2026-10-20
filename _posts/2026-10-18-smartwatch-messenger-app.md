@@ -1,5 +1,6 @@
 ---
 layout: post
+permalink: /smartwatch-messenger-app/
 title: Smartwatch Messenger App
 date: 2026-10-18 17:19:00
 custom_css:
