@@ -147,7 +147,7 @@ custom_css:
 }
 $('newPost').addEventListener('click',newPost);
 
-document.querySelectorAll('.file').forEach(b=>b.addEventListener('click',()=>{if(editor.getValue()!==original&&!confirm('Discard unsaved changes and open another file?'))return;setPath(b.dataset.file)}));
+document.querySelectorAll('.file[data-file]').forEach(b=>b.addEventListener('click',()=>{if(editor.getValue()!==original&&!confirm('Discard unsaved changes and open another file?'))return;setPath(b.dataset.file)}));
 $('openCustom').addEventListener('click',()=>{const p=$('customPath').value.trim().replace(/^\/+/, '');if(!p||p.includes('..')){state('Enter a valid repository-relative file path.',true);return}if(editor.getValue()!==original&&!confirm('Discard unsaved changes and open another file?'))return;setPath(p)});
 $('reload').addEventListener('click',()=>{if(editor.getValue()!==original&&!confirm('Discard unsaved changes and reload from GitHub?'))return;load()});
 $('save').addEventListener('click',save);
