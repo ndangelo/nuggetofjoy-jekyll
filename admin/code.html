@@ -192,7 +192,7 @@ $('save').addEventListener('click',save);
 const siteBase='https://ndangelo.github.io/nuggetofjoy-jekyll';
 function postPreviewUrl(){
  const text=editor.getValue();
- const match=text.match(/^permalink:\s*["']?([^"'\\n]+)["']?\s*$/m);
+ const match=text.match(/^permalink:\s*["']?([^"'\\r\\n]+)["']?\s*$/m);
  if(match&&match[1].trim().startsWith('/'))return siteBase+match[1].trim();
  const title=text.match(/^title:\s*["']?(.+?)["']?\s*$/m);
  return null;
