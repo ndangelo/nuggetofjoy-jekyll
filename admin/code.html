@@ -68,9 +68,9 @@ permalink: /admin/code.html
 const repo='ndangelo/nuggetofjoy-jekyll',branch='main';
 const tokenKey='noj_code_studio_token';
 let token=sessionStorage.getItem(tokenKey)||'',path='assets/css/style.css',sha='',original='',loading=false,isNewFile=false;
-if(token)$('tokenInput').value=token;
 const editor=CodeMirror.fromTextArea(document.getElementById('source'),{theme:'material-darker',lineNumbers:true,indentUnit:2,tabSize:2,indentWithTabs:false,lineWrapping:false,mode:'css',matchBrackets:true,viewportMargin:20});
 const $=id=>document.getElementById(id),state=(s,error=false)=>{$('state').textContent=s;$('state').className=error?'message error':'message'};
+if(token)$('tokenInput').value=token;
 function modeFor(p){if(p.endsWith('.css'))return 'css';if(p.endsWith('.html')||p.endsWith('.md'))return p.endsWith('.md')?'markdown':'htmlmixed';if(p.endsWith('.js'))return 'javascript';if(p.endsWith('.yml')||p.endsWith('.yaml'))return 'yaml';return 'text/plain'}
 function setPath(p){path=p;isNewFile=false;$('filename').textContent=p;$('mode').textContent=modeFor(p).toUpperCase();document.querySelectorAll('.file[data-file]').forEach(b=>b.classList.toggle('active',b.dataset.file===p));editor.setOption('mode',modeFor(p));load()}
 function headers(){return {'Authorization':'Bearer '+token,'Accept':'application/vnd.github+json','X-GitHub-Api-Version':'2022-11-28'}}
