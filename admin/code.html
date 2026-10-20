@@ -27,6 +27,7 @@ permalink: /admin/code.html
     .aside-note{font-size:12px;color:var(--muted);line-height:1.55;margin:22px 10px}.post-list{display:flex;flex-direction:column;gap:2px;margin:0 4px 8px}.post-list button{background:transparent;border:0;color:#bfc9d2;text-align:left;padding:8px;border-radius:6px;font-size:12px;line-height:1.35;overflow-wrap:anywhere}.post-list button:hover{background:#303a44;color:white}.connect{display:flex;gap:8px;align-items:center;flex-wrap:wrap;padding:10px 14px;background:#171b20;border-bottom:1px solid var(--line)}.connect input{flex:1;min-width:220px;background:#101418;border:1px solid #48535f;color:white;padding:9px 10px;border-radius:6px}.connect small{width:100%;color:var(--muted);font-size:11px}.workspace{min-width:0;display:grid;grid-template-rows:auto 1fr;min-height:0}.toolbar{display:flex;gap:8px;align-items:center;flex-wrap:wrap;padding:10px 14px;border-bottom:1px solid var(--line);background:var(--panel)}.filename{font-family:'DM Mono',monospace;font-size:12px;color:var(--blue);margin-right:8px}
     .editor-wrap{display:grid;grid-template-rows:1fr auto;min-height:0}.CodeMirror{height:calc(100vh - 170px);min-height:350px;font:13px/1.65 'DM Mono',monospace;background:#171b20}.CodeMirror-gutters{background:#171b20;border-right:1px solid var(--line)}.bottom{display:flex;gap:14px;align-items:center;padding:9px 14px;border-top:1px solid var(--line);color:var(--muted);font-size:11px}.message{color:var(--green)}.message.error{color:#ff938a}
     .empty{padding:26px;color:var(--muted);line-height:1.7}.settings{display:flex;gap:8px;align-items:center}.token{width:min(260px,28vw);background:#171b20;border:1px solid #48535f;color:white;padding:8px;border-radius:6px}.hint{padding:14px 18px;border-bottom:1px solid var(--line);background:#222a32;color:#c5cdd4;font-size:12px;line-height:1.5}
+    .deploybar{display:flex;gap:10px;align-items:center;flex-wrap:wrap;padding:9px 14px;background:#192129;border-bottom:1px solid var(--line);font-size:12px}.deploy-state{color:var(--muted)}.deploy-state.good{color:var(--green)}.deploy-state.bad{color:#ff938a}.deploy-state.busy{color:#efc078}
     @media(max-width:760px){main{grid-template-columns:1fr}aside{border-right:0;border-bottom:1px solid var(--line);max-height:190px}.file{display:inline-flex;width:auto}.section{margin-top:4px}.aside-note{display:none}.toolbar{align-items:stretch}.settings{width:100%;flex-wrap:wrap}.token{flex:1}.CodeMirror{height:55vh;min-height:320px}.sub{display:none}}
   </style>
 </head>
@@ -53,6 +54,7 @@ permalink: /admin/code.html
 <div class="hint">Edit Markdown posts, embedded HTML, and post-specific CSS in one file. This editor only accesses the staging repository <b>ndangelo/nuggetofjoy-jekyll</b>.</div>
 <div class="connect"><input id="tokenInput" type="password" autocomplete="off" placeholder="GitHub fine-grained token (Contents: Read and write)"><button id="connect" class="btn primary">Connect to GitHub</button><button id="disconnect" class="btn">Forget token</button><small>Token is remembered in this browser until you choose Forget token. It is not written to the repository. Grant access only to this repository, with Contents read/write permission.</small></div>
 <div class="toolbar"><span id="filename" class="filename">assets/css/style.css</span><div class="spacer"></div><button id="reload" class="btn">Reload</button><button id="save" class="btn primary">Save to GitHub</button></div>
+<div class="deploybar"><span id="deployState" class="deploy-state">Deployment status not checked yet.</span><div class="spacer"></div><button id="checkDeploy" class="btn">Check build status</button><button id="previewPost" class="btn" disabled>Preview post ↗</button></div>
 </div>
 <div class="editor-wrap"><textarea id="source"></textarea><div class="bottom"><span id="state">Enter a GitHub token to load a file.</span><div class="spacer"></div><span id="mode">CSS</span><span id="linecol">Ln 1, Col 1</span></div></div>
 </section>
@@ -186,9 +188,45 @@ document.querySelectorAll('.file[data-file]').forEach(b=>b.addEventListener('cli
 $('openCustom').addEventListener('click',()=>{const p=$('customPath').value.trim().replace(/^\/+/, '');if(!p||p.includes('..')){state('Enter a valid repository-relative file path.',true);return}if(editor.getValue()!==original&&!confirm('Discard unsaved changes and open another file?'))return;setPath(p)});
 $('reload').addEventListener('click',()=>{if(editor.getValue()!==original&&!confirm('Discard unsaved changes and reload from GitHub?'))return;load()});
 $('save').addEventListener('click',save);
+
+const siteBase='https://ndangelo.github.io/nuggetofjoy-jekyll';
+function postPreviewUrl(){
+ const text=editor.getValue();
+ const match=text.match(/^permalink:\s*["']?([^"'\\n]+)["']?\s*$/m);
+ if(match&&match[1].trim().startsWith('/'))return siteBase+match[1].trim();
+ const title=text.match(/^title:\s*["']?(.+?)["']?\s*$/m);
+ return null;
+}
+function updatePreviewButton(){
+ const url=postPreviewUrl(),isPost=path.startsWith('_posts/')&&path.endsWith('.md')&&!!url;
+ $('previewPost').disabled=!isPost;
+ $('previewPost').onclick=()=>{const u=postPreviewUrl();if(u)window.open(u,'_blank','noopener')};
+ $('previewPost').title=isPost?url:'Open a post with a permalink in its front matter to enable preview.';
+}
+async function checkDeploy(){
+ const el=$('deployState');el.className='deploy-state busy';el.textContent='Checking latest build…';
+ try{
+  const res=await fetch('https://api.github.com/repos/'+repo+'/actions/runs?per_page=1');
+  if(!res.ok)throw Error('GitHub Actions status unavailable ('+res.status+')');
+  const data=await res.json(),run=data.workflow_runs&&data.workflow_runs[0];
+  if(!run)throw Error('No workflow runs found.');
+  const age=Math.max(0,Math.round((Date.now()-new Date(run.updated_at||run.created_at).getTime())/60000));
+  if(run.status!=='completed'){
+   el.className='deploy-state busy';el.textContent='Build/deploy is '+run.status+'. Wait for it to finish before previewing.';
+  }else if(run.conclusion==='success'){
+   el.className='deploy-state good';el.textContent='Latest build/deploy succeeded ('+age+' min ago). Preview should be ready.';
+  }else{
+   el.className='deploy-state bad';el.textContent='Latest build/deploy '+(run.conclusion||'finished')+'. Check the workflow log before previewing.';
+  }
+  el.title=run.display_title+' · '+run.head_sha;
+ }catch(e){el.className='deploy-state bad';el.textContent='Could not check deployment: '+e.message}
+}
+$('checkDeploy').addEventListener('click',checkDeploy);
+editor.on('change',()=>{if(!loading&&editor.getValue()!==original)state('Unsaved changes');updatePreviewButton()});
 editor.on('cursorActivity',()=>{const c=editor.getCursor();$('linecol').textContent='Ln '+(c.line+1)+', Col '+(c.ch+1)});
-editor.on('change',()=>{if(!loading&&editor.getValue()!==original)state('Unsaved changes');});
+
 if(token){$('tokenInput').value=token;load();refreshPosts()}else{editor.setValue('/* Connect to GitHub above to load a file. */');state('Enter your token above and click Connect to GitHub.');}
+updatePreviewButton();checkDeploy();
 })();
 </script>
 </body>
