@@ -74,7 +74,7 @@ const editor=CodeMirror.fromTextArea(document.getElementById('source'),{theme:'m
 const $=id=>document.getElementById(id),state=(s,error=false)=>{$('state').textContent=s;$('state').className=error?'message error':'message'};
 if(token)$('tokenInput').value=token;
 function modeFor(p){if(p.endsWith('.css'))return 'css';if(p.endsWith('.html')||p.endsWith('.md'))return p.endsWith('.md')?'markdown':'htmlmixed';if(p.endsWith('.js'))return 'javascript';if(p.endsWith('.yml')||p.endsWith('.yaml'))return 'yaml';return 'text/plain'}
-function setPath(p){path=p;isNewFile=false;$('filename').textContent=p;$('mode').textContent=modeFor(p).toUpperCase();document.querySelectorAll('.file[data-file]').forEach(b=>b.classList.toggle('active',b.dataset.file===p));editor.setOption('mode',modeFor(p));load()}
+function setPath(p){path=p;isNewFile=false;$('filename').textContent=p;$('mode').textContent=modeFor(p).toUpperCase();document.querySelectorAll('.file[data-file]').forEach(b=>b.classList.toggle('active',b.dataset.file===p));editor.setOption('mode',modeFor(p));updatePreviewButton();load()}
 function headers(){return {'Authorization':'Bearer '+token,'Accept':'application/vnd.github+json','X-GitHub-Api-Version':'2022-11-28'}}
 async function api(url,opts={}){const res=await fetch(url,{...opts,headers:{...headers(),...(opts.headers||{})}});const data=await res.json().catch(()=>({}));if(!res.ok)throw Error(data.message||('GitHub API error '+res.status));return data}
 async function load(){if(!token){state('Enter your token above and click Connect to GitHub.',true);return}loading=true;$('save').disabled=true;state('Loading '+path+'…');try{const data=await api('https://api.github.com/repos/'+repo+'/contents/'+path+'?ref='+branch);if(data.encoding!=='base64')throw Error('Unexpected file encoding');const bytes=Uint8Array.from(atob(data.content.replace(/\s/g,'')),c=>c.charCodeAt(0));const text=new TextDecoder().decode(bytes);sha=data.sha;original=text;editor.setValue(text);editor.clearHistory();state('Loaded from GitHub. Unsaved changes are local until you save.');}catch(e){state(e.message,true)}finally{loading=false;$('save').disabled=false}}
@@ -191,17 +191,23 @@ $('save').addEventListener('click',save);
 
 const siteBase='https://ndangelo.github.io/nuggetofjoy-jekyll';
 function postPreviewUrl(){
+ if(!path.startsWith('_posts/')||!path.endsWith('.md'))return null;
  const text=editor.getValue();
- const match=text.match(/^permalink:\s*["']?([^"'\\r\\n]+)["']?\s*$/m);
- if(match&&match[1].trim().startsWith('/'))return siteBase+match[1].trim();
- const title=text.match(/^title:\s*["']?(.+?)["']?\s*$/m);
- return null;
+ const line=text.split(/\r?\n/).find(line=>/^permalink\s*:/.test(line.trim()));
+ if(line){
+  const value=line.trim().replace(/^permalink\s*:\s*/,'').trim().replace(/^["']|["']$/g,'').trim();
+  if(value.startsWith('/'))return siteBase+value;
+ }
+ // Jekyll's default post URL is based on the date-prefixed filename when no permalink is set.
+ const filename=path.split('/').pop();
+ const slug=filename.replace(/^\d{4}-\d{2}-\d{2}-/,'').replace(/\.md$/i,'');
+ return slug?siteBase+'/'+slug+'/':null;
 }
 function updatePreviewButton(){
- const url=postPreviewUrl(),isPost=path.startsWith('_posts/')&&path.endsWith('.md')&&!!url;
+ const isPost=path.startsWith('_posts/')&&path.endsWith('.md');
  $('previewPost').disabled=!isPost;
  $('previewPost').onclick=()=>{const u=postPreviewUrl();if(u)window.open(u,'_blank','noopener')};
- $('previewPost').title=isPost?url:'Open a post with a permalink in its front matter to enable preview.';
+ $('previewPost').title=isPost?(postPreviewUrl()||'Preview this post'):'Open a Markdown post to enable preview.';
 }
 async function checkDeploy(){
  const el=$('deployState');el.className='deploy-state busy';el.textContent='Checking latest build…';
