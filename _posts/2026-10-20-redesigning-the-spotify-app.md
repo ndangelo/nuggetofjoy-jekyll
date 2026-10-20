@@ -6,6 +6,8 @@ slug: "redesigning-the-spotify-app"
 author: admin
 categories:
   - Projects
+  - UI/UX
+  - Visual Information Theory
 ---
 
 UX/UI DESIGN BRIEF #8
