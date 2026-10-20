@@ -51,7 +51,7 @@ permalink: /admin/code.html
 <section class="workspace">
 <div>
 <div class="hint">Edit Markdown posts, embedded HTML, and post-specific CSS in one file. This editor only accesses the staging repository <b>ndangelo/nuggetofjoy-jekyll</b>.</div>
-<div class="connect"><input id="tokenInput" type="password" autocomplete="off" placeholder="GitHub fine-grained token (Contents: Read and write)"><button id="connect" class="btn primary">Connect to GitHub</button><button id="disconnect" class="btn">Forget token</button><small>Token is kept in this browser tab session only. It is not written to the repository. Grant access only to this repository, with Contents read/write permission.</small></div>
+<div class="connect"><input id="tokenInput" type="password" autocomplete="off" placeholder="GitHub fine-grained token (Contents: Read and write)"><button id="connect" class="btn primary">Connect to GitHub</button><button id="disconnect" class="btn">Forget token</button><small>Token is remembered in this browser until you choose Forget token. It is not written to the repository. Grant access only to this repository, with Contents read/write permission.</small></div>
 <div class="toolbar"><span id="filename" class="filename">assets/css/style.css</span><div class="spacer"></div><button id="reload" class="btn">Reload</button><button id="save" class="btn primary">Save to GitHub</button></div>
 </div>
 <div class="editor-wrap"><textarea id="source"></textarea><div class="bottom"><span id="state">Enter a GitHub token to load a file.</span><div class="spacer"></div><span id="mode">CSS</span><span id="linecol">Ln 1, Col 1</span></div></div>
@@ -67,7 +67,7 @@ permalink: /admin/code.html
 (function(){
 const repo='ndangelo/nuggetofjoy-jekyll',branch='main';
 const tokenKey='noj_code_studio_token';
-let token=sessionStorage.getItem(tokenKey)||'',path='assets/css/style.css',sha='',original='',loading=false,isNewFile=false;
+let token=localStorage.getItem(tokenKey)||'',path='assets/css/style.css',sha='',original='',loading=false,isNewFile=false;
 const editor=CodeMirror.fromTextArea(document.getElementById('source'),{theme:'material-darker',lineNumbers:true,indentUnit:2,tabSize:2,indentWithTabs:false,lineWrapping:false,mode:'css',matchBrackets:true,viewportMargin:20});
 const $=id=>document.getElementById(id),state=(s,error=false)=>{$('state').textContent=s;$('state').className=error?'message error':'message'};
 if(token)$('tokenInput').value=token;
@@ -171,11 +171,11 @@ async function refreshPosts(){
 }
 $('connect').addEventListener('click',async()=>{
  const entered=$('tokenInput').value.trim();
- if(entered){token=entered;sessionStorage.setItem(tokenKey,token)}
+ if(entered){token=entered;localStorage.setItem(tokenKey,token)}
  if(!token){state('Paste a GitHub fine-grained token first.',true);return}
  state('Checking GitHub connection…');
  try{await api('https://api.github.com/repos/'+repo);state('Connected to GitHub.');load();refreshPosts()}
- catch(e){token='';sessionStorage.removeItem(tokenKey);state('Connection failed: '+e.message,true)}
+ catch(e){token='';localStorage.removeItem(tokenKey);state('Connection failed: '+e.message,true)}
 });
 $('tokenInput').addEventListener('keydown',e=>{if(e.key==='Enter')$('connect').click()});
 $('disconnect').addEventListener('click',()=>{token='';sessionStorage.removeItem(tokenKey);$('tokenInput').value='';state('Token cleared. Connect to GitHub to continue.');$('postList').innerHTML='<div class="aside-note">Connect to GitHub to load posts.</div>'});
