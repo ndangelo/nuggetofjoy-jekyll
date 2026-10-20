@@ -5,76 +5,14 @@ permalink: /admin/index.html
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <meta name="robots" content="noindex,nofollow">
-  <meta name="theme-color" content="#20262d">
-  <title>Nugget of Joy — Studio</title>
-  <link rel="stylesheet" href="{{ '/admin/dashboard.css' | relative_url }}">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<meta http-equiv="refresh" content="0;url={{ '/admin/code.html' | relative_url }}">
+<title>Nugget of Joy — Code Studio</title>
+<script>window.location.replace("{{ '/admin/code.html' | relative_url }}");</script>
 </head>
 <body>
-  <div class="studio">
-    <aside class="sidebar">
-      <a class="brand" href="{{ '/admin/' | relative_url }}" aria-label="Nugget of Joy Studio home">
-        <span class="brand-mark">n.</span><span class="brand-name">nugget <b>of joy</b><small>CONTENT STUDIO</small></span>
-      </a>
-      <div class="side-label">WORKSPACE</div>
-      <nav class="side-nav" aria-label="Studio navigation">
-        <a class="nav-link active" href="{{ '/admin/' | relative_url }}"><span class="nav-icon">⌂</span> Dashboard</a>
-        <a class="nav-link" href="{{ '/admin/cms.html' | relative_url }}"><span class="nav-icon">✦</span> Sveltia CMS <span class="nav-count">NEW</span></a>
-        <a class="nav-link" href="{{ '/admin/cms.html#/collections/posts' | relative_url }}"><span class="nav-icon">▤</span> Blog Posts <span id="post-count" class="nav-count">—</span></a>
-        <a class="nav-link" href="{{ '/admin/cms.html#/collections/content_pages' | relative_url }}"><span class="nav-icon">▧</span> Pages <span id="page-count" class="nav-count">—</span></a>
-        <a class="nav-link" href="{{ '/admin/cms.html#/collections/homepage_settings' | relative_url }}"><span class="nav-icon">⌘</span> Homepage &amp; Navigation</a>
-      </nav>
-      <div class="side-label side-label-spaced">PUBLISHING</div>
-      <nav class="side-nav" aria-label="Publishing tools">
-        <a class="nav-link" href="{{ '/admin/cms.html#/collections/posts' | relative_url }}"><span class="nav-icon">✎</span> Content Editor</a>
-        <a class="nav-link" href="{{ '/admin/cms.html#/collections/site_code' | relative_url }}"><span class="nav-icon">▣</span> Design &amp; CSS</a>
-        <a class="nav-link" href="{{ '/admin/cms.html#/media' | relative_url }}"><span class="nav-icon">▦</span> Media Library</a>
-      </nav>
-      <div class="sidebar-bottom"><span class="status-dot"></span><span>Staging workspace</span><small>GitHub · Jekyll · Sveltia CMS</small></div>
-    </aside>
-    <main class="main">
-      <header class="topbar">
-        <div class="breadcrumbs">NUGGET OF JOY <span>/</span> <strong>Dashboard</strong></div>
-        <div class="top-actions"><a class="site-link" href="{{ '/' | relative_url }}" target="_blank" rel="noopener">View website ↗</a><a class="profile" href="{{ '/admin/cms.html' | relative_url }}" aria-label="Open content editor">ND</a></div>
-      </header>
-      <div class="content">
-        <section class="welcome"><div><p class="eyebrow">CONTENT WORKSPACE</p><h1>Good afternoon<span>.</span></h1><p class="welcome-copy">Manage the archive, shape the homepage, and prepare content for publishing.</p></div><a class="primary-button" href="{{ '/admin/cms.html#/collections/posts' | relative_url }}">＋ Create a post</a></section>
-        <section class="stats" aria-label="Content overview">
-          <article class="stat-card"><div class="stat-top"><span>Published posts</span><span class="stat-icon orange">▤</span></div><strong id="total-posts">—</strong><small>Articles, lessons &amp; briefs</small></article>
-          <article class="stat-card"><div class="stat-top"><span>Site pages</span><span class="stat-icon blue">▧</span></div><strong id="total-pages">—</strong><small>Standalone pages</small></article>
-          <article class="stat-card"><div class="stat-top"><span>Homepage sections</span><span class="stat-icon purple">⌘</span></div><strong>Editable</strong><small>Copy, links &amp; navigation</small></article>
-          <article class="stat-card"><div class="stat-top"><span>Publishing</span><span class="stat-icon green">↗</span></div><strong>CMS linked</strong><small>Use the editor to publish changes</small></article>
-        </section>
-        <section class="quick-grid">
-          <article class="panel quick-panel"><div class="panel-heading"><div><p class="eyebrow">QUICK ACTIONS</p><h2>What would you like to do?</h2></div></div>
-            <div class="action-grid">
-              <a class="action-card" href="{{ '/admin/cms.html#/collections/posts' | relative_url }}"><span class="action-icon orange">＋</span><span><b>Write a blog post</b><small>Start an article or design brief</small></span><span class="arrow">↗</span></a>
-              <a class="action-card" href="{{ '/admin/cms.html#/collections/content_pages' | relative_url }}"><span class="action-icon blue">▧</span><span><b>Edit a page</b><small>Update content, appearance or CSS</small></span><span class="arrow">↗</span></a>
-              <a class="action-card" href="{{ '/admin/cms.html#/collections/homepage_settings' | relative_url }}"><span class="action-icon purple">⌘</span><span><b>Configure homepage</b><small>Headings, links and navigation</small></span><span class="arrow">↗</span></a>
-              <a class="action-card" href="{{ '/admin/cms.html#/collections/site_code' | relative_url }}"><span class="action-icon green">{ }</span><span><b>Edit HTML / CSS</b><small>Edit global CSS with syntax highlighting</small></span><span class="arrow">↗</span></a>
-            </div>
-          </article>
-          <article class="panel guide-panel"><p class="eyebrow">YOUR WORKFLOW</p><h2>From draft to live</h2>
-            <ol class="workflow">
-              <li><span>1</span><div><b>Choose content</b><small>Open a post, page, or homepage settings.</small></div></li>
-              <li><span>2</span><div><b>Edit and preview</b><small>Use Visual or Raw HTML mode, with a separate CSS code editor.</small></div></li>
-              <li><span>3</span><div><b>Publish changes</b><small>Use the CMS publishing controls to commit updates.</small></div></li>
-            </ol><a class="text-link" href="{{ '/admin/cms.html' | relative_url }}">Open full content editor →</a>
-          </article>
-        </section>
-        <section class="panel library-panel">
-          <div class="library-heading"><div><p class="eyebrow">CONTENT LIBRARY</p><h2>Content library</h2><p class="subcopy">Search posts and pages, then open the item in the editor.</p></div><a class="text-link" href="{{ '/admin/cms.html#/collections/posts' | relative_url }}">Manage all content →</a></div>
-          <div class="library-tools"><label class="search-box"><span>⌕</span><input id="search-content" type="search" placeholder="Search titles, categories, descriptions…" autocomplete="off"></label><select id="content-type" aria-label="Filter content type"><option value="all">All content</option><option value="post">Blog posts</option><option value="page">Pages</option></select><select id="content-sort" aria-label="Sort content"><option value="recent">Most recent</option><option value="title">Title A–Z</option><option value="oldest">Oldest first</option></select></div>
-          <div class="table-wrap"><table><thead><tr><th>Title</th><th>Type</th><th>Date</th><th>Public page</th><th></th></tr></thead><tbody id="content-rows"><tr><td colspan="5" class="loading">Loading content library…</td></tr></tbody></table></div>
-          <div class="library-footer"><span id="result-count">Loading content…</span><span>Edits and publishing take place in the connected CMS.</span></div>
-        </section>
-        <footer class="footer"><span>Nugget of Joy Studio</span><span>Staging admin · Live WordPress is unchanged</span></footer>
-      </div>
-    </main>
-  </div>
-  <script>window.NOJ_BASEURL = {{ site.baseurl | jsonify }};</script>
-  <script src="{{ '/admin/dashboard.js' | relative_url }}"></script>
+<p>Opening Nugget of Joy Code Studio… <a href="{{ '/admin/code.html' | relative_url }}">Continue to the browser code editor</a>.</p>
 </body>
 </html>
