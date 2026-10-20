@@ -212,22 +212,26 @@ function updatePreviewButton(){
 async function checkDeploy(){
  const el=$('deployState');el.className='deploy-state busy';el.textContent='Checking latest build…';
  try{
-  const res=await fetch('https://api.github.com/repos/'+repo+'/actions/runs?per_page=1');
-  if(!res.ok)throw Error('GitHub Actions status unavailable ('+res.status+')');
+  const res=await fetch('https://api.github.com/repos/'+repo+'/actions/runs?per_page=1',{cache:'no-store',headers:{'Accept':'application/vnd.github+json'}});
+  if(!res.ok)throw Error(res.status===403?'GitHub API rate limit or access restriction. Open the workflow page for the authoritative status.':'GitHub Actions status unavailable ('+res.status+')');
   const data=await res.json(),run=data.workflow_runs&&data.workflow_runs[0];
   if(!run)throw Error('No workflow runs found.');
   const age=Math.max(0,Math.round((Date.now()-new Date(run.updated_at||run.created_at).getTime())/60000));
   if(run.status!=='completed'){
-   el.className='deploy-state busy';el.textContent='Build/deploy is '+run.status+'. Wait for it to finish before previewing.';
+   el.className='deploy-state busy';el.textContent='Latest workflow is '+run.status+'. Open GitHub for live details.';
   }else if(run.conclusion==='success'){
-   el.className='deploy-state good';el.textContent='Latest build/deploy succeeded ('+age+' min ago). Preview should be ready.';
+   el.className='deploy-state good';el.textContent='Latest workflow succeeded ('+age+' min ago). Preview should be ready.';
   }else{
-   el.className='deploy-state bad';el.textContent='Latest build/deploy '+(run.conclusion||'finished')+'. Check the workflow log before previewing.';
+   el.className='deploy-state bad';el.textContent='Latest workflow '+(run.conclusion||'finished')+'. Open GitHub to inspect the run.';
   }
-  el.title=run.display_title+' · '+run.head_sha;
- }catch(e){el.className='deploy-state bad';el.textContent='Could not check deployment: '+e.message}
+  el.title=(run.display_title||'GitHub Actions')+' · '+run.head_sha;
+ }catch(e){el.className='deploy-state bad';el.textContent='Status lookup unavailable: '+e.message+' Use “Open workflow” for the reliable status.'}
 }
 $('checkDeploy').addEventListener('click',checkDeploy);
+$('checkDeploy').textContent='Refresh status';
+const workflowLink=document.createElement('a');
+workflowLink.className='btn';workflowLink.href='https://github.com/'+repo+'/actions';workflowLink.target='_blank';workflowLink.rel='noopener';workflowLink.textContent='Open workflow ↗';workflowLink.style.textDecoration='none';
+$('checkDeploy').insertAdjacentElement('afterend',workflowLink);
 editor.on('change',()=>{if(!loading&&editor.getValue()!==original)state('Unsaved changes');updatePreviewButton()});
 editor.on('cursorActivity',()=>{const c=editor.getCursor();$('linecol').textContent='Ln '+(c.line+1)+', Col '+(c.ch+1)});
 
